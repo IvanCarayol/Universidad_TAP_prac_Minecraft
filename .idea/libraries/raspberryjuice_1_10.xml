@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="raspberryjuice-1.10">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/AdventuresInMinecraft-PC-master/Server/plugins/raspberryjuice-1.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

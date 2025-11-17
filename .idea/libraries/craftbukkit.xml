@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="craftbukkit">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/AdventuresInMinecraft-PC-master/Server/craftbukkit.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
