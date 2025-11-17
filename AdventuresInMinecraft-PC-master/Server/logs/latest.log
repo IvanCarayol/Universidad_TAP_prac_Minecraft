@@ -1,339 +1,90 @@
-[15:53:14] [Server thread/INFO]: Starting minecraft server version 1.12
-[15:53:14] [Server thread/INFO]: Loading properties
-[15:53:14] [Server thread/INFO]: Default game type: CREATIVE
-[15:53:14] [Server thread/INFO]: Generating keypair
-[15:53:14] [Server thread/INFO]: Starting Minecraft server on *:25565
-[15:53:14] [Server thread/INFO]: Using default channel type
-[15:53:14] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
-[15:53:14] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
-[15:53:14] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[15:53:14] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
-[15:53:14] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[15:53:14] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
-[15:53:14] [Server thread/INFO]: Preparing level "world"
-[15:53:15] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
-[15:53:16] [Server thread/INFO]: Preparing spawn area: 9%
-[15:53:17] [Server thread/INFO]: Preparing spawn area: 15%
-[15:53:18] [Server thread/INFO]: Preparing spawn area: 24%
-[15:53:19] [Server thread/INFO]: Preparing spawn area: 33%
-[15:53:20] [Server thread/INFO]: Preparing spawn area: 43%
-[15:53:21] [Server thread/INFO]: Preparing spawn area: 55%
-[15:53:22] [Server thread/INFO]: Preparing spawn area: 69%
-[15:53:23] [Server thread/INFO]: Preparing spawn area: 85%
-[15:53:24] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
-[15:53:25] [Server thread/INFO]: Preparing spawn area: 27%
-[15:53:26] [Server thread/INFO]: Preparing spawn area: 55%
-[15:53:27] [Server thread/INFO]: Preparing spawn area: 84%
-[15:53:27] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
-[15:53:28] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
-[15:53:28] [Server thread/INFO]: [RaspberryJuice] Using port 4711
-[15:53:28] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
-[15:53:28] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
-[15:53:28] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
-[15:53:28] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[15:53:28] [Server thread/INFO]: Done (13,830s)! For help, type "help" or "?"
-[15:55:47] [Server thread/INFO]: animalito1000[/127.0.0.1:63404] logged in with entity id 2391 at ([world]248.5, 66.0, 235.5)
-[15:56:02] [Server thread/INFO]: Opped animalito1000
-[15:56:57] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
-[15:56:57] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:63504.
-[15:56:57] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
-[15:56:58] [Server thread/INFO]:  Hello Minecraft World [m
-[15:56:58] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:63504.
-[15:57:42] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:63533.
-[15:57:42] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
-[15:57:42] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
-[15:57:42] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:42] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:42] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:42] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:42] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:42] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:42] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:43] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:44] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:45] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:46] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:47] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:48] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:49] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:50] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:51] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:52] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:53] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:54] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:55] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:56] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:57] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:57] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:57] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:57] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:57] [Server thread/INFO]:  Hello Minecraft World [m
-[15:57:57] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:63533.
-[15:58:54] [Server thread/INFO]: animalito1000 lost connection: Disconnected
-[15:58:54] [Server thread/INFO]: animalito1000 left the game
+[16:16:32] [Server thread/INFO]: Loading properties
+[16:16:32] [Server thread/INFO]: Default game type: CREATIVE
+[16:16:32] [Server thread/INFO]: Generating keypair
+[16:16:32] [Server thread/INFO]: Starting Minecraft server on *:25565
+[16:16:32] [Server thread/INFO]: Using default channel type
+[16:16:33] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
+[16:16:33] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
+[16:16:33] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[16:16:33] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[16:16:33] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[16:16:33] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[16:16:33] [Server thread/INFO]: Preparing level "world"
+[16:16:33] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
+[16:16:34] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
+[16:16:35] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
+[16:16:35] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
+[16:16:35] [Server thread/INFO]: [RaspberryJuice] Using port 4711
+[16:16:35] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
+[16:16:35] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
+[16:16:35] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
+[16:16:35] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[16:16:35] [Server thread/INFO]: Done (1,718s)! For help, type "help" or "?"
+[16:17:03] [Server thread/INFO]: animalito1000[/127.0.0.1:54412] logged in with entity id 51 at ([world]255.32917492029839, 79.0, 255.20857584502403)
+[16:23:16] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:54910.
+[16:23:16] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
+[16:23:16] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
+[16:23:16] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:54910.
+[16:25:03] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:54985.
+[16:25:03] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
+[16:25:03] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
+[16:25:03] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:54985.
+[16:26:16] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55050.
+[16:26:16] [Thread-12/INFO]: [RaspberryJuice] Starting output thread!
+[16:26:16] [Thread-11/INFO]: [RaspberryJuice] Starting input thread
+[16:26:16] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55050.
+[16:26:41] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55063.
+[16:26:41] [Thread-13/INFO]: [RaspberryJuice] Starting input thread
+[16:26:41] [Thread-14/INFO]: [RaspberryJuice] Starting output thread!
+[16:26:41] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55063.
+[16:28:07] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55099.
+[16:28:07] [Thread-15/INFO]: [RaspberryJuice] Starting input thread
+[16:28:07] [Thread-16/INFO]: [RaspberryJuice] Starting output thread!
+[16:28:07] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55099.
+[16:28:23] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55112.
+[16:28:23] [Thread-18/INFO]: [RaspberryJuice] Starting output thread!
+[16:28:23] [Thread-17/INFO]: [RaspberryJuice] Starting input thread
+[16:28:23] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55112.
+[16:31:17] [Server thread/INFO]: animalito1000 issued server command: /tp 100 50 100
+[16:31:17] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 100.5, 50.0, 100.5]
+[16:31:21] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2085ms behind, skipping 41 tick(s)
+[16:31:24] [Server thread/INFO]: animalito1000 issued server command: /gamemode spectator
+[16:31:24] [Server thread/INFO]: [animalito1000: Set own game mode to Spectator Mode]
+[16:35:57] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55274.
+[16:35:57] [Thread-19/INFO]: [RaspberryJuice] Starting input thread
+[16:35:57] [Thread-20/INFO]: [RaspberryJuice] Starting output thread!
+[16:35:57] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55274.
+[16:36:19] [Server thread/INFO]: animalito1000 issued server command: /tp 102 115 102
+[16:36:19] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 102.5, 115.0, 102.5]
+[16:37:59] [Server thread/INFO]: animalito1000 issued server command: /gamemode creative
+[16:37:59] [Server thread/INFO]: [animalito1000: Set own game mode to Creative Mode]
+[16:56:12] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55773.
+[16:56:12] [Thread-22/INFO]: [RaspberryJuice] Starting output thread!
+[16:56:12] [Thread-21/INFO]: [RaspberryJuice] Starting input thread
+[16:56:12] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55773.
+[16:56:31] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55781.
+[16:56:31] [Thread-23/INFO]: [RaspberryJuice] Starting input thread
+[16:56:31] [Thread-24/INFO]: [RaspberryJuice] Starting output thread!
+[16:56:31] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55781.
+[16:56:36] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55784.
+[16:56:36] [Thread-26/INFO]: [RaspberryJuice] Starting output thread!
+[16:56:36] [Thread-25/INFO]: [RaspberryJuice] Starting input thread
+[16:56:40] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55784.
+[16:58:06] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55807.
+[16:58:06] [Thread-27/INFO]: [RaspberryJuice] Starting input thread
+[16:58:06] [Thread-28/INFO]: [RaspberryJuice] Starting output thread!
+[16:58:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55807.
+[16:58:26] [Server thread/INFO]: animalito1000 issued server command: /tp 130 103 100
+[16:58:26] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 130.5, 103.0, 100.5]
+[16:59:04] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55826.
+[16:59:04] [Thread-29/INFO]: [RaspberryJuice] Starting input thread
+[16:59:04] [Thread-30/INFO]: [RaspberryJuice] Starting output thread!
+[16:59:28] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55826.
+[16:59:45] [Server thread/INFO]: animalito1000 issued server command: /tp 243 63 100
+[16:59:45] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 243.5, 63.0, 100.5]
+[17:00:19] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55847.
+[17:00:19] [Thread-31/INFO]: [RaspberryJuice] Starting input thread
+[17:00:19] [Thread-32/INFO]: [RaspberryJuice] Starting output thread!
+[17:00:24] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55847.
+[17:00:36] [Server thread/INFO]: animalito1000 issued server command: /tp 131 103 100
+[17:00:36] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 131.5, 103.0, 100.5]

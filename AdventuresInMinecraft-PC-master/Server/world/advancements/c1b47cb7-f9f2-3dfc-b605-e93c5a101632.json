@@ -1,6 +1,8 @@
 {
   "minecraft:adventure/adventuring_time": {
     "criteria": {
+      "jungle_hills": "2025-11-17 16:31:18 +0100",
+      "jungle_edge": "2025-11-17 16:59:46 +0100",
       "jungle": "2025-11-03 15:55:48 +0100"
     },
     "done": false
