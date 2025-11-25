@@ -1,90 +1,156 @@
-[16:16:32] [Server thread/INFO]: Loading properties
-[16:16:32] [Server thread/INFO]: Default game type: CREATIVE
-[16:16:32] [Server thread/INFO]: Generating keypair
-[16:16:32] [Server thread/INFO]: Starting Minecraft server on *:25565
-[16:16:32] [Server thread/INFO]: Using default channel type
-[16:16:33] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
-[16:16:33] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
-[16:16:33] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[16:16:33] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
-[16:16:33] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[16:16:33] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
-[16:16:33] [Server thread/INFO]: Preparing level "world"
-[16:16:33] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
-[16:16:34] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
-[16:16:35] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
-[16:16:35] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
-[16:16:35] [Server thread/INFO]: [RaspberryJuice] Using port 4711
-[16:16:35] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
-[16:16:35] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
-[16:16:35] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
-[16:16:35] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[16:16:35] [Server thread/INFO]: Done (1,718s)! For help, type "help" or "?"
-[16:17:03] [Server thread/INFO]: animalito1000[/127.0.0.1:54412] logged in with entity id 51 at ([world]255.32917492029839, 79.0, 255.20857584502403)
-[16:23:16] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:54910.
-[16:23:16] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
-[16:23:16] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
-[16:23:16] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:54910.
-[16:25:03] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:54985.
-[16:25:03] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
-[16:25:03] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
-[16:25:03] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:54985.
-[16:26:16] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55050.
-[16:26:16] [Thread-12/INFO]: [RaspberryJuice] Starting output thread!
-[16:26:16] [Thread-11/INFO]: [RaspberryJuice] Starting input thread
-[16:26:16] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55050.
-[16:26:41] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55063.
-[16:26:41] [Thread-13/INFO]: [RaspberryJuice] Starting input thread
-[16:26:41] [Thread-14/INFO]: [RaspberryJuice] Starting output thread!
-[16:26:41] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55063.
-[16:28:07] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55099.
-[16:28:07] [Thread-15/INFO]: [RaspberryJuice] Starting input thread
-[16:28:07] [Thread-16/INFO]: [RaspberryJuice] Starting output thread!
-[16:28:07] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55099.
-[16:28:23] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55112.
-[16:28:23] [Thread-18/INFO]: [RaspberryJuice] Starting output thread!
-[16:28:23] [Thread-17/INFO]: [RaspberryJuice] Starting input thread
-[16:28:23] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55112.
-[16:31:17] [Server thread/INFO]: animalito1000 issued server command: /tp 100 50 100
-[16:31:17] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 100.5, 50.0, 100.5]
-[16:31:21] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2085ms behind, skipping 41 tick(s)
-[16:31:24] [Server thread/INFO]: animalito1000 issued server command: /gamemode spectator
-[16:31:24] [Server thread/INFO]: [animalito1000: Set own game mode to Spectator Mode]
-[16:35:57] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55274.
-[16:35:57] [Thread-19/INFO]: [RaspberryJuice] Starting input thread
-[16:35:57] [Thread-20/INFO]: [RaspberryJuice] Starting output thread!
-[16:35:57] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55274.
-[16:36:19] [Server thread/INFO]: animalito1000 issued server command: /tp 102 115 102
-[16:36:19] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 102.5, 115.0, 102.5]
-[16:37:59] [Server thread/INFO]: animalito1000 issued server command: /gamemode creative
-[16:37:59] [Server thread/INFO]: [animalito1000: Set own game mode to Creative Mode]
-[16:56:12] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55773.
-[16:56:12] [Thread-22/INFO]: [RaspberryJuice] Starting output thread!
-[16:56:12] [Thread-21/INFO]: [RaspberryJuice] Starting input thread
-[16:56:12] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55773.
-[16:56:31] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55781.
-[16:56:31] [Thread-23/INFO]: [RaspberryJuice] Starting input thread
-[16:56:31] [Thread-24/INFO]: [RaspberryJuice] Starting output thread!
-[16:56:31] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55781.
-[16:56:36] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55784.
-[16:56:36] [Thread-26/INFO]: [RaspberryJuice] Starting output thread!
-[16:56:36] [Thread-25/INFO]: [RaspberryJuice] Starting input thread
-[16:56:40] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55784.
-[16:58:06] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55807.
-[16:58:06] [Thread-27/INFO]: [RaspberryJuice] Starting input thread
-[16:58:06] [Thread-28/INFO]: [RaspberryJuice] Starting output thread!
-[16:58:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55807.
-[16:58:26] [Server thread/INFO]: animalito1000 issued server command: /tp 130 103 100
-[16:58:26] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 130.5, 103.0, 100.5]
-[16:59:04] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55826.
-[16:59:04] [Thread-29/INFO]: [RaspberryJuice] Starting input thread
-[16:59:04] [Thread-30/INFO]: [RaspberryJuice] Starting output thread!
-[16:59:28] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55826.
-[16:59:45] [Server thread/INFO]: animalito1000 issued server command: /tp 243 63 100
-[16:59:45] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 243.5, 63.0, 100.5]
-[17:00:19] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:55847.
-[17:00:19] [Thread-31/INFO]: [RaspberryJuice] Starting input thread
-[17:00:19] [Thread-32/INFO]: [RaspberryJuice] Starting output thread!
-[17:00:24] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:55847.
-[17:00:36] [Server thread/INFO]: animalito1000 issued server command: /tp 131 103 100
-[17:00:36] [Server thread/INFO]: [animalito1000: Teleported animalito1000 to 131.5, 103.0, 100.5]
+[15:56:31] [Server thread/INFO]: Starting minecraft server version 1.12
+[15:56:31] [Server thread/INFO]: Loading properties
+[15:56:31] [Server thread/INFO]: Default game type: CREATIVE
+[15:56:31] [Server thread/INFO]: Generating keypair
+[15:56:31] [Server thread/INFO]: Starting Minecraft server on *:25565
+[15:56:31] [Server thread/INFO]: Using default channel type
+[15:56:32] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
+[15:56:32] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
+[15:56:32] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[15:56:32] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[15:56:32] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[15:56:32] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[15:56:32] [Server thread/INFO]: Preparing level "world"
+[15:56:33] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
+[15:56:34] [Server thread/INFO]: Preparing spawn area: 64%
+[15:56:34] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
+[15:56:34] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
+[15:56:35] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
+[15:56:35] [Server thread/INFO]: [RaspberryJuice] Using port 4711
+[15:56:35] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
+[15:56:35] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
+[15:56:35] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
+[15:56:35] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[15:56:35] [Server thread/INFO]: Done (2,558s)! For help, type "help" or "?"
+[15:56:43] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
+[15:56:43] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62785.
+[15:56:43] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
+[15:56:47] [Server thread/INFO]: Fortcraft354[/127.0.0.1:62787] logged in with entity id 28 at ([world]241.17169939704795, 67.52025223523292, 99.96194332336327)
+[15:57:06] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62785.
+[15:57:12] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[15:57:12] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[15:57:14] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
+[15:57:14] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
+[16:01:00] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61376.
+[16:01:00] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
+[16:01:00] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
+[16:01:21] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61376.
+[16:01:33] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[16:01:33] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[16:07:23] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61559.
+[16:07:23] [Thread-12/INFO]: [RaspberryJuice] Starting output thread!
+[16:07:23] [Thread-11/INFO]: [RaspberryJuice] Starting input thread
+[16:08:34] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61559.
+[16:08:36] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61593.
+[16:08:36] [Thread-13/INFO]: [RaspberryJuice] Starting input thread
+[16:08:36] [Thread-14/INFO]: [RaspberryJuice] Starting output thread!
+[16:09:40] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61593.
+[16:10:55] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61652.
+[16:10:55] [Thread-16/INFO]: [RaspberryJuice] Starting output thread!
+[16:10:55] [Thread-15/INFO]: [RaspberryJuice] Starting input thread
+[16:12:01] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2562ms behind, skipping 51 tick(s)
+[16:12:09] [Server thread/INFO]: Fortcraft354 lost connection: Disconnected
+[16:12:09] [Server thread/INFO]: Fortcraft354 left the game
+[16:12:13] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61652.
+[16:13:06] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61712.
+[16:13:06] [Thread-17/INFO]: [RaspberryJuice] Starting input thread
+[16:13:06] [Thread-18/INFO]: [RaspberryJuice] Starting output thread!
+[16:13:09] [Server thread/INFO]: Fortcraft354[/127.0.0.1:61716] logged in with entity id 94 at ([world]125.68767190554674, 104.2576943538642, 154.530900810491)
+[16:14:03] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61712.
+[16:14:05] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61737.
+[16:14:05] [Thread-20/INFO]: [RaspberryJuice] Starting output thread!
+[16:14:05] [Thread-19/INFO]: [RaspberryJuice] Starting input thread
+[16:16:10] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2705ms behind, skipping 54 tick(s)
+[16:16:14] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[16:16:14] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[16:16:30] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
+[16:16:30] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
+[16:17:01] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61737.
+[16:17:07] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61825.
+[16:17:07] [Thread-21/INFO]: [RaspberryJuice] Starting input thread
+[16:17:07] [Thread-22/INFO]: [RaspberryJuice] Starting output thread!
+[16:18:17] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61825.
+[16:20:00] [Thread-23/INFO]: [RaspberryJuice] Starting input thread
+[16:20:00] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:61903.
+[16:20:00] [Thread-24/INFO]: [RaspberryJuice] Starting output thread!
+[16:20:47] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[16:20:47] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[16:20:53] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
+[16:20:53] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
+[16:21:21] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[16:21:21] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[16:21:39] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:61903.
+[16:26:26] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62300.
+[16:26:26] [Thread-25/INFO]: [RaspberryJuice] Starting input thread
+[16:26:26] [Thread-26/INFO]: [RaspberryJuice] Starting output thread!
+[16:26:57] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
+[16:26:57] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
+[16:27:56] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[16:27:56] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[16:28:15] [Thread-25/INFO]: [RaspberryJuice] Connection reset
+[16:28:15] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62300.
+[16:30:06] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62415.
+[16:30:06] [Thread-28/INFO]: [RaspberryJuice] Starting output thread!
+[16:30:06] [Thread-27/INFO]: [RaspberryJuice] Starting input thread
+[16:30:25] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62415.
+[16:33:01] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62515.
+[16:33:01] [Thread-29/INFO]: [RaspberryJuice] Starting input thread
+[16:33:01] [Thread-30/INFO]: [RaspberryJuice] Starting output thread!
+[16:33:39] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
+[16:33:39] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
+[16:33:41] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[16:33:41] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[16:37:53] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62515.
+[16:38:02] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62638.
+[16:38:02] [Thread-31/INFO]: [RaspberryJuice] Starting input thread
+[16:38:02] [Thread-32/INFO]: [RaspberryJuice] Starting output thread!
+[16:38:18] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 4755ms behind, skipping 95 tick(s)
+[16:41:37] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62638.
+[16:42:02] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62808.
+[16:42:02] [Thread-33/INFO]: [RaspberryJuice] Starting input thread
+[16:42:02] [Thread-34/INFO]: [RaspberryJuice] Starting output thread!
+[16:42:08] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62808.
+[16:42:20] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62817.
+[16:42:20] [Thread-35/INFO]: [RaspberryJuice] Starting input thread
+[16:42:20] [Thread-36/INFO]: [RaspberryJuice] Starting output thread!
+[16:42:44] [Server thread/INFO]: Fortcraft354 issued server command: /tp 80 100 0
+[16:42:44] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 80.5, 100.0, 0.5]
+[16:43:05] [Server thread/INFO]: Fortcraft354 issued server command: /tp 80 190 0
+[16:43:05] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 80.5, 190.0, 0.5]
+[16:44:20] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62817.
+[16:45:30] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:62898.
+[16:45:30] [Thread-37/INFO]: [RaspberryJuice] Starting input thread
+[16:45:30] [Thread-38/INFO]: [RaspberryJuice] Starting output thread!
+[16:45:49] [Server thread/INFO]: Fortcraft354 issued server command: /tp 80 100 0
+[16:45:49] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 80.5, 100.0, 0.5]
+[16:46:04] [Server thread/INFO]: Fortcraft354 issued server command: /tp 80 167 0
+[16:46:04] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 80.5, 167.0, 0.5]
+[16:46:14] [Server thread/INFO]: Fortcraft354 issued server command: /tp 167 100 0
+[16:46:14] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 167.5, 100.0, 0.5]
+[16:46:48] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:62898.
+[16:48:44] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 113135ms behind, skipping 2262 tick(s)
+[16:48:44] [Server thread/INFO]: Fortcraft354 lost connection: Timed out
+[16:48:44] [Server thread/INFO]: Fortcraft354 left the game
+[17:13:04] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 962865ms behind, skipping 19257 tick(s)
+[17:13:11] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:49892.
+[17:13:11] [Thread-40/INFO]: [RaspberryJuice] Starting output thread!
+[17:13:11] [Thread-39/INFO]: [RaspberryJuice] Starting input thread
+[17:13:20] [Server thread/INFO]: Fortcraft354[/127.0.0.1:49900] logged in with entity id 463 at ([world]167.5, 106.29455279137731, 0.5)
+[17:13:34] [Server thread/INFO]: Fortcraft354 issued server command: /tp 79 100 0
+[17:13:34] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 79.5, 100.0, 0.5]
+[17:13:36] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
+[17:13:36] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
+[17:13:52] [Server thread/INFO]: Fortcraft354 issued server command: /tp 199 100 0
+[17:13:52] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 199.5, 100.0, 0.5]
+[17:15:39] [Server thread/INFO]: Fortcraft354 lost connection: Internal Exception: java.io.IOException: Se ha forzado la interrupción de una conexión existente por el host remoto
+[17:15:39] [Server thread/INFO]: Fortcraft354 left the game
+[17:15:40] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:49892.
+[17:17:57] [Server thread/INFO]: Stopping the server
+[17:17:57] [Server thread/INFO]: Stopping server
+[17:17:57] [Server thread/INFO]: [RaspberryJuice] Disabling RaspberryJuice v1.10
+[17:17:57] [Server thread/INFO]: [RaspberryJuice] Raspberry Juice Stopped
+[17:17:57] [Server thread/INFO]: Saving players
+[17:17:57] [Server thread/INFO]: Saving worlds
+[17:17:57] [Server thread/INFO]: Saving chunks for level 'world'/overworld
+[17:17:57] [Server thread/INFO]: Saving chunks for level 'world_nether'/the_nether
+[17:17:57] [Server thread/INFO]: Saving chunks for level 'world_the_end'/the_end
