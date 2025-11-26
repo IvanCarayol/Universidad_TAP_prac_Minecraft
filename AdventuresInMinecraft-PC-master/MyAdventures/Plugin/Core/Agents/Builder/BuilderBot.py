@@ -57,7 +57,7 @@ class BuilderBot(BaseAgent):
 
         # Subscribe to incoming messages
         if bus:
-            bus.subscribe("map.v1", self._on_map)
+            #bus.subscribe("map.v1", self._on_map)
             bus.subscribe("inventory.v1", self._on_inventory)
             bus.subscribe("command.*.v1", self._on_command_message)
             bus.subscribe("*", self._on_generic_message)

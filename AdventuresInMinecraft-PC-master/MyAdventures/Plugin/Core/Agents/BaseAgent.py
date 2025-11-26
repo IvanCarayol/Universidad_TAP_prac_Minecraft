@@ -26,20 +26,17 @@ class AgentState(Enum):
 # ---------------------------------------------------------
 class BaseAgent:
     """
-    Base class for all Minecraft agents.
-
-    Implements:
-      - perception → decision → action cycle (PDA)
-      - unified state machine
-      - pause/resume/stop commands
-      - structured logging
-      - integration with MessageBus
-      - checkpoint (optional override)
+    Base class for all Minecraft agents with:
+      - PDA loop (perceive -> decide -> act)
+      - pause/resume/stop
+      - async-safe task lifecycle
+      - no deadlocks or self-await errors
     """
 
     def __init__(self, agent_id: str, bus=None):
         self.agent_id = agent_id
         self.bus = bus
+
         self._state: AgentState = AgentState.IDLE
         self._task: Optional[asyncio.Task] = None
         self._should_stop = False
@@ -64,25 +61,37 @@ class BaseAgent:
     #  Control commands
     # -----------------------------------------------------
     async def start(self):
-        """Start the agent's PDA cycle asynchronously."""
+        """Start the agent loop (safe)."""
         if self._task and not self._task.done():
-            logger.warning(f"[START] Agent '{self.agent_id}' is already running")
+            logger.warning(f"[START] Agent '{self.agent_id}' already running")
             return
 
         self._should_stop = False
         self.set_state(AgentState.RUNNING, "start")
+
         self._task = asyncio.create_task(self._run_loop())
         logger.info(f"[START] Agent '{self.agent_id}' started")
 
     async def stop(self):
-        """Safely stop the PDA loop and cleanup."""
-        self._should_stop = True
+        """Stop the agent WITHOUT causing it to await on itself."""
         logger.info(f"[STOP] Stopping agent '{self.agent_id}'...")
 
-        if self._task:
-            await self._task  # wait for termination
+        self._should_stop = True
 
-        # final state
+        # If stop() was called from another task → safe await
+        if (
+            self._task
+            and not self._task.done()
+            and asyncio.current_task() is not self._task
+        ):
+            self._task.cancel()
+            try:
+                await self._task
+            except asyncio.CancelledError:
+                pass
+            except Exception as e:
+                logger.error(f"[STOP ERROR] {e}")
+
         self.set_state(AgentState.STOPPED, "stop command")
         await self.save_checkpoint()
 
@@ -94,14 +103,13 @@ class BaseAgent:
             self.set_state(AgentState.RUNNING, "resume command")
 
     async def update(self, params: Dict[str, Any]):
-        """Update internal configuration dynamically."""
         logger.info(f"[UPDATE] {self.agent_id} updated with params={params}")
 
     # -----------------------------------------------------
     #  PDA LOOP
     # -----------------------------------------------------
     async def _run_loop(self):
-        """Internal execution loop: perceive → decide → act."""
+        """Core perception-decision-action loop."""
         try:
             while not self._should_stop:
                 if self.state == AgentState.PAUSED:
@@ -111,19 +119,20 @@ class BaseAgent:
                 if self.state in (AgentState.STOPPED, AgentState.ERROR):
                     break
 
-                # --------------------
-                # Perceive
+                # --- Perceive
                 percept = await self.perceive()
 
-                # --------------------
-                # Decide
+                # --- Decide
                 decision = await self.decide(percept)
 
-                # --------------------
-                # Act
+                # --- Act
                 await self.act(decision)
 
                 await asyncio.sleep(0)  # yield control
+
+        except asyncio.CancelledError:
+            # Normal shutdown → no log spam, no await stop()
+            return
 
         except Exception as e:
             logger.exception(f"[ERROR] Agent '{self.agent_id}' crashed: {e}")
@@ -131,39 +140,25 @@ class BaseAgent:
             await self.save_checkpoint()
 
         finally:
+            # Ensure STOPPED state if loop ends
             if not self._should_stop:
-                await self.stop()
+                self.set_state(AgentState.STOPPED, "loop finished")
+                await self.save_checkpoint()
 
     # -----------------------------------------------------
-    #  PDA methods (must be implemented)
+    #  PDA abstract methods
     # -----------------------------------------------------
     async def perceive(self) -> Any:
-        """
-        Should gather information from the environment.
-        MUST be overridden by child agents.
-        """
         raise NotImplementedError
 
     async def decide(self, percept: Any) -> Any:
-        """
-        Should process percepts and compute an action.
-        MUST be overridden by child agents.
-        """
         raise NotImplementedError
 
     async def act(self, decision: Any):
-        """
-        Should perform an action in Minecraft or send a message.
-        MUST be overridden by child agents.
-        """
         raise NotImplementedError
 
     # -----------------------------------------------------
-    #  Checkpoint (optional override)
+    #  Checkpoint
     # -----------------------------------------------------
     async def save_checkpoint(self):
-        """
-        Save persistent state (position, context, inventory...).
-        Child agents may override.
-        """
         logger.info(f"[CHECKPOINT] Saved checkpoint for {self.agent_id}")

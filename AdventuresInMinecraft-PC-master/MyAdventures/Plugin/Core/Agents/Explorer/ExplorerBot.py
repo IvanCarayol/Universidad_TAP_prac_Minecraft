@@ -5,6 +5,7 @@ from typing import Dict, Any, Optional, Tuple
 import sys
 import os
 
+from ..Strategies.explorer_strategies import search_line, search_spiral, search_random
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
 
@@ -32,78 +33,89 @@ class TerrainAPI:
 # ExplorerBot Implementation
 # ============================================================
 class ExplorerBot(BaseAgent):
-    """
-    ExplorerBot:
-
-    - Escanea una región (x/z + rango)
-    - Calcula varianza de alturas por sub-zonas
-    - Detecta áreas planas
-    - Publica mensajes map.v1
-    - Responde a control messages
-    - Permite reconfiguración dinámica (update)
-    - Respeta el modelo de estado del enunciado
-    """
-
-    SCAN_DELAY = 0.05  # delay entre lecturas de altura
+    SCAN_DELAY = 0.01
     PUBLISH_INTERVAL = 1.0
 
     def __init__(self, agent_id="ExplorerBot", bus=None, terrain_api=None):
         super().__init__(agent_id, bus)
-        self.center: Tuple[int, int] = (0, 0)       # (x, z)
-        self.range: int = 30                        # default range
-        self._scan_results: Dict[str, Any] = {}
+        self.center: Tuple[int, int] = (0, 0)
+        self.range: int = 30
         self._last_publish: float = 0.0
-        self._queued_request: Optional[Tuple[int, int, int]] = None  # (x,z,range)
-        self.terrain = terrain_api or TerrainAPI()
+        self._queued_request: Optional[Tuple[int, int, int]] = None
+        self.terrain = TerrainAPI()
+        self.occupied = set()
+        self.cube_size = 3
 
-        # Subscribe to messages
+        # Estrategia por defecto
+        self.search_strategy = search_random
+
         if bus:
             bus.subscribe("command.explorer.start.v1", self._on_start_cmd)
             bus.subscribe("command.explorer.set.v1", self._on_update_cmd)
             bus.subscribe("command.*.v1", self._on_control)
             bus.subscribe("*", self._on_generic)
 
+    def set_strategy(self, strategy_name: str):
+        strategies = {
+            "line": search_line,
+            "spiral": search_spiral,
+            "random": search_random
+        }
+        if strategy_name in strategies:
+            self.search_strategy = strategies[strategy_name]
+
+    async def _yield_scan(self):
+        await asyncio.sleep(self.SCAN_DELAY)
+
+
     # ---------------------------------------------------------
     # Message handlers
     # ---------------------------------------------------------
     async def _on_start_cmd(self, msg: Dict[str, Any]):
-        """Handle `/explorer start x=... z=... range=...`"""
+        """Handle `explorer start x=... z=... range=...`"""
         if msg.get("target") not in (self.agent_id, "*"):
             return
-
 
         payload = msg.get("payload", {})
         x = int(payload.get("x", 0))
         z = int(payload.get("z", 0))
         r = int(payload.get("range", self.range))
+        cube = int(payload.get("cube", self.cube_size))
 
-        if "cube" in payload:
-            self.cube_size = int(payload["cube"])
-        else:
-            self.cube_size = 5  # default
-
-        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s cube=%s", x, z, r, self.cube_size)
+        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s cube=%s", x, z, r, cube)
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:
             logger.info("[EXPLORER] Queuing new request until current scan finishes")
-            self._queued_request = (x, z, r)
+            self._queued_request = (x, z, r, cube)
         else:
             self.center = (x, z)
             self.range = r
+            self.cube = cube
             await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
-        """Handle `/explorer set range N`"""
+        """Handle `explorer set` command with optional parameters in payload."""
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
         payload = msg.get("payload", {})
+
+        # Actualizar rango si viene en payload
         if "range" in payload:
             self.range = int(payload["range"])
-            logger.info("[EXPLORER] Range updated to %s", self.range)
 
+        # Actualizar tamaño del cubo si viene en payload
+        if "cube" in payload:
+            self.cube_size = int(payload["cube"])
+
+        # Actualizar estrategia si viene en payload
+        if "strategy" in payload:
+            self.set_strategy(payload["strategy"])
+
+        # Llamar a update del BaseAgent para cualquier otro parámetro general
         await self.update(payload)
+
 
     async def _on_control(self, msg: Dict[str, Any]):
         """pause/resume/stop commands"""
@@ -127,35 +139,47 @@ class ExplorerBot(BaseAgent):
     # ---------------------------------------------------------
     # PDA Methods
     # ---------------------------------------------------------
-    async def perceive(self) -> Dict[str, Any]:
-        """Scan only needed positions for diagonal flat-area detection."""
-        await asyncio.sleep(0)
-
+    async def perceive(self) -> Dict[str, any]:
         x0, z0 = self.center
         r = self.range
 
-        # No leemos todo el rango; solo apuntamos a posiciones candidatas.
-        candidates = []
+        # coords según la estrategia seleccionada
+        candidates = await self.search_strategy(self, x0, z0, r)
 
-        for dx in range(-r, r + 1):
-            for dz in range(-r, r + 1):
+        # construir height_map
+        height_map = {}
+        for x, z in candidates:
+            h = self.terrain.get_height(x, z)
+            height_map[(x, z)] = h
+            logger.info(f"[EXPLORER] Perciviendo coordenadas ({x},{z}) con altura {h}")
+            await asyncio.sleep(self.SCAN_DELAY)
 
-                # Guardamos todos los puntos para probarlos en `decide`
-                candidates.append((x0 + dx, z0 + dz))
-
-                await asyncio.sleep(self.SCAN_DELAY)
-
-        return {"candidates": candidates}
+        return {"height_map": height_map}
 
     async def decide(self, percept: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect flat cube-sized areas using diagonal check logic."""
-
-        candidates = percept["candidates"]
+        """Detect flat areas by checking neighboring heights and ignoring occupied zones."""
+        height_map = percept["height_map"]
         flat_spots = []
+        cube_half = self.cube_size // 2
 
-        for (x, z) in candidates:
-            if self._is_flat_area(x, z):
+        for (x, z), h0 in height_map.items():
+            is_flat = True
+            # Comprobar vecinos dentro de cube_size x cube_size
+            for dx in range(-cube_half, cube_half + 1):
+                for dz in range(-cube_half, cube_half + 1):
+                    nx, nz = x + dx, z + dz
+                    if (nx, nz) in self.occupied or height_map.get((nx, nz), None) != h0:
+                        is_flat = False
+                        break
+                if not is_flat:
+                    break
+
+            if is_flat:
                 flat_spots.append({"x": x, "z": z})
+                # marcar todas las coordenadas de esta zona como ocupadas
+                for dx in range(-cube_half, cube_half + 1):
+                    for dz in range(-cube_half, cube_half + 1):
+                        self.occupied.add((x + dx, z + dz))
 
         return {
             "flat_areas": flat_spots,
@@ -172,7 +196,7 @@ class ExplorerBot(BaseAgent):
         for area in flats:
             x, z = area["x"], area["z"]
             logger.info(f"[EXPLORER] Construyendo cubo en zona plana ({x},{z})")
-            await self._build_cube(x, z, size=3, block_id=1)
+            await self._build_cube(x, z, block_id=20)
 
         # --- publicar como siempre ---
         if now - self._last_publish >= ExplorerBot.PUBLISH_INTERVAL:
@@ -181,17 +205,18 @@ class ExplorerBot(BaseAgent):
 
         # --- manejar peticiones nuevas ---
         if self._queued_request:
-            (x, z, r) = self._queued_request
+            (x, z, r, cube) = self._queued_request
             self._queued_request = None
             self.center = (x, z)
             self.range = r
+            self.cube_size = cube
             logger.info("[EXPLORER] Switching to queued request: (%s,%s) r=%s", x, z, r)
 
 
     # ---------------------------------------------------------
     # Helpers
     # ---------------------------------------------------------
-    async def _build_cube(self, x: int, z: int, size: int = 3, block_id: int = 1):
+    async def _build_cube(self, x: int, z: int, block_id: int = 20):
         """
         Construye un cubo sólido tamaño NxNxN sobre la posición plana detectada.
         `block_id=1` = Stone por defecto.
@@ -199,37 +224,16 @@ class ExplorerBot(BaseAgent):
         # y = altura del terreno en ese punto
         y = self.terrain.get_height(x, z)
 
-        half = size // 2
+        half = self.cube_size // 2
         for dx in range(-half, half + 1):
-            for dy in range(0, size):
+            for dy in range(0, self.cube_size):
                 for dz in range(-half, half + 1):
                     bx = x + dx
                     by = y + dy
                     bz = z + dz
                     self.terrain.set_block(bx, by, bz, block_id)
+                    self.occupied.add((bx, bz))
                     await asyncio.sleep(0)   # yield control
-
-    def _is_flat_area(self, x0, z0):
-        half = self.cube_size // 2
-        h0 = self.terrain.get_height(x0, z0)
-
-        # Revisar diagonales desde la más exterior hasta la más interior
-        for d in range(1, half + 1):
-            check_positions = [
-                (x0 + d, z0 + d),
-                (x0 + d, z0 - d),
-                (x0 - d, z0 + d),
-                (x0 - d, z0 - d),
-            ]
-
-            for x, z in check_positions:
-                if (x, z) in getattr(self, "occupied", set()):
-                    return False
-                if self.terrain.get_height(x, z) != h0:
-                    return False
-
-        return True
-
 
     async def _publish_map(self, decision: Dict[str, Any]):
         msg = {
@@ -265,3 +269,15 @@ class ExplorerBot(BaseAgent):
 
     async def save_checkpoint(self):
         logger.info("[CHECKPOINT] ExplorerBot saved: center=%s range=%s", self.center, self.range)
+    
+    async def status(self):
+        """Devuelve el estado actual del bot"""
+        return {
+            "agent_id": self.agent_id,
+            "state": self.state.value,
+            "center": self.center,
+            "range": self.range,
+            "cube_size": self.cube_size,
+            "strategy": self.search_strategy.__name__,
+        }
+

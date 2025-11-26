@@ -1,12 +1,16 @@
 import asyncio
 import sys
 import os
-from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
-from mcpi.event import ChatEvent
-from mcpi.minecraft import Minecraft
-from Plugin.Core.Logger.logging_config import get_logger
 
-# Ruta absoluta del directorio raíz del proyecto
+from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
+from Plugin.Core.Logger.logging_config import get_logger
+from mcpi.minecraft import Minecraft
+from mcpi.event import ChatEvent, register_bot, start_chat_listener 
+
+
+# --------------------------
+# Rutas del proyecto
+# --------------------------
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "Plugin"))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
@@ -14,58 +18,74 @@ if ROOT_DIR not in sys.path:
 MCPI_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "mcpi"))
 if MCPI_PATH not in sys.path:
     sys.path.insert(0, MCPI_PATH)
-    
-# ---------------------------------------------------------
-# Configuración de logger
-# ---------------------------------------------------------
+
+
+# --------------------------
+# Logger
+# --------------------------
 logger = get_logger(__name__)
 
 
-# -----------------------------------------------------
+# --------------------------
 # Conectar con Minecraft
-# -----------------------------------------------------
+# --------------------------
 mc = Minecraft.create("localhost", 4711)
 
-# ---------------------------------------------------------
-# Función principal de arranque
-# ---------------------------------------------------------
+
+# --------------------------
+# Función principal
+# --------------------------
 async def main():
     logger.info("Iniciando sistema de bots...")
 
     # -----------------------------------------------------
-    # Inicializar ExplorerBot
+    # Crear instancias reales de bots
     # -----------------------------------------------------
-    explorer_bot = ExplorerBot(agent_id="ExplorerBot", bus=None)  # si tienes MessageBus, pásalo
-    # Opcional: configurar parámetros iniciales
-    await explorer_bot.update({"x": 100, "z": 100, "range": 30})
+    explorer_bot = ExplorerBot(agent_id="ExplorerBot", bus=None, terrain_api=None)
+    explorer_bot.terrain.mc = mc  # conectar MCPI al bot
 
-    logger.info("Bots registrados y listos para recibir comandos de chat.")
+    # Si tienes otros bots, créalos aquí:
+    # builder_bot = BuilderBot(...)
+    # miner_bot = MinerBot(...)
 
     # -----------------------------------------------------
-    # Simular recepción de chat
+    # Registrar bots en ChatEvent (MUY IMPORTANTE)
+    # -----------------------------------------------------
+    register_bot(explorer_bot)
+    # register_bot(builder_bot)
+    # register_bot(miner_bot)
+
+    logger.info("Bots registrados correctamente.")
+
+    start_chat_listener(mc)
+    # -----------------------------------------------------
+    # Simulador de chat
     # -----------------------------------------------------
     async def simulate_chat():
-        """Simula mensajes de chat para probar commandos"""
         await asyncio.sleep(1)
-        ChatEvent.Post(entityId=1, message="/explorer start x=100 z=100 range=10 cube=3")
+        ChatEvent.Post(entityId=1, message="explorer start x=100 z=100 range=1000 cube=3")
+
         await asyncio.sleep(2)
-        ChatEvent.Post(entityId=1, message="/explorer pause")
+        ChatEvent.Post(entityId=1, message="explorer pause")
+
         await asyncio.sleep(2)
-        ChatEvent.Post(entityId=1, message="/explorer resume")
+        ChatEvent.Post(entityId=1, message="explorer resume")
+
         await asyncio.sleep(2)
-        ChatEvent.Post(entityId=1, message="/explorer stop")
+        ChatEvent.Post(entityId=1, message="explorer stop")
 
     # -----------------------------------------------------
-    # Iniciar bot y simulador de chat
+    # Lanzar bot + simulador
     # -----------------------------------------------------
-    await asyncio.gather(
-        explorer_bot.start(),
-        simulate_chat()
-    )
+    #ChatEvent.Post(entityId=1, message="explorer start x=-180 z=70 range=30 cube=5")
+    #ChatEvent.Post(entityId=2, message="explorer start x=180 z=-70 range=20 cube=5")
+    while True:
+        await asyncio.sleep(1)
 
-# ---------------------------------------------------------
-# Entrypoint
-# ---------------------------------------------------------
+
+# --------------------------
+# Entry point
+# --------------------------
 if __name__ == "__main__":
     try:
         asyncio.run(main())
