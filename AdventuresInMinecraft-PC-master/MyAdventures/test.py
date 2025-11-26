@@ -18,13 +18,22 @@ class ExplorerBot:
     async def is_flat_area(self, x0, z0):
         half = CUBE_SIZE // 2
         h0 = self.mc.getHeight(x0, z0)
-        for dx in range(-half, half + 1):
-            for dz in range(-half, half + 1):
-                x, z = x0 + dx, z0 + dz
+
+        # Revisar diagonales desde la más lejana hasta la más interior
+        for d in range(1, half + 1):
+            check_positions = [
+                (x0 + d, z0 + d),
+                (x0 + d, z0 - d),
+                (x0 - d, z0 + d),
+                (x0 - d, z0 - d),
+            ]
+
+            for x, z in check_positions:
                 if (x, z) in self.occupied:
                     return False
                 if self.mc.getHeight(x, z) != h0:
                     return False
+
         return True
 
     async def find_flat_area(self, x, z):
@@ -130,6 +139,6 @@ async def main():
     bot = ExplorerBot(mc, center=(0, 0))
 
     print("Iniciando exploración infinita desde última posición...")
-    await bot.explore_forever(mode="line")  # modos: spiral, line, random
+    await bot.explore_forever(mode="spiral")  # modos: spiral, line, random
 
 asyncio.run(main())

@@ -4,8 +4,7 @@ import asyncio
 from enum import Enum
 from typing import Any, Dict, Optional
 
-from .logging_config import get_logger
-from .fsm import StateMachine
+from ..Logger.logging_config import get_logger
 
 logger = get_logger(__name__)
 
@@ -44,9 +43,6 @@ class BaseAgent:
         self._state: AgentState = AgentState.IDLE
         self._task: Optional[asyncio.Task] = None
         self._should_stop = False
-
-        # FSM wrapper
-        self.fsm = StateMachine(self)
 
         logger.info(f"[INIT] Agent '{agent_id}' created")
 
