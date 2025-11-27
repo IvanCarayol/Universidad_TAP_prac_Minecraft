@@ -34,7 +34,6 @@ class TerrainAPI:
 # ============================================================
 class ExplorerBot(BaseAgent):
     SCAN_DELAY = 0.01
-    PUBLISH_INTERVAL = 1.0
 
     def __init__(self, agent_id="ExplorerBot", bus=None):
         super().__init__(agent_id, bus)
@@ -192,7 +191,6 @@ class ExplorerBot(BaseAgent):
 
     async def act(self, decision: Dict[str, Any]):
         """Publish map.v1 periodically, handle queued requests, and build cubes."""
-        now = time.time()
 
         # --- NUEVO: construir cubos ---
         flats = decision.get("flat_areas", [])
@@ -202,9 +200,7 @@ class ExplorerBot(BaseAgent):
             await self._build_cube(x, z, block_id=20)
 
         # --- publicar como siempre ---
-        if now - self._last_publish >= ExplorerBot.PUBLISH_INTERVAL:
-            await self._publish_map(decision)
-            self._last_publish = now
+        await self._publish_map(decision)
 
         # --- manejar peticiones nuevas ---
         if self._queued_request:

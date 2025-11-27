@@ -81,8 +81,8 @@ async def main():
     # -----------------------------------------------------
     # Lanzar bot + simulador
     # -----------------------------------------------------
-    #ChatEvent.Post(entityId=1, message="explorer start x=-180 z=70 range=30 cube=5")
-    #ChatEvent.Post(entityId=2, message="explorer start x=180 z=-70 range=20 cube=5")
+    ChatEvent.Post(entityId=1, message="explorer start x=-180 z=70 range=5 cube=5")
+    ChatEvent.Post(entityId=2, message="builder start")
     while True:
         await asyncio.sleep(1)
 

@@ -1,27 +1,59 @@
 # agents/builder/builder_bot.py
 import asyncio
-import time
+import os
+from pathlib import Path
+from Plugin.Schematics.schematic_loader import load_schematic, parse_schematic, schematic_to_blocks
 from typing import Dict, Any, Optional
-
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
 
 logger = get_logger(__name__)
 
-TEMPLATES = {
-    "house_small": {
-        "materials": {"wood": 10, "stone": 5},
-        "height": 3,
-        "width": 4,
-        "depth": 4,
-    },
-    "tower": {
-        "materials": {"stone": 20},
-        "height": 6,
-        "width": 3,
-        "depth": 3,
-    }
-}
+ROOT_DIR = Path(__file__).resolve().parents[3]
+TEMPLATE_DIR = ROOT_DIR / "Schematics"
+TEMPLATES = {}
+
+def load_all_templates():
+    logger.info("[BUILDER] Loading templates from ./Schematics/")
+
+    if not os.path.isdir(TEMPLATE_DIR):
+        logger.warning(f"[BUILDER] Template folder '{TEMPLATE_DIR}' does not exist")
+        return
+
+    for file in os.listdir(TEMPLATE_DIR):
+        if not file.endswith(".schem"):
+            continue
+
+        name = file.replace(".schem", "")
+        path = os.path.join(TEMPLATE_DIR, file)
+
+        try:
+            logger.info(f"[BUILDER] Loading template '{name}' ({file})...")
+            nbt = load_schematic(path)
+            struct = parse_schematic(nbt)
+            blocks = schematic_to_blocks(struct)
+
+            # Build material count
+            materials = {}
+            for (_, _, _, block) in blocks:
+                if block != "minecraft:air":
+                    materials[block] = materials.get(block, 0) + 1
+
+            width, height, depth = struct["size"]
+
+            TEMPLATES[name] = {
+                "width": width,
+                "height": height,
+                "depth": depth,
+                "materials": materials,
+                "blocks": blocks,
+            }
+
+            logger.info(f"[BUILDER] Loaded template '{name}' "
+                        f"({width}×{height}×{depth}, {len(blocks)} blocks)")
+
+        except Exception as e:
+            logger.error(f"[BUILDER] ERROR loading {file}: {e}")
 
 
 class BuilderBot(BaseAgent):
@@ -30,9 +62,11 @@ class BuilderBot(BaseAgent):
 
     def __init__(self, agent_id="BuilderBot", bus=None):
         super().__init__(agent_id, bus)
-
+        
+        load_all_templates()
+ 
         self._last_map: Optional[Dict[str, Any]] = None
-        self._template_name = "house_small"
+        self._template_name = list(TEMPLATES.keys())[0]  # default first template
         self._bom = None
         self._material_inventory = {}
         self._build_progress = 0
@@ -47,20 +81,6 @@ class BuilderBot(BaseAgent):
         self.bus.subscribe("command.builder.start.v1", self._on_start_cmd)
         self.bus.subscribe("command.*.v1", self._on_control)
         self.bus.subscribe("*", self._on_generic)
-
-        # Anunciar que está listo
-        asyncio.create_task(self.announce_ready())
-
-    # =================== READY ANNOUNCEMENT ====================
-    async def announce_ready(self):
-        msg = self.build_message(
-            "builder.status.v1",
-            "*",
-            payload={"status": "READY"},
-            context={"agent_id": self.agent_id}
-        )
-        await self.bus.publish(msg)
-        logger.info("[BUILDER] Announced READY status")
 
     # ============ MESSAGE HANDLERS ====================
     async def _on_map(self, msg):
@@ -84,14 +104,14 @@ class BuilderBot(BaseAgent):
         logger.info("[INVENTORY] Updated: %s", payload)
         
     async def _on_start_cmd(self, msg: Dict[str, Any]):
-        """Handle `explorer start x=... z=... range=...`"""
+        """Handle `builder start.`"""
         if msg.get("target") not in (self.agent_id, "*"):
             return
         logger.info("[BUILDER] Start request")
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:
-            logger.info("[BUILDER] Queuing new request until current scan finishes")
+            logger.info("[BUILDER] Queuing new request until current finishes")
         await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
@@ -156,7 +176,7 @@ class BuilderBot(BaseAgent):
         if p["bom"] is None:
             return {"action": "compute_bom"}
 
-        if not self._materials_ready(p["bom"], p["inventory"]):
+        #if not self._materials_ready(p["bom"], p["inventory"]):
             self.set_state(AgentState.WAITING, "Need materials")
             return {"action": "wait_for_materials"}
 
@@ -187,7 +207,7 @@ class BuilderBot(BaseAgent):
         if action == "compute_bom":
             return await self._compute_and_send_bom()
 
-        if action == "wait_for_materials":
+        #if action == "wait_for_materials":
             logger.info("[BUILDER] Waiting for materials")
             return await asyncio.sleep(0.5)
 
@@ -218,23 +238,29 @@ class BuilderBot(BaseAgent):
 
     async def _make_build_plan(self):
         tpl = TEMPLATES[self._template_name]
-        h, w, d = tpl["height"], tpl["width"], tpl["depth"]
+        blocks = tpl["blocks"]
 
-        self._build_plan = []
-        for y in range(h):
-            layer = {
-                "y": y,
-                "blocks": [
-                    {"x": x, "y": y, "z": z, "material": "stone"}
-                    for x in range(w) for z in range(d)
-                ]
-            }
-            self._build_plan.append(layer)
+        # Plan: lista de capas y cada capa lista de bloques reales
+        max_y = tpl["height"]
+        plan = [[] for _ in range(max_y)]
+
+        for x, y, z, block in blocks:
+            if block != "minecraft:air":
+                plan[y].append({"x": x, "y": y, "z": z, "material": block})
+
+        self._build_plan = [
+            {"y": y, "blocks": layer}
+            for y, layer in enumerate(plan)
+        ]
+
+        logger.info(f"[BUILDER] Build plan ready ({len(self._build_plan)} layers)")
 
     async def _build_next_layer(self):
         layer = self._build_plan[self._build_progress]
 
-        for _ in layer["blocks"]:
+        for block in layer["blocks"]:
+            # Aquí colocarías el bloque en Minecraft
+            # Ahora solo simulamos tiempo de construcción
             await asyncio.sleep(0.01)
 
         self._build_progress += 1
