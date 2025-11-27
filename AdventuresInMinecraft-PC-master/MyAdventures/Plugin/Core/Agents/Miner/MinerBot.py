@@ -1,11 +1,11 @@
 # agents/miner/miner_bot.py
 import asyncio
 import time
-from typing import Dict, Any, Optional, Tuple, List
+from typing import Dict, Any, Optional, Tuple
 from collections import defaultdict
 
-from core.agent_base import BaseAgent, AgentState
-from core.logging_config import get_logger
+from ..BaseAgent import BaseAgent, AgentState
+from ...Logger.logging_config import get_logger
 
 logger = get_logger(__name__)
 

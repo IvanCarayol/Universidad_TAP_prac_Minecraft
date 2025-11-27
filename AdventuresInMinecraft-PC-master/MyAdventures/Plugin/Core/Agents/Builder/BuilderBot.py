@@ -1,7 +1,7 @@
 # agents/builder/builder_bot.py
 import asyncio
 import time
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional
 
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
@@ -37,21 +37,43 @@ class BuilderBot(BaseAgent):
         self._material_inventory = {}
         self._build_progress = 0
         self._build_plan = None
+        self._map_event = asyncio.Event()
 
-        if bus:
-            bus.subscribe("map.v1", self._on_map)
-            bus.subscribe("inventory.v1", self._on_inventory)
-            bus.subscribe("command.*.v1", self._on_command_message)
-            bus.subscribe("*", self._on_generic_message)
+        # Inicializar estado activo esperando mapas
+        self.set_state(AgentState.WAITING, "Waiting for map")
 
-    # ============ MESSAGE HANDLERS ================
+        self.bus.subscribe("map.v1", self._on_map)
+        self.bus.subscribe("inventory.v1", self._on_inventory)
+        self.bus.subscribe("command.builder.start.v1", self._on_start_cmd)
+        self.bus.subscribe("command.*.v1", self._on_control)
+        self.bus.subscribe("*", self._on_generic)
+
+        # Anunciar que está listo
+        asyncio.create_task(self.announce_ready())
+
+    # =================== READY ANNOUNCEMENT ====================
+    async def announce_ready(self):
+        msg = self.build_message(
+            "builder.status.v1",
+            "*",
+            payload={"status": "READY"},
+            context={"agent_id": self.agent_id}
+        )
+        await self.bus.publish(msg)
+        logger.info("[BUILDER] Announced READY status")
+
+    # ============ MESSAGE HANDLERS ====================
     async def _on_map(self, msg):
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
         self._last_map = msg["payload"]
         logger.info("[MAP] Received map from %s", msg["source"])
-        await self._compute_and_send_bom()
+
+        # Desbloquear espera
+        self._map_event.set()
+
+        self.set_state(AgentState.RUNNING, "Processing map")
 
     async def _on_inventory(self, msg):
         if msg.get("target") not in (self.agent_id, "*"):
@@ -60,28 +82,63 @@ class BuilderBot(BaseAgent):
         payload = msg.get("payload", {})
         self._material_inventory = payload
         logger.info("[INVENTORY] Updated: %s", payload)
+        
+    async def _on_start_cmd(self, msg: Dict[str, Any]):
+        """Handle `explorer start x=... z=... range=...`"""
+        if msg.get("target") not in (self.agent_id, "*"):
+            return
+        logger.info("[BUILDER] Start request")
 
-    async def _on_command_message(self, msg):
+        # If the bot is running, queue new scan
+        if self.state == AgentState.RUNNING:
+            logger.info("[BUILDER] Queuing new request until current scan finishes")
+        await self.start()
+
+    async def _on_update_cmd(self, msg: Dict[str, Any]):
+        """Handle `explorer set` command with optional parameters in payload."""
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
-        t = msg.get("type", "")
-        p = msg.get("payload", {})
+        payload = msg.get("payload", {})
 
-        if t.endswith(".pause.v1"):
+        # Actualizar rango si viene en payload
+        if "range" in payload:
+            self.range = int(payload["range"])
+
+        # Actualizar tamaño del cubo si viene en payload
+        if "cube" in payload:
+            self.cube_size = int(payload["cube"])
+
+        # Actualizar estrategia si viene en payload
+        if "strategy" in payload:
+            self.set_strategy(payload["strategy"])
+
+        # Llamar a update del BaseAgent para cualquier otro parámetro general
+        await self.update(payload)
+
+
+    async def _on_control(self, msg: Dict[str, Any]):
+        """pause/resume/stop commands"""
+        if msg.get("target") not in (self.agent_id, "*"):
+            return
+
+        cmdtype = msg.get("type", "")
+        if cmdtype.endswith(".pause.v1"):
             await self.pause()
-        elif t.endswith(".resume.v1"):
+        elif cmdtype.endswith(".resume.v1"):
             await self.resume()
-        elif t.endswith(".stop.v1"):
+        elif cmdtype.endswith(".stop.v1"):
             await self.stop()
-        elif t.endswith(".update.v1"):
-            await self.update(p)
+        elif cmdtype.endswith(".status.v1"):
+            await self.status()
+        elif cmdtype.endswith(".update.v1"):
+            await self.update(msg.get("payload", {}))
 
-    async def _on_generic_message(self, msg):
+    async def _on_generic(self, msg: Dict[str, Any]):
+        # Debug tap for other messages
         return
 
     # ------------------ PDA ---------------------
-
     async def perceive(self):
         return {
             "map": self._last_map,
@@ -93,12 +150,14 @@ class BuilderBot(BaseAgent):
 
     async def decide(self, p):
         if p["map"] is None:
+            self.set_state(AgentState.WAITING, "Waiting for map")
             return {"action": "wait_for_map"}
 
         if p["bom"] is None:
             return {"action": "compute_bom"}
 
         if not self._materials_ready(p["bom"], p["inventory"]):
+            self.set_state(AgentState.WAITING, "Need materials")
             return {"action": "wait_for_materials"}
 
         if self._build_plan is None:
@@ -107,19 +166,29 @@ class BuilderBot(BaseAgent):
         if self._build_progress >= len(self._build_plan):
             return {"action": "finish_building"}
 
+        self.set_state(AgentState.RUNNING, "Building")
         return {"action": "build_layer"}
 
     async def act(self, decision):
         action = decision["action"]
 
         if action == "wait_for_map":
-            return await asyncio.sleep(0.3)
+            logger.info("[BUILDER] Waiting for map (bus event)…")
+
+            # limpiar el evento por si acaso
+            self._map_event.clear()
+
+            # dormir hasta que llegue map.v1
+            await self._map_event.wait()
+
+            logger.info("[BUILDER] Map arrived! Resuming work.")
+            return
 
         if action == "compute_bom":
             return await self._compute_and_send_bom()
 
         if action == "wait_for_materials":
-            self.set_state(AgentState.WAITING, "Need materials")
+            logger.info("[BUILDER] Waiting for materials")
             return await asyncio.sleep(0.5)
 
         if action == "build_layer":
@@ -130,7 +199,6 @@ class BuilderBot(BaseAgent):
             self._reset_after_build()
 
     # ------------- BOM / BUILD PLAN ---------------
-
     async def _compute_and_send_bom(self):
         tpl = TEMPLATES[self._template_name]
         self._bom = dict(tpl["materials"])
@@ -189,4 +257,4 @@ class BuilderBot(BaseAgent):
         self._build_plan = None
         self._bom = None
         self._material_inventory = {}
-        self.set_state(AgentState.IDLE, "build done")
+        self.set_state(AgentState.IDLE, "Build done")

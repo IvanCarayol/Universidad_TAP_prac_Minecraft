@@ -2,6 +2,7 @@ import asyncio
 import sys
 import os
 
+from Plugin.Core.Bus.Bus import MessageBus
 from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
 from Plugin.Core.Agents.Builder.BuilderBot import BuilderBot
 from Plugin.Core.Logger.logging_config import get_logger
@@ -42,11 +43,12 @@ async def main():
     # -----------------------------------------------------
     # Crear instancias reales de bots
     # -----------------------------------------------------
-    explorer_bot = ExplorerBot(agent_id="ExplorerBot", bus=None)
+    shared_bus = MessageBus()
+
+    explorer_bot = ExplorerBot(agent_id="ExplorerBot", bus=shared_bus)
     explorer_bot.terrain.mc = mc  # conectar MCPI al bot
 
-    builder_bot = BuilderBot(agent_id="BuilderBot", bus=None)
-
+    builder_bot = BuilderBot(agent_id="BuilderBot", bus=shared_bus)
     # Si tienes otros bots, créalos aquí:
     # miner_bot = MinerBot(...)
 

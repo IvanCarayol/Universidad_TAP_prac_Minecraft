@@ -21,9 +21,9 @@ COMMANDS = {
         "description": "Devuelve el estado de el bot",
         "params": [],
     },
-    "builder_build": {
-        "description": "Ordena construir en una posición específica",
-        "params": ["x", "z", "size", "block_id"],
+    "builder_start": {
+        "description": "Ordena construir",
+        "params": [],
     },
 }
 
@@ -67,11 +67,9 @@ def parse_command(event: ChatEvent) -> Optional[Dict[str, Any]]:
     return {"cmd": cmd_name, "params": params}
 
 # ------------------------------------------------------------
-# Despacho de comandos con validación
+# Despacho de comandos con bus
 # ------------------------------------------------------------
 async def dispatch_command(event: ChatEvent, bots: Dict[str, Any]):
-    from ..Agents.Explorer.ExplorerBot import ExplorerBot
-
     parsed = parse_command(event)
     if not parsed:
         return f"Comando no reconocido: {event.message}"
@@ -82,41 +80,51 @@ async def dispatch_command(event: ChatEvent, bots: Dict[str, Any]):
     try:
         # ----------- EXPLORER ----------- 
         if cmd.startswith("explorer") and "explorer" in bots:
-            bot: ExplorerBot = bots["explorer"]
+            bot = bots["explorer"]
 
-            if cmd == "explorer_start":
-                await bot._on_start_cmd({"payload": params, "target": bot.agent_id})
-                return f"ExplorerBot iniciado en ({params.get('x')},{params.get('z')})"
+            # Mapear cmd a type exacto para que coincida con bus.subscribe
+            type_map = {
+                "explorer_start": "command.explorer.start.v1",
+                "explorer_set": "command.explorer.set.v1",
+                "explorer_stop": "command.explorer.stop.v1",
+                "explorer_status": "command.explorer.status.v1",
+            }
 
-            elif cmd == "explorer_set":
-                # Cambiar parámetros opcionales si existen
-                update_params = {}
-                if "range" in params:
-                    update_params["range"] = params["range"]
-                if "cube" in params:
-                    update_params["cube"] = params["cube"]
-                if "strategy" in params:
-                    update_params["strategy"] = params["strategy"]
+            msg_type = type_map.get(cmd)
+            if not msg_type:
+                return f"No hay tipo definido en bus para {cmd}"
 
-                if update_params:
-                    await bot._on_update_cmd({"payload": update_params, "target": bot.agent_id})
+            msg = {
+                "type": msg_type,
+                "source": "chat",
+                "target": bot.agent_id,
+                "payload": params,
+            }
 
-                return f"ExplorerBot parámetros actualizados: {params}"
-            
-            elif cmd == "explorer_status":
-                state_info = await bot.status()
-                return f"ExplorerBot status: {state_info}"
-            
-            elif cmd == "explorer_stop":
-                await bot.stop()
-                return f"ExplorerBot detenido"
+            await bot.bus.publish(msg)
+            return f"ExplorerBot recibió comando: {cmd} ({params})"
+
 
         # ----------- BUILDER ----------- 
         if cmd.startswith("builder") and "builder" in bots:
             bot = bots["builder"]
-            if cmd == "builder_build":
-                await bot._on_build_cmd({"payload": params, "target": bot.agent_id})
-                return f"BuilderBot construyendo"
+            type_map = {
+                "builder_start": "command.builder.start.v1",
+            }
+            msg_type = type_map.get(cmd)
+            if not msg_type:
+                return f"No hay tipo definido en bus para {cmd}"
+
+            msg = {
+                "type": msg_type,
+                "source": "chat",
+                "target": bot.agent_id,
+                "payload": params,
+            }
+
+            await bot.bus.publish(msg)
+            return f"BuilderBot recibió comando: {cmd} ({params})"
+
 
         return f"Comando válido pero bot no registrado: {cmd}"
 

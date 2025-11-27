@@ -41,22 +41,22 @@ class ExplorerBot(BaseAgent):
         self.center: Tuple[int, int] = (0, 0)
         self.range: int = 30
         self._last_publish: float = 0.0
-        self._queued_request: Optional[Tuple[int, int, int]] = None
+        self._queued_request: Optional[Tuple[int, int, int, int]] = None
         self.terrain = TerrainAPI()
         self.occupied = set()
         self.cube_size = 3
+        self.bus = bus
 
         # Estrategia por defecto
         self.search_strategy = search_random
 
-        if bus:
-            bus.subscribe("command.explorer.start.v1", self._on_start_cmd)
-            bus.subscribe("command.explorer.set.v1", self._on_update_cmd)
-            bus.subscribe("command.explorer.pause.v1", self._on_control)
-            bus.subscribe("command.explorer.resume.v1", self._on_control)
-            bus.subscribe("command.explorer.stop.v1", self._on_control)
-            bus.subscribe("command.explorer.update.v1", self._on_control)
-            bus.subscribe("*", self._on_generic)
+        self.bus.subscribe("command.explorer.start.v1", self._on_start_cmd)
+        self.bus.subscribe("command.explorer.set.v1", self._on_update_cmd)
+        self.bus.subscribe("command.explorer.pause.v1", self._on_control)
+        self.bus.subscribe("command.explorer.resume.v1", self._on_control)
+        self.bus.subscribe("command.explorer.stop.v1", self._on_control)
+        self.bus.subscribe("command.explorer.status.v1", self._on_control)
+        self.bus.subscribe("*", self._on_generic)
 
     def set_strategy(self, strategy_name: str):
         strategies = {
@@ -80,8 +80,8 @@ class ExplorerBot(BaseAgent):
             return
 
         payload = msg.get("payload", {})
-        x = int(payload.get("x", 0))
-        z = int(payload.get("z", 0))
+        x = int(payload.get("x", self.center[0]))
+        z = int(payload.get("z", self.center[1]))
         r = int(payload.get("range", self.range))
         cube = int(payload.get("cube", self.cube_size))
 
@@ -116,8 +116,8 @@ class ExplorerBot(BaseAgent):
         if "strategy" in payload:
             self.set_strategy(payload["strategy"])
 
-        # Llamar a update del BaseAgent para cualquier otro parámetro general
-        await self.update(payload)
+        # Llamar a update del BaseAgent para logger
+        await super().update(payload)
 
 
     async def _on_control(self, msg: Dict[str, Any]):
@@ -132,8 +132,8 @@ class ExplorerBot(BaseAgent):
             await self.resume()
         elif cmdtype.endswith(".stop.v1"):
             await self.stop()
-        elif cmdtype.endswith(".update.v1"):
-            await self.update(msg.get("payload", {}))
+        elif cmdtype.endswith(".status.v1"):
+            await self.status()
 
     async def _on_generic(self, msg: Dict[str, Any]):
         # Debug tap for other messages
@@ -216,10 +216,7 @@ class ExplorerBot(BaseAgent):
             logger.info("[EXPLORER] Switching to queued request: (%s,%s) r=%s cube=%s", x, z, r, cube)
         else:
             logger.info("[EXPLORER] Exploration completed. Marking as FINISHED.")
-            await self.stop()
-
-
-
+            await self.idle()
 
     # ---------------------------------------------------------
     # Helpers
@@ -255,32 +252,25 @@ class ExplorerBot(BaseAgent):
                 "state": self.state.value,
             },
         }
-        if self.bus:
-            await self.bus.publish(msg)
+        await self.bus.publish(msg)
 
         logger.info("[EXPLORER] Published map.v1")
 
     # ---------------------------------------------------------
     # Control Overloads
     # ---------------------------------------------------------
-    async def update(self, params: Dict[str, Any]):
-        """Allow updating center, range, etc."""
-        if "x" in params and "z" in params:
-            self.center = (int(params["x"]), int(params["z"]))
-        if "range" in params:
-            self.range = int(params["range"])
-        await super().update(params)
-
     async def stop(self):
-        logger.info("[EXPLORER] Stopping ExplorerBot, saving checkpoint")
         await super().stop()
 
+    async def idle(self):
+        await super().idle()
+
     async def save_checkpoint(self):
-        logger.info("[CHECKPOINT] ExplorerBot saved: center=%s range=%s", self.center, self.range)
+        logger.info("[CHECKPOINT] ExplorerBot saved: center=%s range=%s cube=%s", self.center, self.range, self.cube)
     
     async def status(self):
-        """Devuelve el estado actual del bot"""
-        return {
+        """Imprime el estado actual del bot en el logger"""
+        info = {
             "agent_id": self.agent_id,
             "state": self.state.value,
             "center": self.center,
@@ -288,4 +278,6 @@ class ExplorerBot(BaseAgent):
             "cube_size": self.cube_size,
             "strategy": self.search_strategy.__name__,
         }
+        logger.info("[EXPLORER STATUS] %s", info)
+
 

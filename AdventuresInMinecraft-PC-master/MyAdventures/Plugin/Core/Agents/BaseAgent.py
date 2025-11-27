@@ -99,6 +99,10 @@ class BaseAgent:
     async def pause(self):
         self.set_state(AgentState.PAUSED, "pause command")
 
+    async def idle(self):
+        self._should_stop = True
+        self.set_state(AgentState.IDLE, "pause command")
+
     async def resume(self):
         if self._state == AgentState.PAUSED:
             self.set_state(AgentState.RUNNING, "resume command")
@@ -143,7 +147,6 @@ class BaseAgent:
         finally:
             # Ensure STOPPED state if loop ends
             if not self._should_stop:
-                self.set_state(AgentState.STOPPED, "loop finished")
                 await self.save_checkpoint()
 
     # -----------------------------------------------------
@@ -162,7 +165,7 @@ class BaseAgent:
     #  Checkpoint
     # -----------------------------------------------------
     async def save_checkpoint(self):
-        logger.info(f"[CHECKPOINT] Saved checkpoint for {self.agent_id}")
+        logger.info(f"[CHECKPOINT] Saved data for {self.agent_id}")
 
 
     # -----------------------------------------------------
