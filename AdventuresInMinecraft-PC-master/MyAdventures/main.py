@@ -3,6 +3,7 @@ import sys
 import os
 
 from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
+from Plugin.Core.Agents.Builder.BuilderBot import BuilderBot
 from Plugin.Core.Logger.logging_config import get_logger
 from mcpi.minecraft import Minecraft
 from mcpi.event import ChatEvent, register_bot, start_chat_listener 
@@ -41,18 +42,19 @@ async def main():
     # -----------------------------------------------------
     # Crear instancias reales de bots
     # -----------------------------------------------------
-    explorer_bot = ExplorerBot(agent_id="ExplorerBot", bus=None, terrain_api=None)
+    explorer_bot = ExplorerBot(agent_id="ExplorerBot", bus=None)
     explorer_bot.terrain.mc = mc  # conectar MCPI al bot
 
+    builder_bot = BuilderBot(agent_id="BuilderBot", bus=None)
+
     # Si tienes otros bots, créalos aquí:
-    # builder_bot = BuilderBot(...)
     # miner_bot = MinerBot(...)
 
     # -----------------------------------------------------
     # Registrar bots en ChatEvent (MUY IMPORTANTE)
     # -----------------------------------------------------
     register_bot(explorer_bot)
-    # register_bot(builder_bot)
+    register_bot(builder_bot)
     # register_bot(miner_bot)
 
     logger.info("Bots registrados correctamente.")

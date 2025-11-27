@@ -36,7 +36,7 @@ class ExplorerBot(BaseAgent):
     SCAN_DELAY = 0.01
     PUBLISH_INTERVAL = 1.0
 
-    def __init__(self, agent_id="ExplorerBot", bus=None, terrain_api=None):
+    def __init__(self, agent_id="ExplorerBot", bus=None):
         super().__init__(agent_id, bus)
         self.center: Tuple[int, int] = (0, 0)
         self.range: int = 30
@@ -52,7 +52,10 @@ class ExplorerBot(BaseAgent):
         if bus:
             bus.subscribe("command.explorer.start.v1", self._on_start_cmd)
             bus.subscribe("command.explorer.set.v1", self._on_update_cmd)
-            bus.subscribe("command.*.v1", self._on_control)
+            bus.subscribe("command.explorer.pause.v1", self._on_control)
+            bus.subscribe("command.explorer.resume.v1", self._on_control)
+            bus.subscribe("command.explorer.stop.v1", self._on_control)
+            bus.subscribe("command.explorer.update.v1", self._on_control)
             bus.subscribe("*", self._on_generic)
 
     def set_strategy(self, strategy_name: str):
@@ -210,7 +213,12 @@ class ExplorerBot(BaseAgent):
             self.center = (x, z)
             self.range = r
             self.cube_size = cube
-            logger.info("[EXPLORER] Switching to queued request: (%s,%s) r=%s", x, z, r)
+            logger.info("[EXPLORER] Switching to queued request: (%s,%s) r=%s cube=%s", x, z, r, cube)
+        else:
+            logger.info("[EXPLORER] Exploration completed. Marking as FINISHED.")
+            await self.stop()
+
+
 
 
     # ---------------------------------------------------------

@@ -1,7 +1,6 @@
 from .vec3 import Vec3
 import asyncio
 
-
 # Diccionario global de bots disponibles
 BOTS_REGISTRY = {}
 
@@ -16,39 +15,6 @@ def register_bot(bot):
     BOTS_REGISTRY[bot_key] = bot
     print(f"[mcpi.event] Bot registrado: {bot_key}")
     return True
-
-# =====================================================
-#              EVENTOS
-# =====================================================
-async def chat_listener(mc, poll_interval: float = 0.1):
-    """
-    Escucha continuamente los mensajes de chat en el servidor y despacha eventos.
-    """
-    last_events = set()  # para evitar procesar mensajes repetidos
-    while True:
-        # Obtener mensajes recientes
-        events = mc.events.pollChatPosts()  # devuelve lista de {'entityId', 'message'}
-        for evt in events:
-            key = (evt.entityId, evt.message)
-            if key in last_events:
-                continue  # ya procesado
-            last_events.add(key)
-
-            # Crear y despachar ChatEvent
-            ChatEvent.Post(evt.entityId, evt.message)
-
-        # Mantener la lista de eventos recientes pequeña
-        if len(last_events) > 1000:
-            last_events = set(list(last_events)[-500:])
-
-        await asyncio.sleep(poll_interval)
-
-# ==========================================================
-# Función principal para arrancar el listener
-# ==========================================================
-def start_chat_listener(mc):
-    asyncio.create_task(chat_listener(mc))
-    print("[CHAT LISTENER] Iniciado")
 
 
 class BlockEvent:
@@ -67,6 +33,7 @@ class BlockEvent:
 
 class ChatEvent:
     POST = 0
+    _active_dispatches = set()  # global: mensajes que ya están en dispatch
 
     def __init__(self, type, entityId, message):
         self.type = type
@@ -74,14 +41,17 @@ class ChatEvent:
         self.message = message
 
         if self.type == ChatEvent.POST:
-            asyncio.create_task(self._dispatch())
+            key = (self.entityId, self.message)
+            if key not in ChatEvent._active_dispatches:
+                ChatEvent._active_dispatches.add(key)
+                asyncio.create_task(self._dispatch(key))
 
     @staticmethod
     def Post(entityId, message):
         return ChatEvent(ChatEvent.POST, entityId, message)
 
-    async def _dispatch(self):
-        """Despacha el comando al bot correspondiente usando commandos.py"""
+    async def _dispatch(self, key):
+        """Despacha el comando y libera el lock después."""
         try:
             from Plugin.Core.Commands import commands
             result = await commands.dispatch_command(self, BOTS_REGISTRY)
@@ -89,3 +59,25 @@ class ChatEvent:
                 print(f"[CHAT CMD] {result}")
         except Exception as e:
             print(f"[CHAT CMD ERROR] {str(e)}")
+        finally:
+            ChatEvent._active_dispatches.discard(key)
+
+
+
+# =====================================================
+# Listener de chat
+# =====================================================
+async def chat_listener(mc, poll_interval: float = 0.1):
+    """
+    Escucha continuamente los mensajes de chat en el servidor y despacha eventos.
+    """
+    while True:
+        events = mc.events.pollChatPosts()
+        for evt in events:
+            ChatEvent.Post(evt.entityId, evt.message)
+        await asyncio.sleep(poll_interval)
+
+
+def start_chat_listener(mc):
+    asyncio.create_task(chat_listener(mc))
+    print("[CHAT LISTENER] Iniciado")

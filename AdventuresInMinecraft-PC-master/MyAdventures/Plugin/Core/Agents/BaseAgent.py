@@ -3,6 +3,7 @@
 import asyncio
 from enum import Enum
 from typing import Any, Dict, Optional
+import datetime
 
 from ..Logger.logging_config import get_logger
 
@@ -162,3 +163,19 @@ class BaseAgent:
     # -----------------------------------------------------
     async def save_checkpoint(self):
         logger.info(f"[CHECKPOINT] Saved checkpoint for {self.agent_id}")
+
+
+    # -----------------------------------------------------
+    #  Messages
+    # -----------------------------------------------------
+    def build_message(self, msg_type: str, target: str, payload: dict, status="SUCCESS", context=None):
+        return {
+            "type": msg_type,
+            "source": self.agent_id,
+            "target": target,
+            "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+            "payload": payload,
+            "status": status,
+            "context": context or {}
+        }
+
