@@ -1,27 +1,13 @@
-[00:04:34] [Server thread/INFO]: Fortcraft354 lost connection: Disconnected
-[00:04:34] [Server thread/INFO]: Fortcraft354 left the game
-[00:07:08] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:40727.
-[00:07:08] [Thread-22/INFO]: [RaspberryJuice] Starting output thread!
-[00:07:08] [Thread-21/INFO]: [RaspberryJuice] Starting input thread
-[00:12:45] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:40727.
-[00:15:46] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:41110.
-[00:15:46] [Thread-23/INFO]: [RaspberryJuice] Starting input thread
-[00:15:46] [Thread-24/INFO]: [RaspberryJuice] Starting output thread!
-[00:18:13] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:41110.
-[00:18:15] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:41218.
-[00:18:15] [Thread-26/INFO]: [RaspberryJuice] Starting output thread!
-[00:18:15] [Thread-25/INFO]: [RaspberryJuice] Starting input thread
-[00:19:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:41218.
-[00:19:17] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:41246.
-[00:19:17] [Thread-27/INFO]: [RaspberryJuice] Starting input thread
-[00:19:17] [Thread-28/INFO]: [RaspberryJuice] Starting output thread!
-[00:21:39] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:41246.
-[00:22:58] [Server thread/INFO]: Stopping the server
-[00:22:58] [Server thread/INFO]: Stopping server
-[00:22:58] [Server thread/INFO]: [RaspberryJuice] Disabling RaspberryJuice v1.10
-[00:22:58] [Server thread/INFO]: [RaspberryJuice] Raspberry Juice Stopped
-[00:22:58] [Server thread/INFO]: Saving players
-[00:22:58] [Server thread/INFO]: Saving worlds
-[00:22:58] [Server thread/INFO]: Saving chunks for level 'world'/overworld
-[00:22:58] [Server thread/INFO]: Saving chunks for level 'world_nether'/the_nether
-[00:22:58] [Server thread/INFO]: Saving chunks for level 'world_the_end'/the_end
+[04:52:54] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 21598052ms behind, skipping 431961 tick(s)
+[21:20:49] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 59270308ms behind, skipping 1185406 tick(s)
+[21:21:11] [Server thread/INFO]: Stopping the server
+[21:21:11] [Server thread/INFO]: Stopping server
+[21:21:11] [Server thread/INFO]: [RaspberryJuice] Disabling RaspberryJuice v1.10
+[21:21:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:50205.
+[21:21:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:50206.
+[21:21:11] [Server thread/INFO]: [RaspberryJuice] Raspberry Juice Stopped
+[21:21:11] [Server thread/INFO]: Saving players
+[21:21:11] [Server thread/INFO]: Saving worlds
+[21:21:11] [Server thread/INFO]: Saving chunks for level 'world'/overworld
+[21:21:11] [Server thread/INFO]: Saving chunks for level 'world_nether'/the_nether
+[21:21:11] [Server thread/INFO]: Saving chunks for level 'world_the_end'/the_end

@@ -25,6 +25,14 @@ COMMANDS = {
         "description": "Ordena construir",
         "params": [],
     },
+    "builder_set": {
+        "description": "Cambia la schem",
+        "params": ["schem"],
+    },
+    "builder_list": {
+        "description": "Muestra la lista schem",
+        "params": ["schem"],
+    },
 }
 
 # ------------------------------------------------------------
@@ -110,6 +118,8 @@ async def dispatch_command(event: ChatEvent, bots: Dict[str, Any]):
             bot = bots["builder"]
             type_map = {
                 "builder_start": "command.builder.start.v1",
+                "builder_set" : "command.builder.set.v1",
+                "builder_list" : "command.builder.list.v1"
             }
             msg_type = type_map.get(cmd)
             if not msg_type:

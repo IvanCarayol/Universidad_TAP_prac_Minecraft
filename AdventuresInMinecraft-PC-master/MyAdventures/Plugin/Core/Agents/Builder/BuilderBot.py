@@ -1,6 +1,9 @@
 # agents/builder/builder_bot.py
 import asyncio
 import os
+from mcpi.minecraft import Minecraft
+mc = Minecraft.create()
+from mcpi.block import AIR, BLOCK_MAP, Block
 from pathlib import Path
 from Plugin.Schematics.schematic_loader import load_schematic, parse_schematic, schematic_to_blocks
 from typing import Dict, Any, Optional
@@ -58,7 +61,7 @@ def load_all_templates():
 
 class BuilderBot(BaseAgent):
 
-    BUILD_INTERVAL = 0.3
+    BUILD_INTERVAL = 0.01
 
     def __init__(self, agent_id="BuilderBot", bus=None):
         super().__init__(agent_id, bus)
@@ -79,6 +82,8 @@ class BuilderBot(BaseAgent):
         self.bus.subscribe("map.v1", self._on_map)
         self.bus.subscribe("inventory.v1", self._on_inventory)
         self.bus.subscribe("command.builder.start.v1", self._on_start_cmd)
+        self.bus.subscribe("command.builder.set.v1", self._on_update_cmd)
+        self.bus.subscribe("command.builder.list.v1", self._on_control)
         self.bus.subscribe("command.*.v1", self._on_control)
         self.bus.subscribe("*", self._on_generic)
 
@@ -87,12 +92,40 @@ class BuilderBot(BaseAgent):
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
-        self._last_map = msg["payload"]
-        logger.info("[MAP] Received map from %s", msg["source"])
+        payload = msg.get("payload", {})
+        rect = payload.get("best_rectangle")
 
-        # Desbloquear espera
+        if rect is None:
+            logger.warning("[BUILDER] ExplorerBot did not find any valid flat area.")
+            return  # ignorar mapa inválido
+
+        # Rectangle dimensions (ExplorerBot guarantees x2 >= x1)
+        rect_width = rect["width"]
+        rect_depth = rect["height"]  # height aquí significa "profundidad"
+
+        # Template requirements
+        tpl = TEMPLATES[self._template_name]
+        tpl_w = tpl["width"]
+        tpl_d = tpl["depth"]
+
+        logger.info(
+            f"[BUILDER] Received rectangle {rect_width}×{rect_depth} "
+            f"for template '{self._template_name}' ({tpl_w}×{tpl_d})"
+        )
+
+        # --- VALIDATION ---
+        if rect_width < tpl_w or rect_depth < tpl_d:
+            logger.warning(
+                f"[BUILDER] Flat area too small. Needed at least {tpl_w}×{tpl_d}, "
+                f"got {rect_width}×{rect_depth}. Waiting for new map…"
+            )
+            return  # NO aceptamos este mapa
+
+        # If valid:
+        self._last_map = payload
+        logger.info("[MAP] Accepted map from %s", msg["source"])
+
         self._map_event.set()
-
         self.set_state(AgentState.RUNNING, "Processing map")
 
     async def _on_inventory(self, msg):
@@ -122,19 +155,14 @@ class BuilderBot(BaseAgent):
         payload = msg.get("payload", {})
 
         # Actualizar rango si viene en payload
-        if "range" in payload:
-            self.range = int(payload["range"])
+        if "schem" in payload:
+            name = payload["schem"]
+            if name not in TEMPLATES:
+                return
 
-        # Actualizar tamaño del cubo si viene en payload
-        if "cube" in payload:
-            self.cube_size = int(payload["cube"])
-
-        # Actualizar estrategia si viene en payload
-        if "strategy" in payload:
-            self.set_strategy(payload["strategy"])
-
+            self._template_name = name
         # Llamar a update del BaseAgent para cualquier otro parámetro general
-        await self.update(payload)
+        await super().update(payload)
 
 
     async def _on_control(self, msg: Dict[str, Any]):
@@ -149,10 +177,8 @@ class BuilderBot(BaseAgent):
             await self.resume()
         elif cmdtype.endswith(".stop.v1"):
             await self.stop()
-        elif cmdtype.endswith(".status.v1"):
-            await self.status()
-        elif cmdtype.endswith(".update.v1"):
-            await self.update(msg.get("payload", {}))
+        elif cmdtype.endswith(".list.v1"):
+            await self.list()
 
     async def _on_generic(self, msg: Dict[str, Any]):
         # Debug tap for other messages
@@ -217,6 +243,7 @@ class BuilderBot(BaseAgent):
         if action == "finish_building":
             await self._publish_build_status("COMPLETED", final=True)
             self._reset_after_build()
+            await self.idle()
 
     # ------------- BOM / BUILD PLAN ---------------
     async def _compute_and_send_bom(self):
@@ -256,15 +283,41 @@ class BuilderBot(BaseAgent):
         logger.info(f"[BUILDER] Build plan ready ({len(self._build_plan)} layers)")
 
     async def _build_next_layer(self):
+        if not self._build_plan or self._build_progress >= len(self._build_plan):
+            return
+
         layer = self._build_plan[self._build_progress]
 
-        for block in layer["blocks"]:
-            # Aquí colocarías el bloque en Minecraft
-            # Ahora solo simulamos tiempo de construcción
-            await asyncio.sleep(0.01)
+        # Obtener coordenadas base del mapa de forma segura
+        if not self._last_map:
+            logger.warning("[BUILDER] No map available, cannot build layer")
+            return
+
+        rect = self._last_map.get("best_rectangle")
+        if not rect:
+            logger.warning("[BUILDER] Invalid map rectangle")
+            return
+
+        # Algunos mapas no tienen x/z, usar fallback 0
+        base_x = rect.get("x", rect.get("x1", 0))
+        base_z = rect.get("z", rect.get("z1", 0))
+        base_y = rect.get("y", 0)  # altura base, si el mapa no da altura se asume 0
+
+        for block_info in layer["blocks"]:
+            bx, by, bz, block_name = block_info["x"], block_info["y"], block_info["z"], block_info["material"]
+
+            block = self.get_block_from_name(block_name)
+
+            try:
+                mc.setBlock(base_x + bx, base_y + by, base_z + bz, block.id, block.data)
+            except Exception as e:
+                logger.warning(f"[BUILDER] Failed to place block {block_name} at {(bx, by, bz)}: {e}")
+
+            await asyncio.sleep(self.BUILD_INTERVAL)
 
         self._build_progress += 1
-        await self._publish_build_status("LAYER_DONE")
+        logger.info(f"[BUILDER] Layer {self._build_progress}/{len(self._build_plan)} built")
+
 
     async def _publish_build_status(self, status, final=False):
         msg = self.build_message(
@@ -283,4 +336,38 @@ class BuilderBot(BaseAgent):
         self._build_plan = None
         self._bom = None
         self._material_inventory = {}
-        self.set_state(AgentState.IDLE, "Build done")
+
+    # ------------- Funciones Auxiliares ---------------
+    def list(self):
+        """Print available templates and current selection via logger only."""
+
+        logger.info("\n================= BUILDER TEMPLATE LIST =================")
+
+        logger.info(f"Selected template: {self._template_name}")
+
+        for name, tpl in TEMPLATES.items():
+            logger.info(f"\n-> {name}")
+            logger.info(f"   Size: {tpl['width']}×{tpl['height']}×{tpl['depth']}")
+
+        logger.info("=========================================================")
+
+    def _resolve_block(self, name: str):
+        """Mapea nombre del bloque de .schem a block_id, data de MCPI."""
+        return BLOCK_MAP.get(name, (None, None))
+    
+    # helpers.py o dentro de BuilderBot
+    def get_block_from_name(self, name: str) -> Block:
+        """
+        Devuelve el Block correspondiente a partir del nombre,
+        ignorando las propiedades de bloques entre corchetes.
+        """
+        base_name = name.split("[")[0]  # elimina propiedades tipo [east=true,...]
+        block = BLOCK_MAP.get(base_name)
+        if block is None:
+            logger.warning(f"[BUILDER] Unknown material {name}, skipping")
+            return AIR  # fallback
+        return block
+
+    
+    async def idle(self):
+        await super().idle()

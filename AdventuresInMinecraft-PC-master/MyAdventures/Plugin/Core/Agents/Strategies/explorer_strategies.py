@@ -6,7 +6,7 @@ async def search_line(bot, x0: int, z0: int, length: int):
     """Devuelve coordenadas en línea recta considerando el grosor del cubo."""
     coords: List[Tuple[int, int]] = []
     x, z = x0, z0
-    half = bot.cube_size // 2
+    half = 5
 
     for _ in range(length):
         # generar todas las coordenadas dentro del grosor del cubo en z
@@ -47,7 +47,7 @@ async def search_random(bot, x0: int, z0: int, count: int):
     """Devuelve `count` coordenadas aleatorias considerando el grosor del cubo."""
     coords: List[Tuple[int, int]] = []
     radius = count
-    half = bot.cube_size // 2
+    half = 5
 
     for _ in range(count):
         rx = x0 + random.randint(-radius, radius)

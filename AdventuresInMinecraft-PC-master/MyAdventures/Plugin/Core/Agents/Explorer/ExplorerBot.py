@@ -43,7 +43,6 @@ class ExplorerBot(BaseAgent):
         self._queued_request: Optional[Tuple[int, int, int, int]] = None
         self.terrain = TerrainAPI()
         self.occupied = set()
-        self.cube_size = 3
         self.bus = bus
 
         # Estrategia por defecto
@@ -82,18 +81,16 @@ class ExplorerBot(BaseAgent):
         x = int(payload.get("x", self.center[0]))
         z = int(payload.get("z", self.center[1]))
         r = int(payload.get("range", self.range))
-        cube = int(payload.get("cube", self.cube_size))
 
-        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s cube=%s", x, z, r, cube)
+        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s cube=%s", x, z, r)
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:
             logger.info("[EXPLORER] Queuing new request until current scan finishes")
-            self._queued_request = (x, z, r, cube)
+            self._queued_request = (x, z, r)
         else:
             self.center = (x, z)
             self.range = r
-            self.cube = cube
             await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
@@ -106,10 +103,6 @@ class ExplorerBot(BaseAgent):
         # Actualizar rango si viene en payload
         if "range" in payload:
             self.range = int(payload["range"])
-
-        # Actualizar tamaño del cubo si viene en payload
-        if "cube" in payload:
-            self.cube_size = int(payload["cube"])
 
         # Actualizar estrategia si viene en payload
         if "strategy" in payload:
@@ -159,98 +152,195 @@ class ExplorerBot(BaseAgent):
         return {"height_map": height_map}
 
     async def decide(self, percept: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect flat areas by checking neighboring heights and ignoring occupied zones."""
+        """
+        Detecta el rectángulo más grande para cualquier altura encontrada.
+        Devuelve: { x1, z1, x2, z2, height, width, area }
+        """
         height_map = percept["height_map"]
-        flat_spots = []
-        cube_half = self.cube_size // 2
 
-        for (x, z), h0 in height_map.items():
-            is_flat = True
-            # Comprobar vecinos dentro de cube_size x cube_size
-            for dx in range(-cube_half, cube_half + 1):
-                for dz in range(-cube_half, cube_half + 1):
-                    nx, nz = x + dx, z + dz
-                    if (nx, nz) in self.occupied or height_map.get((nx, nz), None) != h0:
-                        is_flat = False
-                        break
-                if not is_flat:
-                    break
+        # Agrupar coordenadas por altura
+        levels = {}
+        for (x, z), h in height_map.items():
+            levels.setdefault(h, []).append((x, z))
 
-            if is_flat:
-                flat_spots.append({"x": x, "z": z})
-                # marcar todas las coordenadas de esta zona como ocupadas
-                for dx in range(-cube_half, cube_half + 1):
-                    for dz in range(-cube_half, cube_half + 1):
-                        self.occupied.add((x + dx, z + dz))
+        best_rect = None  # (area, x1, z1, x2, z2, height_level)
 
-        return {
-            "flat_areas": flat_spots,
-            "count": len(flat_spots),
-            "cube_size": self.cube_size
-        }
+        # Procesar altura por altura
+        for h, coords in levels.items():
+            # Construir grid local
+            xs = sorted(set([c[0] for c in coords]))
+            zs = sorted(set([c[1] for c in coords]))
+
+            x_index = {x: i for i, x in enumerate(xs)}
+            z_index = {z: i for i, z in enumerate(zs)}
+
+            grid = [[0] * len(zs) for _ in range(len(xs))]
+
+            for (x, z) in coords:
+                grid[x_index[x]][z_index[z]] = 1
+
+            # Convertir en "matriz por filas"
+            matrix = list(zip(*grid))  # filas = z, columnas = x
+
+            # Buscar mayor rectángulo
+            rect = self._largest_rectangle_in_matrix(matrix)
+
+            if rect is None:
+                continue
+
+            area, (z1_i, x1_i), (z2_i, x2_i) = rect
+
+            # Convertir indices a coords reales
+            x1, x2 = xs[x1_i], xs[x2_i]
+            z1, z2 = zs[z1_i], zs[z2_i]
+
+            if best_rect is None or area > best_rect[0]:
+                best_rect = (area, x1, z1, x2, z2, h)
+
+        if best_rect:
+            area, x1, z1, x2, z2, h = best_rect
+
+            return {
+                "best_rectangle": {
+                    "x1": x1,
+                    "z1": z1,
+                    "x2": x2,
+                    "z2": z2,
+                    "width": abs(x2 - x1) + 1,
+                    "height": abs(z2 - z1) + 1,
+                    "area": area,
+                    "y": h
+                }
+            }
+
+        return {"best_rectangle": None}
 
     async def act(self, decision: Dict[str, Any]):
-        """Publish map.v1 periodically, handle queued requests, and build cubes."""
+        """
+        Publica map.v1, muestra logs correctos y gestiona peticiones en cola.
+        El decision contiene:
+        {
+            "best_rectangle": {
+                x1, z1, x2, z2, width, height, area, y
+            }
+        }
+        """
+        rect = decision.get("best_rectangle")
 
-        # --- NUEVO: construir cubos ---
-        flats = decision.get("flat_areas", [])
-        for area in flats:
-            x, z = area["x"], area["z"]
-            logger.info(f"[EXPLORER] Construyendo cubo en zona plana ({x},{z})")
-            await self._build_cube(x, z, block_id=20)
+        if rect is None:
+            logger.info("[EXPLORER] No se ha encontrado ninguna zona plana utilizable.")
+        else:
+            logger.info(
+                f"[EXPLORER] Mejor rectángulo encontrado: "
+                f"({rect['x1']},{rect['z1']}) → ({rect['x2']},{rect['z2']}), "
+                f"area={rect['area']} bloques, altura={rect['y']}"
+            )
 
-        # --- publicar como siempre ---
-        await self._publish_map(decision)
+        # Publicar resultados
+        await self._publish_map(rect)
 
-        # --- manejar peticiones nuevas ---
+        # Manejar siguiente petición si existe
         if self._queued_request:
-            (x, z, r, cube) = self._queued_request
+            x, z, r = self._queued_request
             self._queued_request = None
+
             self.center = (x, z)
             self.range = r
-            self.cube_size = cube
-            logger.info("[EXPLORER] Switching to queued request: (%s,%s) r=%s cube=%s", x, z, r, cube)
+
+            logger.info(
+                "[EXPLORER] Switching to queued request: "
+                f"({x},{z}) r={r}"
+            )
+
         else:
-            logger.info("[EXPLORER] Exploration completed. Marking as FINISHED.")
+            logger.info("[EXPLORER] Exploration completed. Going IDLE.")
             await self.idle()
+
 
     # ---------------------------------------------------------
     # Helpers
     # ---------------------------------------------------------
-    async def _build_cube(self, x: int, z: int, block_id: int = 20):
-        """
-        Construye un cubo sólido tamaño NxNxN sobre la posición plana detectada.
-        `block_id=1` = Stone por defecto.
-        """
-        # y = altura del terreno en ese punto
-        y = self.terrain.get_height(x, z)
+    def _largest_rectangle_hist(self, heights):
+        """Largest rectangle in histogram algorithm."""
+        stack = []
+        max_area = 0
+        left = right = 0
 
-        half = self.cube_size // 2
-        for dx in range(-half, half + 1):
-            for dy in range(0, self.cube_size):
-                for dz in range(-half, half + 1):
-                    bx = x + dx
-                    by = y + dy
-                    bz = z + dz
-                    self.terrain.set_block(bx, by, bz, block_id)
-                    self.occupied.add((bx, bz))
-                    await asyncio.sleep(0)   # yield control
+        heights.append(0)
+        for i, h in enumerate(heights):
+            start = i
+            while stack and stack[-1][1] > h:
+                index, height = stack.pop()
+                area = height * (i - index)
+                if area > max_area:
+                    max_area = area
+                    left = index
+                    right = i - 1
+                start = index
+            stack.append((start, h))
+        heights.pop()
 
-    async def _publish_map(self, decision: Dict[str, Any]):
+        return max_area, left, right
+
+
+    def _largest_rectangle_in_matrix(self, matrix):
+        """
+        Encuentra el mayor rectángulo de 1s en una matriz binaria.
+        matrix[fila=z][columna=x]
+        """
+        if not matrix:
+            return None
+
+        rows = len(matrix)
+        cols = len(matrix[0])
+        heights = [0] * cols
+
+        best = None  # (area, (z1,x1), (z2,x2))
+
+        for z in range(rows):
+            for x in range(cols):
+                heights[x] = heights[x] + 1 if matrix[z][x] == 1 else 0
+
+            area, x1, x2 = self._largest_rectangle_hist(heights)
+            if area > 0:
+                height = area // (x2 - x1 + 1)
+                z2 = z
+                z1 = z - height + 1
+
+                if best is None or area > best[0]:
+                    best = (area, (z1, x1), (z2, x2))
+
+        return best
+
+    async def _publish_map(self, rect: Optional[Dict[str, Any]]):
+        """
+        Publica el resultado para BuilderBot en formato limpio.
+        rect = None o un dict con x1,z1,x2,z2,area,width,height,y
+        """
         msg = {
             "type": "map.v1",
             "source": self.agent_id,
             "target": "BuilderBot",
-            "payload": decision,
+            "payload": {
+                "best_rectangle": rect,
+            },
             "context": {
                 "center": self.center,
                 "range": self.range,
                 "state": self.state.value,
             },
         }
+
         await self.bus.publish(msg)
 
-        logger.info("[EXPLORER] Published map.v1")
+        if rect:
+            logger.info(
+                f"[EXPLORER] Published map.v1 (rect area={rect['area']}, "
+                f"coords=({rect['x1']},{rect['z1']})→({rect['x2']},{rect['z2']}))"
+            )
+        else:
+            logger.info("[EXPLORER] Published map.v1 (no rectangle found)")
+
 
     # ---------------------------------------------------------
     # Control Overloads
@@ -262,7 +352,7 @@ class ExplorerBot(BaseAgent):
         await super().idle()
 
     async def save_checkpoint(self):
-        logger.info("[CHECKPOINT] ExplorerBot saved: center=%s range=%s cube=%s", self.center, self.range, self.cube)
+        logger.info("[CHECKPOINT] ExplorerBot saved: center=%s range=%s", self.center, self.range)
     
     async def status(self):
         """Imprime el estado actual del bot en el logger"""
@@ -271,7 +361,6 @@ class ExplorerBot(BaseAgent):
             "state": self.state.value,
             "center": self.center,
             "range": self.range,
-            "cube_size": self.cube_size,
             "strategy": self.search_strategy.__name__,
         }
         logger.info("[EXPLORER STATUS] %s", info)

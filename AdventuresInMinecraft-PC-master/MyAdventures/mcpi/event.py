@@ -54,7 +54,7 @@ class ChatEvent:
         """Despacha el comando y libera el lock después."""
         try:
             from Plugin.Core.Commands import commands
-            result = await commands.dispatch_command(self, BOTS_REGISTRY)
+            await commands.dispatch_command(self, BOTS_REGISTRY)
         except Exception as e:
             print(f"[CHAT CMD ERROR] {str(e)}")
         finally:
