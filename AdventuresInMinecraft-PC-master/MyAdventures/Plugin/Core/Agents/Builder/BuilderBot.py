@@ -9,6 +9,8 @@ from Plugin.Schematics.schematic_loader import load_schematic, parse_schematic, 
 from typing import Dict, Any, Optional
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
+from ...World.worldstate import request_free_area, mark_area_status
+
 
 logger = get_logger(__name__)
 
@@ -68,7 +70,7 @@ class BuilderBot(BaseAgent):
         
         load_all_templates()
  
-        self._last_map: Optional[Dict[str, Any]] = None
+        self._valid_area: Optional[Dict[str, Any]] = None
         self._template_name = list(TEMPLATES.keys())[0]  # default first template
         self._bom = None
         self._material_inventory = {}
@@ -96,35 +98,12 @@ class BuilderBot(BaseAgent):
         if rect is None:
             logger.warning("[BUILDER] ExplorerBot did not find any valid flat area.")
             return  # ignorar mapa inválido
-
-        # Rectangle dimensions (ExplorerBot guarantees x2 >= x1)
-        rect_width = rect["width"]
-        rect_depth = rect["height"]  # height aquí significa "profundidad"
-
-        # Template requirements
-        tpl = TEMPLATES[self._template_name]
-        tpl_w = tpl["width"]
-        tpl_d = tpl["depth"]
-
-        logger.info(
-            f"[BUILDER] Received rectangle {rect_width}×{rect_depth} "
-            f"for template '{self._template_name}' ({tpl_w}×{tpl_d})"
-        )
-
-        # --- VALIDATION ---
-        if rect_width < tpl_w or rect_depth < tpl_d:
-            logger.warning(
-                f"[BUILDER] Flat area too small. Needed at least {tpl_w}×{tpl_d}, "
-                f"got {rect_width}×{rect_depth}. Waiting for new map…"
-            )
-            return  # NO aceptamos este mapa
-
-        # If valid:
-        self._last_map = payload
-        logger.info("[MAP] Accepted map from %s", msg["source"])
+        
+        logger.info("[MAP] Recived map from %s", msg["source"])
 
         self._map_event.set()
         self.set_state(AgentState.RUNNING, "Processing map")
+
 
     async def _on_inventory(self, msg):
         if msg.get("target") not in (self.agent_id, "*"):
@@ -187,7 +166,7 @@ class BuilderBot(BaseAgent):
     # ------------------ PDA ---------------------
     async def perceive(self):
         return {
-            "map": self._last_map,
+            "map": self._valid_area,
             "inventory": dict(self._material_inventory),
             "bom": dict(self._bom) if self._bom else None,
             "template": self._template_name,
@@ -196,8 +175,17 @@ class BuilderBot(BaseAgent):
 
     async def decide(self, p):
         if p["map"] is None:
-            self.set_state(AgentState.WAITING, "Waiting for map")
-            return {"action": "wait_for_map"}
+            tpl = TEMPLATES[p["template"]]
+            req_area = {
+                "width": tpl["width"],   # X
+                "depth": tpl["depth"]    # Z
+            }
+
+            self._valid_area = await request_free_area(self.agent_id, req_area)
+
+            if self._valid_area is None:
+                self.set_state(AgentState.WAITING, "Waiting for valid map")
+                return {"action": "wait_for_map"}
 
         if p["bom"] is None:
             return {"action": "compute_bom"}
@@ -289,19 +277,16 @@ class BuilderBot(BaseAgent):
         layer = self._build_plan[self._build_progress]
 
         # Obtener coordenadas base del mapa de forma segura
-        if not self._last_map:
+        if not self._valid_area:
             logger.warning("[BUILDER] No map available, cannot build layer")
             return
 
-        rect = self._last_map.get("best_rectangle")
-        if not rect:
-            logger.warning("[BUILDER] Invalid map rectangle")
+        base = self._get_base_coords()
+        if base is None:
+            logger.warning("[BUILDER] No map available for building")
             return
 
-        # Algunos mapas no tienen x/z, usar fallback 0
-        base_x = rect.get("x", rect.get("x1", 0))
-        base_z = rect.get("z", rect.get("z1", 0))
-        base_y = rect.get("y", 0)  # altura base, si el mapa no da altura se asume 0
+        base_x, base_y, base_z = base
 
         for block_info in layer["blocks"]:
             bx, by, bz, block_name = block_info["x"], block_info["y"], block_info["z"], block_info["material"]
@@ -332,6 +317,7 @@ class BuilderBot(BaseAgent):
             await self.save_checkpoint()
 
     def _reset_after_build(self):
+        self._valid_area = None
         self._build_progress = 0
         self._build_plan = None
         self._bom = None
@@ -376,8 +362,21 @@ class BuilderBot(BaseAgent):
         info = {
             "agent_id": self.agent_id,
             "state": self.state.value,
-            "map": self._last_map,
+            "map": self._valid_area,
             "template": self._template_name,
             "bom": self._bom,
         }
         logger.info("[BUILDER STATUS] %s", info)
+
+    def _get_base_coords(self):
+        if not self._valid_area:
+            return None
+
+        rect = self._valid_area
+
+        return (
+            rect.get("x1", 0),
+            rect.get("y", 0),
+            rect.get("z1", 0)
+        )
+

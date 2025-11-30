@@ -107,6 +107,9 @@ class BaseAgent:
         if self._state == AgentState.PAUSED:
             self.set_state(AgentState.RUNNING, "resume command")
 
+    async def waiting(self):
+        self.set_state(AgentState.WAITING, "resume command")
+
     async def update(self, params: Dict[str, Any]):
         logger.info(f"[UPDATE] {self.agent_id} updated with params={params}")
 

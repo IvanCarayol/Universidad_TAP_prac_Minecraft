@@ -5,6 +5,7 @@ from typing import Dict, Any, Optional, Tuple
 import sys
 import os
 
+from ...World.worldstate import add_flat_area, _normalize_rect
 from ..Strategies.explorer_strategies import search_line, search_spiral, search_random
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
@@ -214,47 +215,39 @@ class ExplorerBot(BaseAgent):
 
         return {"best_rectangle": None}
 
-    async def act(self, decision: Dict[str, Any]):
-        """
-        Publica map.v1, muestra logs correctos y gestiona peticiones en cola.
-        El decision contiene:
-        {
-            "best_rectangle": {
-                x1, z1, x2, z2, width, height, area, y
-            }
-        }
-        """
+    async def act(self, decision):
         rect = decision.get("best_rectangle")
 
-        if rect is None:
-            logger.info("[EXPLORER] No se ha encontrado ninguna zona plana utilizable.")
-        else:
-            logger.info(
-                f"[EXPLORER] Mejor rectángulo encontrado: "
-                f"({rect['x1']},{rect['z1']}) → ({rect['x2']},{rect['z2']}), "
-                f"area={rect['area']} bloques, altura={rect['y']}"
-            )
+        if rect is not None:
+            try:
+                rect = _normalize_rect(rect)
+            except Exception as e:
+                logger.error(f"[EXPLORER] Invalid rect received: {rect} ({e})")
+                rect = None
 
-        # Publicar resultados
+        # Logging
+        if rect:
+            logger.info(f"[EXPLORER] Mejor rectángulo: "
+                        f"({rect['x1']},{rect['z1']}) → ({rect['x2']},{rect['z2']}), "
+                        f"area={rect['area']}, y={rect['y']}")
+        else:
+            logger.info("[EXPLORER] No se ha encontrado ninguna zona plana utilizable.")
+
+        # --- GUARDADO EN WORLDSTATE ---
+        if rect:
+            await add_flat_area(rect)
+
         await self._publish_map(rect)
 
-        # Manejar siguiente petición si existe
+        # Resto igual
         if self._queued_request:
             x, z, r = self._queued_request
             self._queued_request = None
-
             self.center = (x, z)
             self.range = r
-
-            logger.info(
-                "[EXPLORER] Switching to queued request: "
-                f"({x},{z}) r={r}"
-            )
-
+            logger.info(f"[EXPLORER] Switching to queued request: ({x},{z}) r={r}")
         else:
-            logger.info("[EXPLORER] Exploration completed. Going IDLE.")
             await self.idle()
-
 
     # ---------------------------------------------------------
     # Helpers

@@ -73,6 +73,7 @@
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
+      "deep_ocean": "2025-11-30 21:21:22 +0100",
       "beaches": "2025-11-27 16:03:37 +0100",
       "jungle_hills": "2025-11-25 15:29:58 +0100",
       "jungle_edge": "2025-11-25 15:50:44 +0100",
