@@ -33,6 +33,10 @@ COMMANDS = {
         "description": "Muestra la lista schem",
         "params": ["schem"],
     },
+    "builder_status": {
+        "description": "Devuelve el estado de el bot",
+        "params": [],
+    },
 }
 
 # ------------------------------------------------------------
@@ -119,7 +123,8 @@ async def dispatch_command(event: ChatEvent, bots: Dict[str, Any]):
             type_map = {
                 "builder_start": "command.builder.start.v1",
                 "builder_set" : "command.builder.set.v1",
-                "builder_list" : "command.builder.list.v1"
+                "builder_list" : "command.builder.list.v1",
+                "builder_status": "command.builder.status.v1"
             }
             msg_type = type_map.get(cmd)
             if not msg_type:

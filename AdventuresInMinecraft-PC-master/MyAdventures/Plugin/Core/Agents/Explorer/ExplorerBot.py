@@ -68,7 +68,6 @@ class ExplorerBot(BaseAgent):
     async def _yield_scan(self):
         await asyncio.sleep(self.SCAN_DELAY)
 
-
     # ---------------------------------------------------------
     # Message handlers
     # ---------------------------------------------------------

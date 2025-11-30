@@ -1,63 +1,63 @@
-[21:36:05] [Server thread/INFO]: Starting minecraft server version 1.12
-[21:36:05] [Server thread/INFO]: Loading properties
-[21:36:05] [Server thread/INFO]: Default game type: CREATIVE
-[21:36:05] [Server thread/INFO]: Generating keypair
-[21:36:05] [Server thread/INFO]: Starting Minecraft server on *:25565
-[21:36:05] [Server thread/INFO]: Using default channel type
-[21:36:06] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
-[21:36:06] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
-[21:36:06] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[21:36:06] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
-[21:36:06] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[21:36:06] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
-[21:36:06] [Server thread/INFO]: Preparing level "world"
-[21:36:06] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
-[21:36:07] [Server thread/INFO]: Preparing spawn area: 29%
-[21:36:08] [Server thread/INFO]: Preparing spawn area: 88%
-[21:36:08] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
-[21:36:09] [Server thread/INFO]: Preparing spawn area: 62%
-[21:36:10] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
-[21:36:10] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
-[21:36:10] [Server thread/INFO]: [RaspberryJuice] Using port 4711
-[21:36:10] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
-[21:36:10] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
-[21:36:10] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
-[21:36:10] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[21:36:10] [Server thread/INFO]: Done (4,476s)! For help, type "help" or "?"
-[21:36:26] [Server thread/INFO]: Fortcraft354[/127.0.0.1:57312] logged in with entity id 29 at ([world]-187.47005400548906, 69.33953343643216, -117.31575434456987)
-[21:36:32] [Netty Server IO #3/INFO]: <Fortcraft354> weather clear[m
-[21:36:42] [Server thread/INFO]: Fortcraft354 issued server command: /weather clear
-[21:36:42] [Server thread/INFO]: [Fortcraft354: Changing to clear weather]
-[21:36:45] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
-[21:36:45] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
-[21:36:52] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
-[21:36:52] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
-[21:37:13] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
-[21:37:13] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:57349.
-[21:37:13] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
-[21:37:14] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:57351.
-[21:37:14] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
-[21:37:14] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
-[21:37:40] [Netty Server IO #3/INFO]: <Fortcraft354> explorer set range=70 strategy=spiral[m
-[21:37:46] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[21:37:54] [Netty Server IO #3/INFO]: <Fortcraft354> explorer stop[m
-[21:38:51] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start x=-230 z=-230[m
-[21:38:59] [Netty Server IO #3/INFO]: <Fortcraft354> builder status[m
-[21:39:10] [Netty Server IO #3/INFO]: <Fortcraft354> builder list[m
-[21:39:22] [Netty Server IO #3/INFO]: <Fortcraft354> builder start[m
-[21:46:24] [Server thread/INFO]: Fortcraft354 issued server command: /weather clear
-[21:46:24] [Server thread/INFO]: [Fortcraft354: Changing to clear weather]
-[21:51:55] [Netty Server IO #3/INFO]: <Fortcraft354> explorer status[m
-[21:52:30] [Server thread/INFO]: Stopping the server
-[21:52:30] [Server thread/INFO]: Stopping server
-[21:52:30] [Server thread/INFO]: [RaspberryJuice] Disabling RaspberryJuice v1.10
-[21:52:30] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:57349.
-[21:52:30] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:57351.
-[21:52:30] [Server thread/INFO]: [RaspberryJuice] Raspberry Juice Stopped
-[21:52:30] [Server thread/INFO]: Saving players
-[21:52:30] [Server thread/INFO]: Fortcraft354 lost connection: Server closed
-[21:52:30] [Server thread/INFO]: Fortcraft354 left the game
-[21:52:30] [Server thread/INFO]: Saving worlds
-[21:52:30] [Server thread/INFO]: Saving chunks for level 'world'/overworld
-[21:52:30] [Server thread/INFO]: Saving chunks for level 'world_nether'/the_nether
-[21:52:30] [Server thread/INFO]: Saving chunks for level 'world_the_end'/the_end
+[13:48:09] [Server thread/INFO]: Starting minecraft server version 1.12
+[13:48:09] [Server thread/INFO]: Loading properties
+[13:48:09] [Server thread/INFO]: Default game type: CREATIVE
+[13:48:09] [Server thread/INFO]: Generating keypair
+[13:48:09] [Server thread/INFO]: Starting Minecraft server on *:25565
+[13:48:09] [Server thread/INFO]: Using default channel type
+[13:48:11] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
+[13:48:11] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
+[13:48:11] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[13:48:11] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[13:48:11] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[13:48:11] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[13:48:11] [Server thread/INFO]: Preparing level "world"
+[13:48:12] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
+[13:48:13] [Server thread/INFO]: Preparing spawn area: 11%
+[13:48:14] [Server thread/INFO]: Preparing spawn area: 54%
+[13:48:15] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
+[13:48:16] [Server thread/INFO]: Preparing spawn area: 55%
+[13:48:16] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
+[13:48:17] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
+[13:48:17] [Server thread/INFO]: [RaspberryJuice] Using port 4711
+[13:48:17] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
+[13:48:17] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
+[13:48:17] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
+[13:48:17] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[13:48:17] [Server thread/INFO]: Done (5,784s)! For help, type "help" or "?"
+[14:51:11] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 3222440ms behind, skipping 64448 tick(s)
+[15:06:39] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
+[15:06:39] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
+[15:06:39] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:63327.
+[15:06:41] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:63332.
+[15:06:41] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
+[15:06:41] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
+[15:07:50] [Server thread/INFO]: Fortcraft354[/127.0.0.1:53604] logged in with entity id 29 at ([world]-194.434721705474, 72.0, -134.6278904456317)
+[15:07:57] [Netty Server IO #2/INFO]: <Fortcraft354> builder status[m
+[15:08:09] [Netty Server IO #2/INFO]: <Fortcraft354> explorer status[m
+[15:08:14] [Netty Server IO #2/INFO]: <Fortcraft354> builder status[m
+[15:09:21] [Netty Server IO #2/INFO]: <Fortcraft354> builder status[m
+[15:10:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:63327.
+[15:10:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:63332.
+[15:10:14] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:59203.
+[15:10:14] [Thread-11/INFO]: [RaspberryJuice] Starting input thread
+[15:10:14] [Thread-12/INFO]: [RaspberryJuice] Starting output thread!
+[15:10:14] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:59205.
+[15:10:14] [Thread-13/INFO]: [RaspberryJuice] Starting input thread
+[15:10:14] [Thread-14/INFO]: [RaspberryJuice] Starting output thread!
+[15:10:18] [Netty Server IO #2/INFO]: <Fortcraft354> builder status[m
+[15:11:29] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:59203.
+[15:11:29] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:59205.
+[15:32:06] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 9996ms behind, skipping 199 tick(s)
+[16:57:19] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 4877503ms behind, skipping 97550 tick(s)
+[16:57:19] [Server thread/INFO]: Fortcraft354 lost connection: Timed out
+[16:57:19] [Server thread/INFO]: Fortcraft354 left the game
+[16:57:22] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2757ms behind, skipping 55 tick(s)
+[16:57:42] [Server thread/INFO]: Stopping the server
+[16:57:42] [Server thread/INFO]: Stopping server
+[16:57:42] [Server thread/INFO]: [RaspberryJuice] Disabling RaspberryJuice v1.10
+[16:57:42] [Server thread/INFO]: [RaspberryJuice] Raspberry Juice Stopped
+[16:57:42] [Server thread/INFO]: Saving players
+[16:57:42] [Server thread/INFO]: Saving worlds
+[16:57:42] [Server thread/INFO]: Saving chunks for level 'world'/overworld
+[16:57:42] [Server thread/INFO]: Saving chunks for level 'world_nether'/the_nether
+[16:57:42] [Server thread/INFO]: Saving chunks for level 'world_the_end'/the_end

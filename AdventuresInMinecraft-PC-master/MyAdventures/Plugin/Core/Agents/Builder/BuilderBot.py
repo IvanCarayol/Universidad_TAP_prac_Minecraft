@@ -76,14 +76,12 @@ class BuilderBot(BaseAgent):
         self._build_plan = None
         self._map_event = asyncio.Event()
 
-        # Inicializar estado activo esperando mapas
-        self.set_state(AgentState.WAITING, "Waiting for map")
-
         self.bus.subscribe("map.v1", self._on_map)
         self.bus.subscribe("inventory.v1", self._on_inventory)
         self.bus.subscribe("command.builder.start.v1", self._on_start_cmd)
         self.bus.subscribe("command.builder.set.v1", self._on_update_cmd)
         self.bus.subscribe("command.builder.list.v1", self._on_control)
+        self.bus.subscribe("command.builder.status.v1", self._on_control)
         self.bus.subscribe("command.*.v1", self._on_control)
         self.bus.subscribe("*", self._on_generic)
 
@@ -179,6 +177,8 @@ class BuilderBot(BaseAgent):
             await self.stop()
         elif cmdtype.endswith(".list.v1"):
             await self.list()
+        elif cmdtype.endswith(".status.v1"):
+            await self.status()
 
     async def _on_generic(self, msg: Dict[str, Any]):
         # Debug tap for other messages
@@ -370,3 +370,14 @@ class BuilderBot(BaseAgent):
 
     async def idle(self):
         await super().idle()
+
+    async def status(self):
+        """Imprime el estado actual del bot en el logger"""
+        info = {
+            "agent_id": self.agent_id,
+            "state": self.state.value,
+            "map": self._last_map,
+            "template": self._template_name,
+            "bom": self._bom,
+        }
+        logger.info("[BUILDER STATUS] %s", info)
