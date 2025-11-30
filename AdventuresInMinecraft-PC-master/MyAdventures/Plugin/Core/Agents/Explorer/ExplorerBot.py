@@ -82,7 +82,7 @@ class ExplorerBot(BaseAgent):
         z = int(payload.get("z", self.center[1]))
         r = int(payload.get("range", self.range))
 
-        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s cube=%s", x, z, r)
+        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s", x, z)
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:

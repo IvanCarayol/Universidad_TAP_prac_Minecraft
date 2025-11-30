@@ -10,7 +10,7 @@ async def search_line(bot, x0: int, z0: int, length: int):
 
     for _ in range(length):
         # generar todas las coordenadas dentro del grosor del cubo en z
-        for dz in range(-half, half + 1):
+        for dz in range(-half, half):
             coords.append((x, z + dz))
         x += 1
         await bot._yield_scan()
@@ -53,8 +53,8 @@ async def search_random(bot, x0: int, z0: int, count: int):
         rx = x0 + random.randint(-radius, radius)
         rz = z0 + random.randint(-radius, radius)
         # generar todas las coordenadas del grosor del cubo alrededor del punto aleatorio
-        for dx_offset in range(-half, half + 1):
-            for dz_offset in range(-half, half + 1):
+        for dx_offset in range(-half, half):
+            for dz_offset in range(-half, half):
                 coords.append((rx + dx_offset, rz + dz_offset))
         await bot._yield_scan()
 

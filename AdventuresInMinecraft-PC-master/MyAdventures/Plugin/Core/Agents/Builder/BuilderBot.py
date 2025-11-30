@@ -368,6 +368,5 @@ class BuilderBot(BaseAgent):
             return AIR  # fallback
         return block
 
-    
     async def idle(self):
         await super().idle()
