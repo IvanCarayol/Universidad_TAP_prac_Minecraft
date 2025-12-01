@@ -3,8 +3,9 @@ import asyncio
 import os
 from mcpi.minecraft import Minecraft
 mc = Minecraft.create()
-from mcpi.block import AIR, BLOCK_MAP, Block
+from mcpi.block import AIR, Block
 from pathlib import Path
+from Plugin.Schematics.blockmap import BLOCK_MAP
 from Plugin.Schematics.schematic_loader import load_schematic, parse_schematic, schematic_to_blocks
 from typing import Dict, Any, Optional
 from ..BaseAgent import BaseAgent, AgentState
