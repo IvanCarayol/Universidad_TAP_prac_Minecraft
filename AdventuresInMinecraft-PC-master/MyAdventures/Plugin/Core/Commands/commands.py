@@ -42,29 +42,15 @@ COMMANDS = {
 # ------------------------------------------------------------
 # Función de parseo de mensajes de chat
 # ------------------------------------------------------------
-def parse_command(event: ChatEvent) -> Optional[Dict[str, Any]]:
-    """
-    Parsea un mensaje de chat en un comando y parámetros.
-    Devuelve None si no es un comando válido.
-    Ahora no requiere "/" al inicio.
-    """
-    if event.type != ChatEvent.POST:
-        return None
-
-    message = event.message.strip()
-    if not message:
-        return None
-
-    # Split normal por espacios
-    parts = message.split()
+def parse_command(message: str):
+    parts = message.strip().lower().split()
     if not parts:
         return None
 
-    # Construir nombre de comando: ej. "explorer start" → "explorer_start"
-    cmd_name = "_".join(parts[:2]) if len(parts) > 1 else parts[0]
-    params: Dict[str, Any] = {}
+    # "builder start", "explorer set", "builder list"
+    cmd_name = "_".join(parts[:2]) if len(parts) >= 2 else parts[0]
+    params = {}
 
-    # Parsear parámetros clave=valor
     for p in parts[2:]:
         if "=" in p:
             k, v = p.split("=", 1)
@@ -78,70 +64,81 @@ def parse_command(event: ChatEvent) -> Optional[Dict[str, Any]]:
 
     return {"cmd": cmd_name, "params": params}
 
+
 # ------------------------------------------------------------
 # Despacho de comandos con bus
 # ------------------------------------------------------------
-async def dispatch_command(event: ChatEvent, bots: Dict[str, Any]):
-    parsed = parse_command(event)
-    if not parsed:
-        return f"Comando no reconocido: {event.message}"
-
-    cmd = parsed["cmd"]
-    params = parsed["params"]
-
+async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any]):
+    """
+    Procesa un comando escrito en el chat.
+    raw_message: mensaje de texto del chat
+    sender_id: ID del jugador que lo envió
+    bots: registro global de bots
+    """
     try:
-        # ----------- EXPLORER ----------- 
+        # Parsear el comando (ahora pasa raw_message en vez de un ChatEvent)
+        parsed = parse_command(raw_message)
+        if not parsed:
+            return f"Comando no reconocido: {raw_message}"
+
+        cmd = parsed["cmd"]
+        params = parsed["params"]
+
+        # ============================
+        #          EXPLORER
+        # ============================
         if cmd.startswith("explorer") and "explorer" in bots:
             bot = bots["explorer"]
 
-            # Mapear cmd a type exacto para que coincida con bus.subscribe
             type_map = {
-                "explorer_start": "command.explorer.start.v1",
-                "explorer_set": "command.explorer.set.v1",
-                "explorer_stop": "command.explorer.stop.v1",
+                "explorer_start":  "command.explorer.start.v1",
+                "explorer_set":    "command.explorer.set.v1",
+                "explorer_stop":   "command.explorer.stop.v1",
                 "explorer_status": "command.explorer.status.v1",
             }
 
             msg_type = type_map.get(cmd)
             if not msg_type:
-                return f"No hay tipo definido en bus para {cmd}"
+                return f"No hay tipo definido en bus para comando {cmd}"
 
             msg = {
                 "type": msg_type,
-                "source": "chat",
+                "source": f"player:{sender_id}",
                 "target": bot.agent_id,
                 "payload": params,
             }
 
             await bot.bus.publish(msg)
-            return f"ExplorerBot recibió comando: {cmd} ({params})"
+            return f"[ExplorerBot] recibió comando: {cmd} {params}"
 
-
-        # ----------- BUILDER ----------- 
+        # ============================
+        #          BUILDER
+        # ============================
         if cmd.startswith("builder") and "builder" in bots:
             bot = bots["builder"]
+
             type_map = {
-                "builder_start": "command.builder.start.v1",
-                "builder_set" : "command.builder.set.v1",
-                "builder_list" : "command.builder.list.v1",
-                "builder_status": "command.builder.status.v1"
+                "builder_start":  "command.builder.start.v1",
+                "builder_set":    "command.builder.set.v1",
+                "builder_list":   "command.builder.list.v1",
+                "builder_status": "command.builder.status.v1",
             }
+
             msg_type = type_map.get(cmd)
             if not msg_type:
-                return f"No hay tipo definido en bus para {cmd}"
+                return f"No hay tipo definido en bus para comando {cmd}"
 
             msg = {
                 "type": msg_type,
-                "source": "chat",
+                "source": f"player:{sender_id}",
                 "target": bot.agent_id,
                 "payload": params,
             }
 
             await bot.bus.publish(msg)
-            return f"BuilderBot recibió comando: {cmd} ({params})"
+            return f"[BuilderBot] recibió comando: {cmd} {params}"
 
-
-        return f"Comando válido pero bot no registrado: {cmd}"
+        return f"Comando válido pero ningún bot lo gestiona: {cmd}"
 
     except Exception as e:
-        return f"Error ejecutando comando {cmd}: {str(e)}"
+        return f"Error ejecutando comando '{raw_message}': {str(e)}"

@@ -7,7 +7,8 @@ from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
 from Plugin.Core.Agents.Builder.BuilderBot import BuilderBot
 from Plugin.Core.Logger.logging_config import get_logger
 from mcpi.minecraft import Minecraft
-from mcpi.event import ChatEvent, register_bot, start_chat_listener 
+from Plugin.Core.Listener.Chatlistener import register_bot, start_chat_listener 
+from mcpi.event import ChatEvent
 
 
 # --------------------------
