@@ -37,6 +37,10 @@ COMMANDS = {
         "description": "Devuelve el estado de el bot",
         "params": [],
     },
+    "worldstate_start": {
+        "description": "Inicia el bot WorldState",
+        "params": [],
+    },
 }
 
 # ------------------------------------------------------------
@@ -122,6 +126,30 @@ async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any
                 "builder_set":    "command.builder.set.v1",
                 "builder_list":   "command.builder.list.v1",
                 "builder_status": "command.builder.status.v1",
+            }
+
+            msg_type = type_map.get(cmd)
+            if not msg_type:
+                return f"No hay tipo definido en bus para comando {cmd}"
+
+            msg = {
+                "type": msg_type,
+                "source": f"player:{sender_id}",
+                "target": bot.agent_id,
+                "payload": params,
+            }
+
+            await bot.bus.publish(msg)
+            return f"[BuilderBot] recibió comando: {cmd} {params}"
+
+        # ============================
+        #          WorldState
+        # ============================
+        if cmd.startswith("worldstate") and "worldstate" in bots:
+            bot = bots["worldstate"]
+
+            type_map = {
+                "worldstate_start":  "command.worldstate.start.v1",
             }
 
             msg_type = type_map.get(cmd)

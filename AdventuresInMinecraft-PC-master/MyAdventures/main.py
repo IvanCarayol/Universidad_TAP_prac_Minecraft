@@ -5,6 +5,7 @@ import os
 from Plugin.Core.Bus.Bus import MessageBus
 from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
 from Plugin.Core.Agents.Builder.BuilderBot import BuilderBot
+from Plugin.Core.World.worldstate import WorldStateBot
 from Plugin.Core.Logger.logging_config import get_logger
 from mcpi.minecraft import Minecraft
 from Plugin.Core.Listener.Chatlistener import register_bot, start_chat_listener 
@@ -50,6 +51,8 @@ async def main():
     explorer_bot.terrain.mc = mc  # conectar MCPI al bot
 
     builder_bot = BuilderBot(agent_id="BuilderBot", bus=shared_bus)
+
+    worldstate_bot = WorldStateBot(agent_id="WorldstateBot", bus=shared_bus)
     # Si tienes otros bots, créalos aquí:
     # miner_bot = MinerBot(...)
 
@@ -58,6 +61,7 @@ async def main():
     # -----------------------------------------------------
     register_bot(explorer_bot)
     register_bot(builder_bot)
+    register_bot(worldstate_bot)
     # register_bot(miner_bot)
 
     logger.info("Bots registrados correctamente.")

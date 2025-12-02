@@ -5,7 +5,6 @@ from typing import Dict, Any, Optional, Tuple
 import sys
 import os
 
-from ...World.worldstate import add_flat_area, _normalize_rect
 from ..Strategies.explorer_strategies import search_line, search_spiral, search_random
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
@@ -218,13 +217,6 @@ class ExplorerBot(BaseAgent):
     async def act(self, decision):
         rect = decision.get("best_rectangle")
 
-        if rect is not None:
-            try:
-                rect = _normalize_rect(rect)
-            except Exception as e:
-                logger.error(f"[EXPLORER] Invalid rect received: {rect} ({e})")
-                rect = None
-
         # Logging
         if rect:
             logger.info(f"[EXPLORER] Mejor rectángulo: "
@@ -235,8 +227,15 @@ class ExplorerBot(BaseAgent):
 
         # --- GUARDADO EN WORLDSTATE ---
         if rect:
-            await add_flat_area(rect)
-
+            await self.bus.publish({
+                "type": "savearea.v1",
+                "source": self.agent_id,
+                "target": "WorldStateBot",
+                "payload": {
+                    "type": "ADD_FLAT_AREA",
+                    "rect": rect
+                }
+            })
         await self._publish_map(rect)
 
         # Resto igual

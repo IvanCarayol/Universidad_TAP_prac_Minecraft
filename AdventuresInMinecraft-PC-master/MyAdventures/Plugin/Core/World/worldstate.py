@@ -1,18 +1,13 @@
 import asyncio
-from Core.Agents import BaseAgent
-from mcpi.event import ChatEvent
+from ...Core.Agents.BaseAgent import BaseAgent
+from ...Core.Logger.logging_config import get_logger
 
-#Hacer que reciba mensajes de forma normal como el resto de bots
-#Poner en percive un update de su informacion o algo como en builderbot
-#Hacer que espere a la llegada de algun mensaje para despertarse si no le quedan mas
-#Hacer que .send sea .bus
-#Cambiar/aplicar el sistema de mensajeria a builderbot y explorerbot
-#Crear un commando de start para el bot o dejarlo siempre encendido
+logger = get_logger(__name__)
+
 
 def normalize_rect(rect):
     if isinstance(rect, dict):
         return rect
-
     if isinstance(rect, tuple) and len(rect) == 4:
         x1, z1, x2, z2 = rect
         return {
@@ -25,12 +20,10 @@ def normalize_rect(rect):
             "area": abs((x2 - x1) + 1) * abs((z2 - z1) + 1),
             "y": 63
         }
-
     raise ValueError(f"Invalid rect format: {rect}")
 
 
 class WorldStateBot(BaseAgent):
-
     def __init__(self, agent_id, bus=None):
         super().__init__(agent_id, bus)
 
@@ -38,145 +31,147 @@ class WorldStateBot(BaseAgent):
         self.flat_areas = []
         self._lock = asyncio.Lock()
 
-        # Buffers del ciclo cognitivo
-        self.perceptions = []   # mensajes recibidos
-        self.decisions = []     # acciones derivadas de decide()
+        # Cola de percepciones
+        self._inbox = asyncio.Queue()
+        self._msg_event = asyncio.Event()
 
+        # Subscripciones
         self.bus.subscribe("command.worldstate.start.v1", self._on_start_cmd)
-        self.bus.subscribe("command.worldstate.savearea.v1", self.on_message)
-        self.bus.subscribe("command.worldstate.requestarea.v1", self.on_message)
-        self.bus.subscribe("command.worldstate.lockarea.v1", self.on_message)
+        self.bus.subscribe("savearea.v1", self.on_message)
+        self.bus.subscribe("requestarea.v1", self.on_message)
+        self.bus.subscribe("lockarea.v1", self.on_message)
+        self.bus.subscribe("getareas.v1", self.on_message)
 
-    async def _on_start_cmd(self, msg: Dict[str, Any]):
-        """Handle `worldstate start.`"""
+    # ----------------------
+    # Manejo de mensajes
+    # ----------------------
+    async def _on_start_cmd(self, msg):
         if msg.get("target") not in (self.agent_id, "*"):
             return
-        logger.info("[WORLDSTATE] Start request")
+        logger.info("[WORLDSTATE] Start worldstate bot")
         await self.start()
 
-    async def on_message(self, sender, msg):
-        """Recibe mensaje bruto → lo guarda como percepción"""
-        self.perceptions.append((sender, msg))
-        return ChatEvent.Post(self.id, f"[WorldState] Percepción recibida.")
+    async def on_message(self, msg):
+        """Recibe mensaje del bus y lo mete en la cola de percepciones"""
+        sender = msg.get("source")
+        await self._inbox.put((sender, msg))
+        self._msg_event.set()
 
-    # ---------------------------------
-    # PERCIBE: recibe mensajes de bots
-    # ---------------------------------
+    # ----------------------
+    # PERCIBE
+    # ----------------------
     async def perceive(self):
+        """Espera hasta recibir un mensaje"""
+        while self._inbox.empty():
+            await self._msg_event.wait()
+            self._msg_event.clear()
+        return await self._inbox.get()
 
-        return {"height_map"}
+    # ----------------------
+    # DECIDE
+    # ----------------------
+    async def decide(self, percept):
+        sender, msg = percept
+        mtype = msg.get("type")
+        payload = msg.get("payload", {})
 
-    # ---------------------------------
-    # DECIDE: interpreta percepciones
-    # ---------------------------------
-    async def decide(self):
-        """
-        Lee percepciones y decide qué acciones ejecutar.
-        Las almacena en self.decisions como tuplas:
-            ("ACTION_TYPE", data...)
-        """
+        if mtype == "savearea.v1":
+            rect = payload.get("rect")
+            return ("ADD_AREA", rect)
 
-        if not self.perceptions:
-            return  # nada por procesar
+        elif mtype == "requestarea.v1":
+            required = payload.get("required")
+            return ("ALLOCATE_AREA", sender, required)
 
-        for sender, msg in self.perceptions:
+        elif mtype == "lockarea.v1":
+            rect = payload.get("rect")
+            status = payload.get("status", "LOCKED")
+            return ("UPDATE_AREA", rect, status)
 
-            if msg["type"] == "ADD_FLAT_AREA":
-                self.decisions.append(("ADD_AREA", msg["rect"]))
+        elif mtype == "getareas.v1":
+            return ("RETURN_ALL", sender)
 
-            elif msg["type"] == "REQUEST_AREA":
-                self.decisions.append(("ALLOCATE_AREA", sender, msg["required"]))
+        else:
+            return ("UNKNOWN", sender, msg)
 
-            elif msg["type"] == "MARK_AREA":
-                self.decisions.append(("UPDATE_AREA", msg["rect"], msg["status"]))
+    # ----------------------
+    # ACT
+    # ----------------------
+    async def act(self, decision):
+        action = decision[0]
 
-            elif msg["type"] == "GET_AREAS":
-                self.decisions.append(("RETURN_ALL", sender))
+        if action == "ADD_AREA":
+            rect = decision[1]
+            await self._add_flat_area(rect)
+            logger.info("[WORLDSTATE] Staved flat area")
 
-            else:
-                self.decisions.append(("UNKNOWN", sender, msg))
+        elif action == "ALLOCATE_AREA":
+            sender, required = decision[1], decision[2]
+            result = await self._request_area(sender, required)
+            await self.bus.publish({
+                "type": "worldstate.response",
+                "source": self.agent_id,
+                "target": sender,
+                "payload": result
+            })
 
-        # limpiamos percepciones procesadas
-        self.perceptions.clear()
+        elif action == "UPDATE_AREA":
+            rect, status = decision[1], decision[2]
+            await self._mark_area_status(rect, status)
 
-
-    # ---------------------------------
-    # ACT: ejecuta las decisiones
-    # ---------------------------------
-    async def act(self):
-        """Procesa acciones decididas y las ejecuta realmente."""
-
-        for decision in self.decisions:
-            action = decision[0]
-
-            # ------------------------------------
-            if action == "ADD_AREA":
-                rect = decision[1]
-                await self._add_flat_area(rect)
-
-            # ------------------------------------
-            elif action == "ALLOCATE_AREA":
-                sender, required = decision[1], decision[2]
-                result = await self._request_area(sender, required)
-                await self.send(sender, {
-                    "type": "AREA_RESPONSE",
-                    "data": result
-                })
-
-            # ------------------------------------
-            elif action == "UPDATE_AREA":
-                rect, status = decision[1], decision[2]
-                await self._mark_area_status(rect, status)
-
-            # ------------------------------------
-            elif action == "RETURN_ALL":
-                sender = decision[1]
-                await self.send(sender, {
-                    "type": "ALL_AREAS",
+        elif action == "RETURN_ALL":
+            sender = decision[1]
+            await self.bus.publish({
+                "type": "worldstate.response",
+                "source": self.agent_id,
+                "target": sender,
+                "payload": {
                     "areas": self.flat_areas
-                })
+                }
+            })
 
-            # ------------------------------------
-            elif action == "UNKNOWN":
-                sender, msg = decision[1], decision[2]
-                await self.send(sender, {
-                    "type": "ERROR",
-                    "message": f"[WorldState] Mensaje desconocido: {msg}"
-                })
+        elif action == "UNKNOWN":
+            sender, msg = decision[1], decision[2]
+            await self.bus.publish({
+                "type": "worldstate.response",
+                "source": self.agent_id,
+                "target": sender,
+                "payload": {
+                    "error": f"[WorldStateBot] Mensaje desconocido: {msg}"
+                }
+            })
 
-        # limpiar después de actuar
-        self.decisions.clear()
-
-
-    # ---------------------------------
-    # FUNCIONES REALES DE ESTADO
-    # ---------------------------------
+    # ----------------------
+    # Funciones internas de estado
+    # ----------------------
     async def _add_flat_area(self, rect):
         rect = normalize_rect(rect)
-        area = {
-            "rect": rect,
-            "status": "FREE",
-            "assigned_to": None
-        }
-
         async with self._lock:
-            self.flat_areas.append(area)
-
+            self.flat_areas.append({
+                "rect": rect,
+                "status": "FREE",
+                "assigned_to": None
+            })
 
     async def _request_area(self, agent_id, required):
-        req_w = required["width"]
-        req_h = required["depth"]
+        if required is None:
+            logger.warning(f"[WORLDSTATE] Received request with empty required payload from {agent_id}")
+            return {"status": "INVALID_REQUEST"}
+
+        req_w = required.get("width")
+        req_h = required.get("depth")
+
+        if req_w is None or req_h is None:
+            logger.warning(f"[WORLDSTATE] Missing width/depth in request from {agent_id}")
+            return {"status": "INVALID_REQUEST"}
 
         async with self._lock:
-            candidates = []
-
-            for a in self.flat_areas:
-                if a["status"] != "FREE":
-                    continue
-
-                rect = a["rect"]
-                if rect["width"] >= req_w and rect["height"] >= req_h:
-                    candidates.append(a)
+            candidates = [
+                a for a in self.flat_areas
+                if a["status"] == "FREE"
+                and a["rect"]["width"] >= req_w
+                and a["rect"]["height"] >= req_h
+            ]
 
             if not candidates:
                 return {"status": "NO_AREA_AVAILABLE"}
@@ -185,10 +180,7 @@ class WorldStateBot(BaseAgent):
             best["status"] = "RESERVED"
             best["assigned_to"] = agent_id
 
-            return {
-                "status": "OK",
-                "rect": best["rect"]
-            }
+            return {"status": "OK", "rect": best["rect"]}
 
 
     async def _mark_area_status(self, rect, status):
