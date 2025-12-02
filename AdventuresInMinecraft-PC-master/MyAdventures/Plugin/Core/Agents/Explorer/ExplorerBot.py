@@ -225,18 +225,13 @@ class ExplorerBot(BaseAgent):
         else:
             logger.info("[EXPLORER] No se ha encontrado ninguna zona plana utilizable.")
 
-        # --- GUARDADO EN WORLDSTATE ---
-        if rect:
-            await self.bus.publish({
-                "type": "savearea.v1",
-                "source": self.agent_id,
-                "target": "WorldStateBot",
-                "payload": {
-                    "type": "ADD_FLAT_AREA",
-                    "rect": rect
-                }
-            })
-        await self._publish_map(rect)
+        result = await self.save_area_clean(rect)
+
+        if result is None:
+            logger.warning("[EXPLORER] No response from WorldStateBot (timeout)")
+        else:
+            logger.info(f"[EXPLORER] WorldStateBot confirmed savearea: {result}")
+            await self._publish_map(rect)
 
         # Resto igual
         if self._queued_request:
@@ -332,6 +327,45 @@ class ExplorerBot(BaseAgent):
         else:
             logger.info("[EXPLORER] Published map.v1 (no rectangle found)")
 
+    async def save_area_clean(self, rect: dict, timeout=5.0):
+        """
+        Envía un mensaje savearea.v1 a WorldStateBot y espera
+        una respuesta worldstate.response dirigida a este bot.
+        """
+
+        future = asyncio.get_event_loop().create_future()
+
+        # --- callback temporal para esta respuesta ---
+        async def _temp(msg):
+            if msg.get("type") != "worldstate.response":
+                return
+            if msg.get("target") not in (self.agent_id, "*"):
+                return
+
+            payload = msg.get("payload", {})
+            if not future.done():
+                future.set_result(payload)
+
+        # Suscripción temporal
+        self.bus.subscribe("worldstate.response", _temp)
+
+        # Enviar solicitud
+        await self.bus.publish({
+            "type": "savearea.v1",
+            "source": self.agent_id,
+            "target": "WorldStateBot",
+            "payload": {
+                "rect": rect
+            }
+        })
+
+        try:
+            # Esperar respuesta
+            result = await asyncio.wait_for(future, timeout=timeout)
+            return result  # puede contener {"status": "..."} u otros datos
+
+        except asyncio.TimeoutError:
+            return None
 
     # ---------------------------------------------------------
     # Control Overloads

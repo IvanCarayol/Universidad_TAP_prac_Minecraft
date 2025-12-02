@@ -77,10 +77,10 @@ class WorldStateBot(BaseAgent):
 
         if mtype == "savearea.v1":
             rect = payload.get("rect")
-            return ("ADD_AREA", rect)
+            return ("ADD_AREA_AND_REPLY", sender, rect)
 
         elif mtype == "requestarea.v1":
-            required = payload.get("required")
+            required = payload
             return ("ALLOCATE_AREA", sender, required)
 
         elif mtype == "lockarea.v1":
@@ -100,10 +100,23 @@ class WorldStateBot(BaseAgent):
     async def act(self, decision):
         action = decision[0]
 
-        if action == "ADD_AREA":
-            rect = decision[1]
+        if action == "ADD_AREA_AND_REPLY":
+            sender, rect = decision[1], decision[2]
             await self._add_flat_area(rect)
-            logger.info("[WORLDSTATE] Staved flat area")
+
+            # enviar confirmación
+            await self.bus.publish({
+                "type": "worldstate.response",
+                "source": self.agent_id,
+                "target": sender,
+                "payload": {
+                    "status": "OK",
+                    "message": "AREA_SAVED",
+                    "rect": rect
+                }
+            })
+
+            logger.info("[WORLDSTATE] Saved flat area + ACK sent")
 
         elif action == "ALLOCATE_AREA":
             sender, required = decision[1], decision[2]

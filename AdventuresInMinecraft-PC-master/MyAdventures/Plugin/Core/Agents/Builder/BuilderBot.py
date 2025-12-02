@@ -17,38 +17,6 @@ logger = get_logger(__name__)
 ROOT_DIR = Path(__file__).resolve().parents[3]
 TEMPLATE_DIR = ROOT_DIR / "Schematics"
 TEMPLATES = {}
-async def request_free_area(agent_id: str, required: dict, bus, timeout=5.0) -> dict | None:
-        """
-        Envía un mensaje a WorldStateBot para pedir un área libre.
-        Espera respuesta hasta `timeout` segundos.
-        Devuelve el rect o None si no hay respuesta.
-        """
-        future = asyncio.get_event_loop().create_future()
-
-        # Callback para recibir la respuesta del WorldStateBot
-        async def _on_response(msg):
-            if msg.get("target") not in (agent_id, "*"):
-                return
-            payload = msg.get("payload", {})
-            if not future.done():
-                future.set_result(payload)
-
-        # Suscribirse temporalmente
-        bus.subscribe("worldstate.response", _on_response)
-
-        # Enviar request
-        await bus.publish({
-            "type": "requestarea.v1",
-            "source": agent_id,
-            "target": "WorldStateBot",
-            "payload": required
-        })
-
-        try:
-            result = await asyncio.wait_for(future, timeout=timeout)
-            return result.get("rect") or None
-        except asyncio.TimeoutError:
-            return None
         
 def load_all_templates():
     logger.info("[BUILDER] Loading templates from ./Schematics/")
@@ -210,11 +178,11 @@ class BuilderBot(BaseAgent):
         if p["map"] is None:
             tpl = TEMPLATES[p["template"]]
             req_area = {
-                "width": tpl["width"],   # X
-                "depth": tpl["depth"]    # Z
+                "width": tpl["width"],
+                "depth": tpl["depth"]
             }
-            
-            self._valid_area = await request_free_area(self.agent_id, req_area, self.bus)
+
+            self._valid_area = await self.request_free_area_clean(req_area)
 
             if self._valid_area is None:
                 self.set_state(AgentState.WAITING, "Waiting for free area")
@@ -413,5 +381,42 @@ class BuilderBot(BaseAgent):
             rect.get("z1", 0)
         )
     
+    async def request_free_area_clean(self, required: dict, timeout=5.0):
+        """
+        Envía un mensaje de requestarea a WorldStateBot
+        y espera una respuesta worldstate.response SOLO para este agente.
+        """
+
+        future = asyncio.get_event_loop().create_future()
+
+        # --- callback temporal ---
+        async def _temp(msg):
+            if msg.get("type") != "worldstate.response":
+                return
+            if msg.get("target") not in (self.agent_id, "*"):
+                return
+
+            payload = msg.get("payload", {})
+            if not future.done():
+                future.set_result(payload)
+
+        # registrar callback temporal
+        self.bus.subscribe("worldstate.response", _temp)
+
+        # enviar solicitud
+        await self.bus.publish({
+            "type": "requestarea.v1",
+            "source": self.agent_id,
+            "target": "WorldStateBot",
+            "payload": required
+        })
+
+        try:
+            result = await asyncio.wait_for(future, timeout=timeout)
+            return result.get("rect") or None
+
+        except asyncio.TimeoutError:
+            return None
+
 
 
