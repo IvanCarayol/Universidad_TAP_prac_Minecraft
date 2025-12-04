@@ -1,6 +1,6 @@
 import asyncio
-from ...Core.Agents.BaseAgent import BaseAgent
-from ...Core.Logger.logging_config import get_logger
+from ..BaseAgent import BaseAgent
+from ...Logger.logging_config import get_logger
 
 logger = get_logger(__name__)
 

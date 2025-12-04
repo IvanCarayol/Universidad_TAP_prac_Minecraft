@@ -1,0 +1,6 @@
+-Serializable
+-MinerBot
+-Commandos de control de worldstate
+-Bloqueo de areas para minerbot
+-Comprovar coordenadas antes de buscar en ellas en explorerbot
+-Cambiar parser de commandos para aceptar 3 valores

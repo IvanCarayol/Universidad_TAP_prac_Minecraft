@@ -14,34 +14,18 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "Core"))
 logger = get_logger(__name__)
 
 # ============================================================
-# Optional MCPI wrapper for getHeight (real or mocked)
-# ============================================================
-class TerrainAPI:
-    """
-    Wrapper around mcpi.getHeight(x,z) and setBlock.
-    """
-    def __init__(self, mc=None):
-        self.mc = mc
-
-    def get_height(self, x: int, z: int) -> int:
-        return self.mc.getHeight(x, z)
-
-    def set_block(self, x: int, y: int, z: int, block_id: int):
-        self.mc.setBlock(x, y, z, block_id)
-
-# ============================================================
 # ExplorerBot Implementation
 # ============================================================
 class ExplorerBot(BaseAgent):
     SCAN_DELAY = 0.01
 
-    def __init__(self, agent_id="ExplorerBot", bus=None):
+    def __init__(self, agent_id="ExplorerBot", bus=None, mc=None):
         super().__init__(agent_id, bus)
         self.center: Tuple[int, int] = (0, 0)
         self.range: int = 30
         self._last_publish: float = 0.0
         self._queued_request: Optional[Tuple[int, int, int, int]] = None
-        self.terrain = TerrainAPI()
+        self.mc = mc
         self.occupied = set()
         self.bus = bus
 
@@ -81,7 +65,7 @@ class ExplorerBot(BaseAgent):
         z = int(payload.get("z", self.center[1]))
         r = int(payload.get("range", self.range))
 
-        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s", x, z)
+        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s", x, z, r)
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:
@@ -143,7 +127,7 @@ class ExplorerBot(BaseAgent):
         # construir height_map
         height_map = {}
         for x, z in candidates:
-            h = self.terrain.get_height(x, z)
+            h = self.mc.getHeight(x, z)
             height_map[(x, z)] = h
             logger.info(f"[EXPLORER] Perciviendo coordenadas ({x},{z}) con altura {h}")
             await asyncio.sleep(self.SCAN_DELAY)
@@ -327,6 +311,9 @@ class ExplorerBot(BaseAgent):
         else:
             logger.info("[EXPLORER] Published map.v1 (no rectangle found)")
 
+    # ---------------------------------------------------------
+    # Funciones para comunicacion con WorldstateBot
+    # ---------------------------------------------------------
     async def save_area_clean(self, rect: dict, timeout=5.0):
         """
         Envía un mensaje savearea.v1 a WorldStateBot y espera
@@ -366,6 +353,10 @@ class ExplorerBot(BaseAgent):
 
         except asyncio.TimeoutError:
             return None
+        
+        finally:
+            # liberar suscripción temporal
+            self.bus.unsubscribe("worldstate.response", _temp)
 
     # ---------------------------------------------------------
     # Control Overloads

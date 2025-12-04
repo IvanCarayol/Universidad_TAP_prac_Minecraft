@@ -1,5 +1,4 @@
 from typing import Dict, Any, Optional
-from mcpi.event import ChatEvent
 
 # ------------------------------------------------------------
 # Comandos disponibles y sus parámetros
@@ -22,7 +21,7 @@ COMMANDS = {
         "params": [],
     },
     "builder_start": {
-        "description": "Ordena construir",
+        "description": "Inicia el bot Builder",
         "params": [],
     },
     "builder_set": {
@@ -39,6 +38,10 @@ COMMANDS = {
     },
     "worldstate_start": {
         "description": "Inicia el bot WorldState",
+        "params": [],
+    },
+    "miner_start": {
+        "description": "Inicia el bot Miner",
         "params": [],
     },
 }
@@ -142,6 +145,33 @@ async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any
             await bot.bus.publish(msg)
             return f"[BuilderBot] recibió comando: {cmd} {params}"
 
+        # ============================
+        #          MINER
+        # ============================
+        if cmd.startswith("miner") and "miner" in bots:
+            bot = bots["miner"]
+
+            type_map = {
+                "miner_start":  "command.miner.start.v1",
+                "miner_set":    "command.miner.set.v1",
+                "miner_list":   "command.miner.list.v1",
+                "miner_status": "command.miner.status.v1",
+            }
+
+            msg_type = type_map.get(cmd)
+            if not msg_type:
+                return f"No hay tipo definido en bus para comando {cmd}"
+
+            msg = {
+                "type": msg_type,
+                "source": f"player:{sender_id}",
+                "target": bot.agent_id,
+                "payload": params,
+            }
+
+            await bot.bus.publish(msg)
+            return f"[MinerBot] recibió comando: {cmd} {params}"
+        
         # ============================
         #          WorldState
         # ============================

@@ -63,7 +63,7 @@ def load_all_templates():
 
 class BuilderBot(BaseAgent):
 
-    BUILD_INTERVAL = 0.01
+    BUILD_INTERVAL = 0.001
 
     def __init__(self, agent_id="BuilderBot", bus=None):
         super().__init__(agent_id, bus)
@@ -77,6 +77,7 @@ class BuilderBot(BaseAgent):
         self._build_progress = 0
         self._build_plan = None
         self._map_event = asyncio.Event()
+        self._bom_event = asyncio.Event()
 
         self.bus.subscribe("map.v1", self._on_map)
         self.bus.subscribe("inventory.v1", self._on_inventory)
@@ -103,7 +104,6 @@ class BuilderBot(BaseAgent):
         logger.info("[MAP] Recived map from %s", msg["source"])
 
         self._map_event.set()
-        self.set_state(AgentState.RUNNING, "Processing map")
 
 
     async def _on_inventory(self, msg):
@@ -113,7 +113,8 @@ class BuilderBot(BaseAgent):
         payload = msg.get("payload", {})
         self._material_inventory = payload
         logger.info("[INVENTORY] Updated: %s", payload)
-        
+        self._bom_event.set()
+
     async def _on_start_cmd(self, msg: Dict[str, Any]):
         """Handle `builder start.`"""
         if msg.get("target") not in (self.agent_id, "*"):
@@ -191,7 +192,16 @@ class BuilderBot(BaseAgent):
         if p["bom"] is None:
             return {"action": "compute_bom"}
 
-        #if not self._materials_ready(p["bom"], p["inventory"]):
+        if not self._materials_ready(p["bom"], p["inventory"]):
+            await self.bus.publish({
+                "type": "bom.v1",
+                "source": self.agent_id,         # "BuilderBot"
+                "target": "MinerBot",            # para que solo él lo procese
+                "payload": p["bom"],             # diccionario de materiales requeridos
+                "context": {
+                    "task_id": f"BLD-{self.agent_id}"
+                }
+            })
             self.set_state(AgentState.WAITING, "Need materials")
             return {"action": "wait_for_materials"}
 
@@ -222,9 +232,16 @@ class BuilderBot(BaseAgent):
         if action == "compute_bom":
             return await self._compute_and_send_bom()
 
-        #if action == "wait_for_materials":
+        if action == "wait_for_materials":
             logger.info("[BUILDER] Waiting for materials")
-            return await asyncio.sleep(0.5)
+            # limpiar el evento por si acaso
+            self._bom_event.clear()
+
+            # dormir hasta que llegue inventory.v1
+            await self._bom_event.wait()
+
+            logger.info("[BUILDER] Inventory arrived! Resuming work.")
+            return
 
         if action == "build_layer":
             return await self._build_next_layer()
@@ -234,7 +251,10 @@ class BuilderBot(BaseAgent):
             self._reset_after_build()
             await self.idle()
 
-    # ------------- BOM / BUILD PLAN ---------------
+    # ---------------------------------------------------------
+    # Helpers 
+    # ---------------------------------------------------------
+
     async def _compute_and_send_bom(self):
         tpl = TEMPLATES[self._template_name]
         self._bom = dict(tpl["materials"])
@@ -324,7 +344,6 @@ class BuilderBot(BaseAgent):
         self._bom = None
         self._material_inventory = {}
 
-    # ------------- Funciones Auxiliares ---------------
     def list(self):
         """Print available templates and current selection via logger only."""
 
@@ -355,20 +374,6 @@ class BuilderBot(BaseAgent):
             return AIR  # fallback
         return block
 
-    async def idle(self):
-        await super().idle()
-
-    async def status(self):
-        """Imprime el estado actual del bot en el logger"""
-        info = {
-            "agent_id": self.agent_id,
-            "state": self.state.value,
-            "map": self._valid_area,
-            "template": self._template_name,
-            "bom": self._bom,
-        }
-        logger.info("[BUILDER STATUS] %s", info)
-
     def _get_base_coords(self):
         if not self._valid_area:
             return None
@@ -381,6 +386,10 @@ class BuilderBot(BaseAgent):
             rect.get("z1", 0)
         )
     
+    # ---------------------------------------------------------
+    # Funciones para comunicacion con WorldstateBot
+    # ---------------------------------------------------------
+
     async def request_free_area_clean(self, required: dict, timeout=5.0):
         """
         Envía un mensaje de requestarea a WorldStateBot
@@ -417,6 +426,26 @@ class BuilderBot(BaseAgent):
 
         except asyncio.TimeoutError:
             return None
+        
+        finally:
+            # liberar suscripción temporal
+            self.bus.unsubscribe("worldstate.response", _temp)
+        
+    # ---------------------------------------------------------
+    # Control Overloads
+    # ---------------------------------------------------------
 
+    async def idle(self):
+        await super().idle()
 
+    async def status(self):
+        """Imprime el estado actual del bot en el logger"""
+        info = {
+            "agent_id": self.agent_id,
+            "state": self.state.value,
+            "map": self._valid_area,
+            "template": self._template_name,
+            "bom": self._bom,
+        }
+        logger.info("[BUILDER STATUS] %s", info)
 

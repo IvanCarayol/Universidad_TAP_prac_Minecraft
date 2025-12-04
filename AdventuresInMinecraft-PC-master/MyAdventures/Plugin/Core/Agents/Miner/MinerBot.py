@@ -3,118 +3,13 @@ import asyncio
 import time
 from typing import Dict, Any, Optional, Tuple
 from collections import defaultdict
+from ...Agents.Strategies.miner_strategies import vertical_strategy, vein_strategy, grid_strategy
+
 
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
 
 logger = get_logger(__name__)
-
-
-# ---------------------------
-# Simple lock manager by sector (x,z)
-# ---------------------------
-class SectorLockManager:
-    def __init__(self):
-        self._locks: Dict[Tuple[int, int], asyncio.Lock] = {}
-        self._global = asyncio.Lock()
-
-    async def acquire(self, sector: Tuple[int, int], timeout: Optional[float] = None) -> bool:
-        # ensure the lock object exists
-        async with self._global:
-            if sector not in self._locks:
-                self._locks[sector] = asyncio.Lock()
-            lock = self._locks[sector]
-
-        try:
-            if timeout is None:
-                await lock.acquire()
-                return True
-            else:
-                return await asyncio.wait_for(lock.acquire(), timeout=timeout)
-        except asyncio.TimeoutError:
-            return False
-
-    async def release(self, sector: Tuple[int, int]):
-        async with self._global:
-            lock = self._locks.get(sector)
-            if lock and lock.locked():
-                lock.release()
-
-    async def release_all(self):
-        async with self._global:
-            for s, lock in list(self._locks.items()):
-                if lock.locked():
-                    try:
-                        lock.release()
-                    except RuntimeError:
-                        # already released or not owned
-                        pass
-
-
-# ---------------------------
-# Strategy interfaces (minimal examples)
-# ---------------------------
-class MiningStrategy:
-    """Base interface for mining strategies"""
-    def __init__(self, params: Dict[str, Any] = None):
-        self.params = params or {}
-
-    async def next_target(self) -> Tuple[int, int, int]:
-        """Return next (x, y, z) target to mine"""
-        raise NotImplementedError
-
-
-class VerticalStrategy(MiningStrategy):
-    def __init__(self, base_x=0, base_z=0, start_y=64, step=1):
-        super().__init__({"base_x": base_x, "base_z": base_z, "start_y": start_y, "step": step})
-        self._y = start_y
-        self.base_x = base_x
-        self.base_z = base_z
-
-    async def next_target(self):
-        t = (self.base_x, self._y, self.base_z)
-        self._y -= self.params.get("step", 1)
-        return t
-
-
-class GridStrategy(MiningStrategy):
-    def __init__(self, x0=0, z0=0, width=5, depth=5, step=1, y=64):
-        super().__init__({"x0": x0, "z0": z0, "width": width, "depth": depth, "step": step, "y": y})
-        self.x0 = x0
-        self.z0 = z0
-        self.width = width
-        self.depth = depth
-        self.step = step
-        self.y = y
-        self._i = 0
-
-    async def next_target(self):
-        xi = (self._i % self.width)
-        zi = (self._i // self.width) % self.depth
-        x = self.x0 + xi * self.step
-        z = self.z0 + zi * self.step
-        self._i += 1
-        return (x, self.y, z)
-
-
-class VeinStrategy(MiningStrategy):
-    # For demonstration: behaves like grid but would expand recursively on matches.
-    def __init__(self, seed_x=0, seed_z=0, radius=3, y=64):
-        super().__init__({"seed_x": seed_x, "seed_z": seed_z, "radius": radius, "y": y})
-        self.seed_x = seed_x
-        self.seed_z = seed_z
-        self.radius = radius
-        self.y = y
-        self._offset = 0
-
-    async def next_target(self):
-        # spiral-like
-        r = self._offset
-        x = self.seed_x + (r % (self.radius * 2)) - self.radius
-        z = self.seed_z + ((r // (self.radius * 2)) % (self.radius * 2)) - self.radius
-        self._offset += 1
-        return (x, self.y, z)
-
 
 # ---------------------------
 # MinerBot implementation
@@ -132,35 +27,35 @@ class MinerBot(BaseAgent):
 
     INVENTORY_PUBLISH_INTERVAL = 1.0  # seconds
 
-    def __init__(self, agent_id: str = "MinerBot", bus=None, default_strategy: str = "grid"):
+    def __init__(self, agent_id: str = "MinerBot", bus=None, mc=None, default_strategy: str = "grid"):
         super().__init__(agent_id, bus=bus)
         self.inventory: Dict[str, int] = defaultdict(int)  # e.g. {'stone': 10}
         self._current_bom: Optional[Dict[str, int]] = None
-        self._bom_task: Optional[asyncio.Task] = None
         self._strategy_name = default_strategy
-        self._strategy: MiningStrategy = self._create_strategy(default_strategy)
-        self._locks = SectorLockManager()
-        self._last_publish = 0.0
-        self._mining = False
-        # subscribe to bus messages if provided
-        if self.bus:
-            # subscribe to materials.requirements.v1 and command messages
-            self.bus.subscribe('materials.requirements.v1', self._on_materials_request)
-            self.bus.subscribe('command.*.v1', self._on_command_message)
-            # also accept direct control channel wildcard
-            self.bus.subscribe('*', self._on_generic_message)
+        self._strategy = None
+        self.assigned_area = None
+        asyncio.create_task(self._init_strategy(default_strategy))
+        self._bom_event = asyncio.Event()
+        self.mc = mc
+
+        self.bus.subscribe('bom.v1', self._on_materials_request)
+        self.bus.subscribe("command.miner.start.v1", self._on_start_cmd)
+        self.bus.subscribe("command.miner.set.v1", self._on_update_cmd)
+        self.bus.subscribe("command.miner.list.v1", self._on_control)
+        self.bus.subscribe("command.miner.status.v1", self._on_control)
+        self.bus.subscribe('*', self._on_generic)
 
     # -----------------------
     # Strategy factory
     # -----------------------
-    def _create_strategy(self, name: str, params: Dict[str, Any] = None) -> MiningStrategy:
-        name = (name or "grid").lower()
-        if name == "vertical":
-            return VerticalStrategy(**(params or {}))
-        elif name == "vein":
-            return VeinStrategy(**(params or {}))
+    async def _init_strategy(self, name, params=None):
+        params = params or {}
+        if name.lower() == "vertical":
+            self._strategy = await vertical_strategy(**params)
+        elif name.lower() == "vein":
+            self._strategy = await vein_strategy(**params)
         else:
-            return GridStrategy(**(params or {}))
+            self._strategy = await grid_strategy(**params)
 
     # -----------------------
     # Message handlers
@@ -186,31 +81,59 @@ class MinerBot(BaseAgent):
             # accept BOM and start fulfillment
             self._current_bom = dict(payload)
             # if not running, start agent loop (caller may have started already)
-            if self.state != AgentState.RUNNING:
-                # don't await here; let the main loop pick up work
-                asyncio.create_task(self.start())
+            self._bom_event.set()
         except Exception:
             logger.exception("Error handling BOM message")
 
-    async def _on_command_message(self, msg: Dict[str, Any]):
-        # Very small generic command handler; expects control messages formatted already.
-        try:
-            payload = msg.get('payload', {})
-            cmd = msg.get('type', '')
-            if msg.get('target') not in (self.agent_id, '*'):
-                return
-            if cmd.endswith('.pause.v1') or cmd == 'command.pause.v1':
-                await self.pause()
-            elif cmd.endswith('.resume.v1') or cmd == 'command.resume.v1':
-                await self.resume()
-            elif cmd.endswith('.stop.v1') or cmd == 'command.stop.v1':
-                await self.stop()
-            elif cmd.endswith('.update.v1') or cmd == 'command.update.v1':
-                await self.update(payload or {})
-        except Exception:
-            logger.exception("Error handling command message")
+    async def _on_start_cmd(self, msg: Dict[str, Any]):
+        """Handle miner start.`"""
+        if msg.get("target") not in (self.agent_id, "*"):
+            return
+        logger.info("[MINER] Start request")
 
-    async def _on_generic_message(self, msg: Dict[str, Any]):
+        # If the bot is running, queue new scan
+        if self.state == AgentState.RUNNING:
+            logger.info("[MINER] Queuing new request until current finishes")
+        await self.start()
+
+    async def _on_update_cmd(self, msg: Dict[str, Any]):
+        """Handle `explorer set` command with optional parameters in payload."""
+        if msg.get("target") not in (self.agent_id, "*"):
+            return
+
+        payload = msg.get("payload", {})
+
+        # Actualizar rango si viene en payload
+        if "range" in payload:
+            self.range = int(payload["range"])
+
+        # Actualizar estrategia si viene en payload
+        if "strategy" in payload:
+            self.set_strategy(payload["strategy"])
+
+        # Llamar a update del BaseAgent para logger
+        await super().update(payload)
+
+
+    async def _on_control(self, msg: Dict[str, Any]):
+        """pause/resume/stop commands"""
+        if msg.get("target") not in (self.agent_id, "*"):
+            return
+
+        cmdtype = msg.get("type", "")
+        if cmdtype.endswith(".pause.v1"):
+            await self.pause()
+        elif cmdtype.endswith(".resume.v1"):
+            await self.resume()
+        elif cmdtype.endswith(".stop.v1"):
+            await self.stop()
+        elif cmdtype.endswith(".list.v1"):
+            await self.list()
+        elif cmdtype.endswith(".status.v1"):
+            await self.status()
+
+
+    async def _on_generic(self, msg: Dict[str, Any]):
         # Optional: listen to other messages (e.g., builder broadcasts)
         return
 
@@ -218,7 +141,6 @@ class MinerBot(BaseAgent):
     # PDA cycle implementations
     # -----------------------
     async def perceive(self) -> Dict[str, Any]:
-        # Minimal perception: return BOM snapshot and strategy
         await asyncio.sleep(0)  # yield
         percept = {
             "bom": dict(self._current_bom) if self._current_bom else None,
@@ -229,22 +151,26 @@ class MinerBot(BaseAgent):
         return percept
 
     async def decide(self, percept: Dict[str, Any]) -> Dict[str, Any]:
-        # Decide whether to mine, publish, or wait
         if percept["bom"] is None:
-            # nothing to do
-            return {"action": "idle"}
-        # check if BOM fulfilled
+            return {"action": "wait_for_bom"}
+        
         if self._bom_fulfilled(percept["bom"]):
             return {"action": "report_complete"}
-        # else keep mining
+
         return {"action": "mine"}
 
     async def act(self, decision: Dict[str, Any]):
         action = decision.get("action")
-        if action == "idle":
-            # occasionally publish inventory snapshot
-            await self._maybe_publish_inventory()
-            await asyncio.sleep(0.2)
+        if action == "wait_for_bom":
+            logger.info("[MINER] Waiting for bom")
+
+            # limpiar el evento por si acaso
+            self._bom_event.clear()
+
+            # dormir hasta que llegue map.v1
+            await self._bom_event.wait()
+
+            logger.info("[MINER] Bom arrived! Reasuming work.")
             return
         if action == "report_complete":
             await self._publish_inventory(status="SUCCESS", final=True)
@@ -254,7 +180,6 @@ class MinerBot(BaseAgent):
         if action == "mine":
             # perform a mining step according to strategy
             await self._perform_mining_step()
-            await self._maybe_publish_inventory()
             return
 
     # -----------------------
@@ -267,60 +192,68 @@ class MinerBot(BaseAgent):
         return True
 
     async def _perform_mining_step(self):
-        if not self._current_bom:
+        if not self._current_bom or self.state == AgentState.PAUSED:
             return
 
-        if self.state == AgentState.PAUSED:
-            return
-
-        # pick target and attempt to lock sector before mining
-        try:
-            target = await self._strategy.next_target()
-            sector = (int(target[0]) // 16, int(target[2]) // 16)  # example sector granularity
-            got = await self._locks.acquire(sector, timeout=0.5)
-            if not got:
-                logger.debug("Sector %s busy, skipping this target", sector)
+        if not hasattr(self, "assigned_area") or not self.assigned_area:
+            # solicitar área libre solo si no tenemos ninguna asignada
+            success = await self.request_single_area({"width": 16, "depth": 16})
+            if not success:
+                logger.debug("No se pudo asignar área, esperando próximo ciclo")
                 return
 
-            self._mining = True
-            logger.info("Mining at %s (sector=%s) using strategy=%s", target, sector, self._strategy_name)
+        rect = self.assigned_area
+        x1, z1, x2, z2 = rect["x1"], rect["z1"], rect["x2"], rect["z2"]
 
-            # simulate mining duration
-            await asyncio.sleep(0.05)
+        try:
+            # seleccionar coordenada de la estrategia dentro del área asignada
+            target = await self._strategy()
+            x, _, z = target
+            # asegurarse que el target esté dentro del área
+            x = max(x1, min(x, x2))
+            z = max(z1, min(z, z2))
 
-            # simulate material found (toy logic: alternating)
-            found_mat = self._simulate_material_from_target(target)
-            self.inventory[found_mat] = self.inventory.get(found_mat, 0) + 1
+            sector = (x // 16, z // 16)
+            logger.info(f"Mining at ({x}, {z}) (sector={sector}) strategy={self._strategy_name})")
 
-            # release lock
-            await self._locks.release(sector)
+            max_y = self.mc.getHeight(x, z)
+            if max_y == 0:
+                logger.debug(f"No blocks to mine at ({x},{z})")
+                return
 
-            # If BOM satisfied, publish immediate update
+            # excavar desde arriba hacia abajo
+            for y in range(max_y - 1, -1, -1):
+                block_type = self.mc.getBlock(x, y, z)
+                if block_type != 0:
+                    self.mc.setBlock(x, y, z, 0)
+                    mat_name = self._simulate_material_from_target((x, y, z))
+                    self.inventory[mat_name] += 1
+                    logger.info(f"Mined {mat_name} at ({x},{y},{z}) (simulated material, real block broken)")
+                    break  # solo un bloque por coordenada
+
             if self._bom_fulfilled(self._current_bom):
                 await self._publish_inventory(status="SUCCESS", final=False)
+
         except Exception:
             logger.exception("Exception during mining step")
-        finally:
-            self._mining = False
 
     def _simulate_material_from_target(self, target: Tuple[int, int, int]) -> str:
-        # Toy deterministic mapping for tests: even x → stone, odd x → iron (rare)
-        x, y, z = target
-        if (int(x) % 7) == 0:
-            return "iron"
-        if int(x) % 2 == 0:
-            return "stone"
-        return "wood"
+        """
+        Devuelve un material que aún falte en el BOM.
+        Simula minería cumpliendo la necesidad exacta del BOM.
+        """
+        if not self._current_bom:
+            return "stone"  # fallback
+
+        pending = [mat for mat, qty in self._current_bom.items() if self.inventory.get(mat, 0) < qty]
+        if not pending:
+            return list(self._current_bom.keys())[0]
+
+        return pending[0]
 
     # -----------------------
     # Publishing inventory
     # -----------------------
-    async def _maybe_publish_inventory(self):
-        now = time.time()
-        if now - self._last_publish >= MinerBot.INVENTORY_PUBLISH_INTERVAL:
-            await self._publish_inventory(status="RUNNING", final=False)
-            self._last_publish = now
-
     async def _publish_inventory(self, status="RUNNING", final: bool = False):
         if not self.bus:
             logger.debug("No bus configured, skipping inventory publish")
@@ -340,6 +273,71 @@ class MinerBot(BaseAgent):
             # optionally persist checkpoint on finalization
             await self.save_checkpoint()
 
+    # ---------------------------------------------------------
+    # Funciones para comunicacion con WorldstateBot
+    # ---------------------------------------------------------
+    async def request_single_area(self, required_area, timeout: float = 5.0):
+        """
+        Solicita un área libre de 16x16 a WorldStateBot y registra su uso.
+        Solo pide un área y luego la libera. La minería posterior
+        continuará en perceive/decide/act.
+        
+        mining_callback: async función que ejecuta minería dado (x, y, z)
+        timeout: tiempo máximo de espera de WorldState
+        """
+        future = asyncio.get_event_loop().create_future()
+
+        # callback temporal para recibir respuesta
+        async def _temp(msg):
+            if msg.get("type") != "worldstate.response":
+                return
+            if msg.get("target") not in (self.agent_id, "*"):
+                return
+            payload = msg.get("payload", {})
+            if not future.done():
+                future.set_result(payload)
+
+        self.bus.subscribe("worldstate.response", _temp)
+
+        # enviar solicitud
+        await self.bus.publish({
+            "type": "requestarea.v1",
+            "source": self.agent_id,
+            "target": "WorldStateBot",
+            "payload": required_area
+        })
+
+        rect = None
+        try:
+            result = await asyncio.wait_for(future, timeout=timeout)
+            rect = result.get("rect")  # {x1, z1, x2, z2}
+            if not rect:
+                logger.debug("WorldState no asignó área libre")
+                return False
+
+            logger.debug(f"Área asignada por WorldState: {rect}")
+
+            # marcar coordenadas en la instancia para minería real
+            self.assigned_area = rect
+            return True
+
+        except asyncio.TimeoutError:
+            logger.warning("Timeout esperando área libre de WorldState")
+            return False
+
+        finally:
+            # desuscribir callback temporal
+            self.bus.unsubscribe("worldstate.response", _temp)
+            # liberar área si se obtuvo
+            if rect:
+                await self.bus.publish({
+                    "type": "releasearea.v1",
+                    "source": self.agent_id,
+                    "target": "WorldStateBot",
+                    "payload": rect
+                })
+                logger.debug(f"Área liberada a WorldState: {rect}")
+
     # -----------------------
     # Control overrides
     # -----------------------
@@ -348,10 +346,6 @@ class MinerBot(BaseAgent):
         logger.info("MinerBot received update: %s", params)
         if "strategy" in params:
             self._strategy_name = params["strategy"]
-            self._strategy = self._create_strategy(self._strategy_name, params.get("strategy_params"))
-            logger.info("MinerBot strategy changed to %s", self._strategy_name)
-        if "clear_bom" in params and params["clear_bom"]:
-            self._current_bom = None
         await super().update(params)
 
     async def stop(self):
