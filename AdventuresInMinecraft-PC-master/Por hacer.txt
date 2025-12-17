@@ -1,6 +1,6 @@
 -Serializable
--MinerBot
--Commandos de control de worldstate
--Bloqueo de areas para minerbot
--Comprovar coordenadas antes de buscar en ellas en explorerbot
+-Factory de bots
 -Cambiar parser de commandos para aceptar 3 valores
+-Commandos faltanes (/pause /resume)
+-Cambio de uso de explorerbot para poder poner una pausa y resumen
+-Chekpoints reales

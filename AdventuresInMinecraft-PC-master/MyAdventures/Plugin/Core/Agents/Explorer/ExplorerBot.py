@@ -117,16 +117,32 @@ class ExplorerBot(BaseAgent):
     # ---------------------------------------------------------
     # PDA Methods
     # ---------------------------------------------------------
-    async def perceive(self) -> Dict[str, any]:
+    async def perceive(self):
         x0, z0 = self.center
         r = self.range
 
-        # coords según la estrategia seleccionada
         candidates = await self.search_strategy(self, x0, z0, r)
 
-        # construir height_map
+        validation = await self.validate_coords(candidates)
+
+        if not validation:
+            logger.warning("[EXPLORER] WorldStateBot no respondió")
+            return {"height_map": {}}
+
+        status = validation["status"]
+        valid_coords = validation["valid_coords"]
+
+        if status == "AREA_OCCUPIED":
+            logger.info("[EXPLORER] Área completamente ocupada, abortando exploración")
+            return {"height_map": {}}
+
+        logger.info(
+            f"[EXPLORER] Validación: {status} "
+            f"({len(valid_coords)}/{len(candidates)} coords válidas)"
+        )
+
         height_map = {}
-        for x, z in candidates:
+        for x, z in valid_coords:
             h = self.mc.getHeight(x, z)
             height_map[(x, z)] = h
             logger.info(f"[EXPLORER] Perciviendo coordenadas ({x},{z}) con altura {h}")
@@ -201,31 +217,35 @@ class ExplorerBot(BaseAgent):
     async def act(self, decision):
         rect = decision.get("best_rectangle")
 
-        # Logging
-        if rect:
-            logger.info(f"[EXPLORER] Mejor rectángulo: "
-                        f"({rect['x1']},{rect['z1']}) → ({rect['x2']},{rect['z2']}), "
-                        f"area={rect['area']}, y={rect['y']}")
-        else:
-            logger.info("[EXPLORER] No se ha encontrado ninguna zona plana utilizable.")
+        # --- 1. NO hay rectángulo válido → no guardar nada ---
+        if rect is None:
+            logger.info("[EXPLORER] No hay rectángulo válido, no se guarda nada")
+            await self._publish_map(None)
+            await self._handle_next_or_idle()
+            return
 
+        # --- 2. Logging del rectángulo encontrado ---
+        logger.info(
+            f"[EXPLORER] Mejor rectángulo: "
+            f"({rect['x1']},{rect['z1']}) → ({rect['x2']},{rect['z2']}), "
+            f"area={rect['area']}, y={rect['y']}"
+        )
+
+        # --- 3. Guardar área en WorldState ---
         result = await self.save_area_clean(rect)
 
         if result is None:
             logger.warning("[EXPLORER] No response from WorldStateBot (timeout)")
+        elif result.get("status") != "OK":
+            logger.info(
+                f"[EXPLORER] WorldStateBot rechazó el área: {result}"
+            )
         else:
-            logger.info(f"[EXPLORER] WorldStateBot confirmed savearea: {result}")
+            logger.info("[EXPLORER] Área guardada correctamente en WorldState")
             await self._publish_map(rect)
 
-        # Resto igual
-        if self._queued_request:
-            x, z, r = self._queued_request
-            self._queued_request = None
-            self.center = (x, z)
-            self.range = r
-            logger.info(f"[EXPLORER] Switching to queued request: ({x},{z}) r={r}")
-        else:
-            await self.idle()
+        # --- 4. Continuar flujo normal ---
+        await self._handle_next_or_idle()
 
     # ---------------------------------------------------------
     # Helpers
@@ -311,9 +331,52 @@ class ExplorerBot(BaseAgent):
         else:
             logger.info("[EXPLORER] Published map.v1 (no rectangle found)")
 
+    async def _handle_next_or_idle(self):
+        if self._queued_request:
+            x, z, r = self._queued_request
+            self._queued_request = None
+            self.center = (x, z)
+            self.range = r
+            logger.info(
+                f"[EXPLORER] Switching to queued request: ({x},{z}) r={r}"
+            )
+        else:
+            await self.idle()
+
     # ---------------------------------------------------------
     # Funciones para comunicacion con WorldstateBot
     # ---------------------------------------------------------
+    async def validate_coords(self, coords, timeout=5.0):
+        future = asyncio.get_event_loop().create_future()
+
+        async def _temp(msg):
+            if msg.get("type") != "worldstate.response":
+                return
+            if msg.get("target") not in (self.agent_id, "*"):
+                return
+
+            payload = msg.get("payload", {})
+            if "status" in payload and not future.done():
+                future.set_result(payload)
+
+        self.bus.subscribe("worldstate.response", _temp)
+
+        await self.bus.publish({
+            "type": "validatecoords.v1",
+            "source": self.agent_id,
+            "target": "WorldStateBot",
+            "payload": {
+                "coords": coords
+            }
+        })
+
+        try:
+            return await asyncio.wait_for(future, timeout)
+        except asyncio.TimeoutError:
+            return None
+        finally:
+            self.bus.unsubscribe("worldstate.response", _temp)
+
     async def save_area_clean(self, rect: dict, timeout=5.0):
         """
         Envía un mensaje savearea.v1 a WorldStateBot y espera

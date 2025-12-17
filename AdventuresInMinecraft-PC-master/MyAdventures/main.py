@@ -65,7 +65,6 @@ async def main():
     register_bot(miner_bot)
     register_bot(builder_bot)
     register_bot(worldstate_bot)
-    # register_bot(miner_bot)
 
     logger.info("Bots registrados correctamente.")
 

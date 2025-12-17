@@ -25,8 +25,6 @@ class MinerBot(BaseAgent):
     - Support pause/resume/stop/update commands.
     """
 
-    INVENTORY_PUBLISH_INTERVAL = 1.0  # seconds
-
     def __init__(self, agent_id: str = "MinerBot", bus=None, mc=None, default_strategy: str = "grid"):
         super().__init__(agent_id, bus=bus)
         self.inventory: Dict[str, int] = defaultdict(int)  # e.g. {'stone': 10}
@@ -34,7 +32,6 @@ class MinerBot(BaseAgent):
         self._strategy_name = default_strategy
         self._strategy = None
         self.assigned_area = None
-        asyncio.create_task(self._init_strategy(default_strategy))
         self._bom_event = asyncio.Event()
         self.mc = mc
 
@@ -48,14 +45,17 @@ class MinerBot(BaseAgent):
     # -----------------------
     # Strategy factory
     # -----------------------
-    async def _init_strategy(self, name, params=None):
-        params = params or {}
-        if name.lower() == "vertical":
-            self._strategy = await vertical_strategy(**params)
-        elif name.lower() == "vein":
-            self._strategy = await vein_strategy(**params)
-        else:
-            self._strategy = await grid_strategy(**params)
+    async def _build_strategy(self, area):
+        name = (self._strategy_name or "grid").lower()
+
+        if name == "vertical":
+            return await vertical_strategy(area=area)
+
+        if name == "vein":
+            return await vein_strategy(area=area)
+
+        # default
+        return await grid_strategy(area=area)
 
     # -----------------------
     # Message handlers
@@ -103,13 +103,9 @@ class MinerBot(BaseAgent):
 
         payload = msg.get("payload", {})
 
-        # Actualizar rango si viene en payload
-        if "range" in payload:
-            self.range = int(payload["range"])
-
         # Actualizar estrategia si viene en payload
         if "strategy" in payload:
-            self.set_strategy(payload["strategy"])
+            self._strategy_name(payload["strategy"])
 
         # Llamar a update del BaseAgent para logger
         await super().update(payload)
@@ -174,9 +170,13 @@ class MinerBot(BaseAgent):
             return
         if action == "report_complete":
             await self._publish_inventory(status="SUCCESS", final=True)
-            # clear BOM to indicate done
+
+            # Liberar el área
+            await self.release_assigned_area()
+
             self._current_bom = None
             return
+
         if action == "mine":
             # perform a mining step according to strategy
             await self._perform_mining_step()
@@ -201,15 +201,23 @@ class MinerBot(BaseAgent):
             if not success:
                 logger.debug("No se pudo asignar área, esperando próximo ciclo")
                 return
+            
+        # inicializar estrategia después de obtener assigned_area
+        if not self._strategy:
+            area = self.assigned_area
+            self._strategy = await self._build_strategy(area)
 
+            
         rect = self.assigned_area
+            
         x1, z1, x2, z2 = rect["x1"], rect["z1"], rect["x2"], rect["z2"]
 
         try:
-            # seleccionar coordenada de la estrategia dentro del área asignada
+            # pasar área a la estrategia
             target = await self._strategy()
             x, _, z = target
-            # asegurarse que el target esté dentro del área
+
+            # asegurarse que esté dentro
             x = max(x1, min(x, x2))
             z = max(z1, min(z, z2))
 
@@ -301,7 +309,7 @@ class MinerBot(BaseAgent):
 
         # enviar solicitud
         await self.bus.publish({
-            "type": "requestarea.v1",
+            "type": "lockarea.v1",
             "source": self.agent_id,
             "target": "WorldStateBot",
             "payload": required_area
@@ -319,6 +327,7 @@ class MinerBot(BaseAgent):
 
             # marcar coordenadas en la instancia para minería real
             self.assigned_area = rect
+            self._strategy = None
             return True
 
         except asyncio.TimeoutError:
@@ -328,26 +337,68 @@ class MinerBot(BaseAgent):
         finally:
             # desuscribir callback temporal
             self.bus.unsubscribe("worldstate.response", _temp)
-            # liberar área si se obtuvo
-            if rect:
-                await self.bus.publish({
-                    "type": "releasearea.v1",
-                    "source": self.agent_id,
-                    "target": "WorldStateBot",
-                    "payload": rect
-                })
-                logger.debug(f"Área liberada a WorldState: {rect}")
+
+    async def release_assigned_area(self, timeout: float = 5.0):
+        """
+        Libera el área actualmente asignada mediante releasearea.v1,
+        esperando confirmación worldstate.response.
+        Sigue exactamente el mismo formato que request_single_area().
+        """
+        if not self.assigned_area:
+            logger.debug("[MINER] No assigned area to release.")
+            return True  # nada que liberar = éxito
+
+        rect_to_release = self.assigned_area
+
+        future = asyncio.get_event_loop().create_future()
+
+        # Callback temporal para capturar la respuesta
+        async def _temp(msg):
+            if msg.get("type") != "worldstate.response":
+                return
+            if msg.get("target") not in (self.agent_id, "*"):
+                return
+
+            payload = msg.get("payload", {})
+            if not future.done():
+                future.set_result(payload)
+
+        # Escuchar respuestas
+        self.bus.subscribe("worldstate.response", _temp)
+
+        # Enviar solicitud de liberación de área
+        await self.bus.publish({
+            "type": "releasearea.v1",
+            "source": self.agent_id,
+            "target": "WorldStateBot",
+            "payload": {"rect": rect_to_release}
+        })
+
+        logger.info(f"[MINER] Enviada solicitud de liberación del área: {rect_to_release}")
+
+        try:
+            # Esperar ACK
+            result = await asyncio.wait_for(future, timeout=timeout)
+
+            status = result.get("status", "UNKNOWN")
+            if status != "OK":
+                logger.warning(f"[MINER] WorldStateBot devolvió estado no OK al liberar área: {status}")
+                return False
+
+            logger.info(f"[MINER] Área liberada correctamente: {rect_to_release}")
+            self.assigned_area = None
+            return True
+
+        except asyncio.TimeoutError:
+            logger.warning("[MINER] Timeout esperando confirmación de liberación del área")
+            return False
+
+        finally:
+            self.bus.unsubscribe("worldstate.response", _temp)
 
     # -----------------------
     # Control overrides
     # -----------------------
-    async def update(self, params: Dict[str, Any]):
-        # handle dynamic reconfiguration (e.g., change strategy)
-        logger.info("MinerBot received update: %s", params)
-        if "strategy" in params:
-            self._strategy_name = params["strategy"]
-        await super().update(params)
-
     async def stop(self):
         # On stop, ensure locks released and save state
         logger.info("MinerBot stopping: releasing locks and saving checkpoint")
@@ -359,3 +410,12 @@ class MinerBot(BaseAgent):
         logger.info("MinerBot checkpoint: inventory=%s bom=%s", dict(self.inventory), self._current_bom)
         # In a complete implementation, persist to disk / DB here
 
+    async def status(self):
+        """Imprime el estado actual del bot en el logger"""
+        info = {
+            "agent_id": self.agent_id,
+            "state": self.state.value,
+            "locked_area": self.assigned_area,
+            "strategy": self._strategy_name,
+        }
+        logger.info("[EXPLORER STATUS] %s", info)

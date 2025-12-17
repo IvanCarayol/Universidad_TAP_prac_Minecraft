@@ -1,270 +1,155 @@
-[13:39:53] [Server thread/INFO]: Loading properties
-[13:39:53] [Server thread/INFO]: Default game type: CREATIVE
-[13:39:53] [Server thread/INFO]: Generating keypair
-[13:39:53] [Server thread/INFO]: Starting Minecraft server on *:25565
-[13:39:53] [Server thread/INFO]: Using default channel type
-[13:39:53] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
-[13:39:53] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
-[13:39:53] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[13:39:53] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
-[13:39:53] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[13:39:53] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
-[13:39:53] [Server thread/INFO]: Preparing level "world"
-[13:39:54] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
-[13:39:55] [Server thread/INFO]: Preparing spawn area: 26%
-[13:39:56] [Server thread/INFO]: Preparing spawn area: 76%
-[13:39:56] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
-[13:39:57] [Server thread/INFO]: Preparing spawn area: 54%
-[13:39:58] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
-[13:39:58] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
-[13:39:58] [Server thread/INFO]: [RaspberryJuice] Using port 4711
-[13:39:58] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
-[13:39:58] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
-[13:39:58] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
-[13:39:58] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[13:39:58] [Server thread/INFO]: Done (4,923s)! For help, type "help" or "?"
-[13:39:59] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
-[13:39:59] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:64733.
-[13:39:59] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
-[13:40:00] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:64735.
-[13:40:00] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
-[13:40:00] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
-[13:40:01] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 2097ms behind, skipping 41 tick(s)
-[13:40:05] [Server thread/INFO]: Fortcraft354[/127.0.0.1:64813] logged in with entity id 22 at ([world]-314.3452872310644, 72.87611571532355, -278.84222384545575)
-[13:40:11] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[13:41:32] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:64733.
-[13:41:32] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:64735.
-[13:41:37] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:64871.
-[13:41:37] [Thread-12/INFO]: [RaspberryJuice] Starting output thread!
-[13:41:37] [Thread-11/INFO]: [RaspberryJuice] Starting input thread
-[13:41:37] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:64872.
-[13:41:37] [Thread-13/INFO]: [RaspberryJuice] Starting input thread
-[13:41:37] [Thread-14/INFO]: [RaspberryJuice] Starting output thread!
-[13:41:41] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[13:41:46] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:64871.
-[13:41:46] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:64872.
-[13:48:33] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:65430.
-[13:48:33] [Thread-15/INFO]: [RaspberryJuice] Starting input thread
-[13:48:33] [Thread-16/INFO]: [RaspberryJuice] Starting output thread!
-[13:48:33] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:65431.
-[13:48:33] [Thread-18/INFO]: [RaspberryJuice] Starting output thread!
-[13:48:33] [Thread-17/INFO]: [RaspberryJuice] Starting input thread
-[13:48:34] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:65430.
-[13:48:34] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:65431.
-[13:48:52] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:65442.
-[13:48:52] [Thread-20/INFO]: [RaspberryJuice] Starting output thread!
-[13:48:52] [Thread-19/INFO]: [RaspberryJuice] Starting input thread
-[13:48:52] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:65443.
-[13:48:52] [Thread-22/INFO]: [RaspberryJuice] Starting output thread!
-[13:48:52] [Thread-21/INFO]: [RaspberryJuice] Starting input thread
-[13:48:56] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[13:50:53] [Thread-21/INFO]: [RaspberryJuice] Connection reset
-[13:50:53] [Thread-19/INFO]: [RaspberryJuice] Connection reset
-[13:50:54] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:65442.
-[13:50:54] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:65443.
-[13:51:35] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1107.
-[13:51:35] [Thread-24/INFO]: [RaspberryJuice] Starting output thread!
-[13:51:35] [Thread-23/INFO]: [RaspberryJuice] Starting input thread
-[13:51:35] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1108.
-[13:51:35] [Thread-25/INFO]: [RaspberryJuice] Starting input thread
-[13:51:35] [Thread-26/INFO]: [RaspberryJuice] Starting output thread!
-[13:51:37] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[13:52:43] [Thread-23/INFO]: [RaspberryJuice] Connection reset
-[13:52:43] [Thread-25/INFO]: [RaspberryJuice] Connection reset
-[13:52:43] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1107.
-[13:52:43] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1108.
-[13:53:30] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1240.
-[13:53:30] [Thread-27/INFO]: [RaspberryJuice] Starting input thread
-[13:53:30] [Thread-28/INFO]: [RaspberryJuice] Starting output thread!
-[13:53:31] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1241.
-[13:53:31] [Thread-30/INFO]: [RaspberryJuice] Starting output thread!
-[13:53:31] [Thread-29/INFO]: [RaspberryJuice] Starting input thread
-[13:53:33] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[13:56:24] [Thread-27/INFO]: [RaspberryJuice] Connection reset
-[13:56:24] [Thread-29/INFO]: [RaspberryJuice] Connection reset
-[13:56:24] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1240.
-[13:56:24] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1241.
-[13:56:27] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1383.
-[13:56:27] [Thread-32/INFO]: [RaspberryJuice] Starting output thread!
-[13:56:27] [Thread-31/INFO]: [RaspberryJuice] Starting input thread
-[13:56:27] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1385.
-[13:56:27] [Thread-33/INFO]: [RaspberryJuice] Starting input thread
-[13:56:27] [Thread-34/INFO]: [RaspberryJuice] Starting output thread!
-[13:56:29] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[13:59:02] [Thread-33/INFO]: [RaspberryJuice] Connection reset
-[13:59:02] [Thread-31/INFO]: [RaspberryJuice] Connection reset
-[13:59:03] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1383.
-[13:59:03] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1385.
-[13:59:08] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1526.
-[13:59:08] [Thread-36/INFO]: [RaspberryJuice] Starting output thread!
-[13:59:08] [Thread-35/INFO]: [RaspberryJuice] Starting input thread
-[13:59:09] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1528.
-[13:59:09] [Thread-38/INFO]: [RaspberryJuice] Starting output thread!
-[13:59:09] [Thread-37/INFO]: [RaspberryJuice] Starting input thread
-[13:59:11] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[13:59:26] [Thread-35/INFO]: [RaspberryJuice] Connection reset
-[13:59:26] [Thread-37/INFO]: [RaspberryJuice] Connection reset
-[13:59:26] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1526.
-[13:59:26] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1528.
-[14:00:57] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1638.
-[14:00:57] [Thread-39/INFO]: [RaspberryJuice] Starting input thread
-[14:00:57] [Thread-40/INFO]: [RaspberryJuice] Starting output thread!
-[14:00:57] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1639.
-[14:00:57] [Thread-42/INFO]: [RaspberryJuice] Starting output thread!
-[14:00:57] [Thread-41/INFO]: [RaspberryJuice] Starting input thread
-[14:00:59] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[14:03:10] [Thread-41/INFO]: [RaspberryJuice] Connection reset
-[14:03:10] [Thread-39/INFO]: [RaspberryJuice] Connection reset
-[14:03:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1638.
-[14:03:11] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1639.
-[14:03:15] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1741.
-[14:03:15] [Thread-44/INFO]: [RaspberryJuice] Starting output thread!
-[14:03:15] [Thread-43/INFO]: [RaspberryJuice] Starting input thread
-[14:03:15] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1742.
-[14:03:15] [Thread-45/INFO]: [RaspberryJuice] Starting input thread
-[14:03:15] [Thread-46/INFO]: [RaspberryJuice] Starting output thread!
-[14:03:16] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[14:03:58] [Thread-45/INFO]: [RaspberryJuice] Connection reset
-[14:03:58] [Thread-43/INFO]: [RaspberryJuice] Connection reset
-[14:03:58] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1741.
-[14:03:58] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1742.
-[14:04:11] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1846.
-[14:04:11] [Thread-48/INFO]: [RaspberryJuice] Starting output thread!
-[14:04:11] [Thread-47/INFO]: [RaspberryJuice] Starting input thread
-[14:04:11] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1849.
-[14:04:11] [Thread-50/INFO]: [RaspberryJuice] Starting output thread!
-[14:04:11] [Thread-49/INFO]: [RaspberryJuice] Starting input thread
-[14:04:13] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[14:04:26] [Thread-47/INFO]: [RaspberryJuice] Connection reset
-[14:04:26] [Thread-49/INFO]: [RaspberryJuice] Connection reset
-[14:04:26] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1846.
-[14:04:26] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1849.
-[14:04:33] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1886.
-[14:04:33] [Thread-51/INFO]: [RaspberryJuice] Starting input thread
-[14:04:33] [Thread-52/INFO]: [RaspberryJuice] Starting output thread!
-[14:04:33] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:1887.
-[14:04:33] [Thread-54/INFO]: [RaspberryJuice] Starting output thread!
-[14:04:33] [Thread-53/INFO]: [RaspberryJuice] Starting input thread
-[14:04:35] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[14:08:10] [Thread-51/INFO]: [RaspberryJuice] Connection reset
-[14:08:10] [Thread-53/INFO]: [RaspberryJuice] Connection reset
-[14:08:10] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1886.
-[14:08:10] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:1887.
-[14:08:16] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2132.
-[14:08:16] [Thread-56/INFO]: [RaspberryJuice] Starting output thread!
-[14:08:16] [Thread-55/INFO]: [RaspberryJuice] Starting input thread
-[14:08:16] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2133.
-[14:08:16] [Thread-58/INFO]: [RaspberryJuice] Starting output thread!
-[14:08:16] [Thread-57/INFO]: [RaspberryJuice] Starting input thread
-[14:08:18] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[14:08:24] [Thread-57/INFO]: [RaspberryJuice] Connection reset
-[14:08:24] [Thread-55/INFO]: [RaspberryJuice] Connection reset
-[14:08:24] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2132.
-[14:08:24] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2133.
-[14:09:26] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2226.
-[14:09:26] [Thread-59/INFO]: [RaspberryJuice] Starting input thread
-[14:09:26] [Thread-60/INFO]: [RaspberryJuice] Starting output thread!
-[14:09:26] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2230.
-[14:09:26] [Thread-62/INFO]: [RaspberryJuice] Starting output thread!
-[14:09:26] [Thread-61/INFO]: [RaspberryJuice] Starting input thread
-[14:09:28] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[14:09:30] [Thread-61/INFO]: [RaspberryJuice] Connection reset
-[14:09:30] [Thread-59/INFO]: [RaspberryJuice] Connection reset
-[14:09:30] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2226.
-[14:09:30] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2230.
-[14:11:10] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2329.
-[14:11:10] [Thread-63/INFO]: [RaspberryJuice] Starting input thread
-[14:11:10] [Thread-64/INFO]: [RaspberryJuice] Starting output thread!
-[14:11:10] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2331.
-[14:11:10] [Thread-66/INFO]: [RaspberryJuice] Starting output thread!
-[14:11:10] [Thread-65/INFO]: [RaspberryJuice] Starting input thread
-[14:11:12] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start[m
-[14:11:20] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2329.
-[14:11:20] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2331.
-[14:17:11] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2647.
-[14:17:11] [Thread-68/INFO]: [RaspberryJuice] Starting output thread!
-[14:17:11] [Thread-67/INFO]: [RaspberryJuice] Starting input thread
-[14:17:11] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:2648.
-[14:17:11] [Thread-69/INFO]: [RaspberryJuice] Starting input thread
-[14:17:11] [Thread-70/INFO]: [RaspberryJuice] Starting output thread!
-[14:17:58] [Netty Server IO #3/INFO]: <Fortcraft354> explorer set strategy=spiral range=10[m
-[14:18:04] [Netty Server IO #3/INFO]: <Fortcraft354> worldstate start[m
-[14:18:06] [Netty Server IO #3/INFO]: <Fortcraft354> miner start[m
-[14:18:14] [Netty Server IO #3/INFO]: <Fortcraft354> builder set schem=importar[m
-[14:18:16] [Netty Server IO #3/INFO]: <Fortcraft354> builder start[m
-[14:18:35] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start x=-290 z=-325[m
-[14:19:21] [Server thread/INFO]: Fortcraft354 issued server command: /tp 0 100 0
-[14:19:21] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 0.5, 100.0, 0.5]
-[14:19:36] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
-[14:19:36] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
-[14:19:57] [Server thread/INFO]: Fortcraft354 issued server command: /tp -290 100 -300
-[14:19:57] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to -289.5, 100.0, -299.5]
-[14:21:06] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2647.
-[14:21:06] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:2648.
-[14:24:17] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:3045.
-[14:24:17] [Thread-71/INFO]: [RaspberryJuice] Starting input thread
-[14:24:17] [Thread-72/INFO]: [RaspberryJuice] Starting output thread!
-[14:24:18] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:3048.
-[14:24:18] [Thread-74/INFO]: [RaspberryJuice] Starting output thread!
-[14:24:18] [Thread-73/INFO]: [RaspberryJuice] Starting input thread
-[14:24:23] [Netty Server IO #3/INFO]: <Fortcraft354> explorer set strategy=spiral range=10[m
-[14:24:26] [Netty Server IO #3/INFO]: <Fortcraft354> builder set schem=importar[m
-[14:24:29] [Netty Server IO #3/INFO]: <Fortcraft354> builder start[m
-[14:24:32] [Netty Server IO #3/INFO]: <Fortcraft354> miner start[m
-[14:24:35] [Netty Server IO #3/INFO]: <Fortcraft354> worldstate start[m
-[14:24:38] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start x=-290 z=-325[m
-[14:26:00] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
-[14:26:00] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
-[14:28:08] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:3045.
-[14:28:08] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:3048.
-[14:28:11] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:3265.
-[14:28:11] [Thread-76/INFO]: [RaspberryJuice] Starting output thread!
-[14:28:11] [Thread-75/INFO]: [RaspberryJuice] Starting input thread
-[14:28:11] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:3266.
-[14:28:11] [Thread-77/INFO]: [RaspberryJuice] Starting input thread
-[14:28:11] [Thread-78/INFO]: [RaspberryJuice] Starting output thread!
-[14:28:20] [Netty Server IO #3/INFO]: <Fortcraft354> builder set schem=importar[m
-[14:28:22] [Netty Server IO #3/INFO]: <Fortcraft354> builder start[m
-[14:28:41] [Netty Server IO #3/INFO]: <Fortcraft354> worldstate start[m
-[14:28:45] [Netty Server IO #3/INFO]: <Fortcraft354> miner start[m
-[14:28:49] [Netty Server IO #3/INFO]: <Fortcraft354> explorer set strategy=spiral range=10[m
-[14:29:01] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start x=-250 z=-315[m
-[14:29:05] [Server thread/INFO]: Fortcraft354 issued server command: /tp 0 100 0
-[14:29:05] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 0.5, 100.0, 0.5]
-[14:30:53] [Server thread/INFO]: Fortcraft354 issued server command: /tp -250 100 -300
-[14:30:53] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to -249.5, 100.0, -299.5]
-[14:31:10] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode spectator
-[14:31:10] [Server thread/INFO]: [Fortcraft354: Set own game mode to Spectator Mode]
-[14:31:13] [Server thread/INFO]: Fortcraft354 issued server command: /gamemode creative
-[14:31:13] [Server thread/INFO]: [Fortcraft354: Set own game mode to Creative Mode]
-[17:11:01] [Thread-75/INFO]: [RaspberryJuice] Connection reset
-[17:11:01] [Thread-77/INFO]: [RaspberryJuice] Connection reset
-[17:11:01] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:3265.
-[17:11:01] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:3266.
-[17:11:09] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:9511.
-[17:11:09] [Thread-79/INFO]: [RaspberryJuice] Starting input thread
-[17:11:09] [Thread-80/INFO]: [RaspberryJuice] Starting output thread!
-[17:11:10] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:9512.
-[17:11:10] [Thread-82/INFO]: [RaspberryJuice] Starting output thread!
-[17:11:10] [Thread-81/INFO]: [RaspberryJuice] Starting input thread
-[17:11:15] [Netty Server IO #3/INFO]: <Fortcraft354> miner start[m
-[17:11:21] [Netty Server IO #3/INFO]: <Fortcraft354> builder set schem=importar[m
-[17:11:24] [Netty Server IO #3/INFO]: <Fortcraft354> builder start[m
-[17:11:27] [Netty Server IO #3/INFO]: <Fortcraft354> worldstate start[m
-[17:11:31] [Netty Server IO #3/INFO]: <Fortcraft354> explorer set strategy=spiral range=10[m
-[17:11:43] [Netty Server IO #3/INFO]: <Fortcraft354> explorer start x=-270 z=-355[m
-[17:12:01] [Server thread/INFO]: Fortcraft354 issued server command: /tp 100 100 100
-[17:12:01] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 100.5, 100.0, 100.5]
-[17:12:36] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:9511.
-[17:12:36] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:9512.
-[17:15:20] [Server thread/INFO]: Stopping the server
-[17:15:20] [Server thread/INFO]: Stopping server
-[17:15:20] [Server thread/INFO]: [RaspberryJuice] Disabling RaspberryJuice v1.10
-[17:15:20] [Server thread/INFO]: [RaspberryJuice] Raspberry Juice Stopped
-[17:15:20] [Server thread/INFO]: Saving players
-[17:15:20] [Server thread/INFO]: Fortcraft354 lost connection: Server closed
-[17:15:20] [Server thread/INFO]: Fortcraft354 left the game
-[17:15:20] [Server thread/INFO]: Saving worlds
-[17:15:20] [Server thread/INFO]: Saving chunks for level 'world'/overworld
-[17:15:20] [Server thread/INFO]: Saving chunks for level 'world_nether'/the_nether
-[17:15:20] [Server thread/INFO]: Saving chunks for level 'world_the_end'/the_end
+[15:23:00] [Server thread/INFO]: Loading properties
+[15:23:00] [Server thread/INFO]: Default game type: CREATIVE
+[15:23:00] [Server thread/INFO]: Generating keypair
+[15:23:00] [Server thread/INFO]: Starting Minecraft server on *:25565
+[15:23:00] [Server thread/INFO]: Using default channel type
+[15:23:00] [Server thread/INFO]: This server is running CraftBukkit version git-Bukkit-ed8c725 (MC: 1.12) (Implementing API version 1.12-R0.1-SNAPSHOT)
+[15:23:01] [Server thread/INFO]: [RaspberryJuice] Loading RaspberryJuice v1.10
+[15:23:01] [Server thread/WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[15:23:01] [Server thread/WARN]: The server will make no attempt to authenticate usernames. Beware.
+[15:23:01] [Server thread/WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[15:23:01] [Server thread/WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[15:23:01] [Server thread/INFO]: Preparing level "world"
+[15:23:01] [Server thread/INFO]: Preparing start region for level 0 (Seed: 9163603543718235335)
+[15:23:02] [Server thread/INFO]: Preparing spawn area: 28%
+[15:23:03] [Server thread/INFO]: Preparing spawn area: 82%
+[15:23:03] [Server thread/INFO]: Preparing start region for level 1 (Seed: 9163603543718235335)
+[15:23:04] [Server thread/INFO]: Preparing spawn area: 51%
+[15:23:05] [Server thread/INFO]: Preparing start region for level 2 (Seed: 9163603543718235335)
+[15:23:05] [Server thread/INFO]: [RaspberryJuice] Enabling RaspberryJuice v1.10
+[15:23:05] [Server thread/INFO]: [RaspberryJuice] Using port 4711
+[15:23:05] [Server thread/INFO]: [RaspberryJuice] Using ABSOLUTE locations
+[15:23:05] [Server thread/INFO]: [RaspberryJuice] Using BOTH clicks for hits
+[15:23:05] [Server thread/INFO]: [RaspberryJuice] ThreadListener Started
+[15:23:05] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[15:23:05] [Server thread/INFO]: Done (4,800s)! For help, type "help" or "?"
+[15:25:33] [Thread-7/INFO]: [RaspberryJuice] Starting input thread
+[15:25:33] [Thread-8/INFO]: [RaspberryJuice] Starting output thread!
+[15:25:33] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16364.
+[15:25:34] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16368.
+[15:25:34] [Thread-10/INFO]: [RaspberryJuice] Starting output thread!
+[15:25:34] [Thread-9/INFO]: [RaspberryJuice] Starting input thread
+[15:26:12] [Server thread/INFO]: Fortcraft354[/127.0.0.1:16491] logged in with entity id 24 at ([world]-316.43846440022145, 72.0, -300.50250706185324)
+[15:26:27] [Server thread/INFO]: Fortcraft354 issued server command: /worldstate start
+[15:26:31] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate start[m
+[15:26:47] [Netty Server IO #2/INFO]: <Fortcraft354> miner start[m
+[15:26:56] [Netty Server IO #2/INFO]: <Fortcraft354> builder set schem=importar[m
+[15:27:01] [Netty Server IO #2/INFO]: <Fortcraft354> builder start[m
+[15:27:24] [Netty Server IO #2/INFO]: <Fortcraft354> explorer set range=10 strategy=spiral[m
+[15:27:44] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-383 z=-341[m
+[15:28:43] [Server thread/INFO]: Fortcraft354 issued server command: /tp 80 100 -53
+[15:28:43] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to 80.5, 100.0, -52.5]
+[15:29:27] [Server thread/INFO]: Fortcraft354 issued server command: /tp -300 100 -300
+[15:29:27] [Server thread/INFO]: [Fortcraft354: Teleported Fortcraft354 to -299.5, 100.0, -299.5]
+[15:38:22] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16364.
+[15:38:22] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16368.
+[15:38:32] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16912.
+[15:38:32] [Thread-11/INFO]: [RaspberryJuice] Starting input thread
+[15:38:32] [Thread-12/INFO]: [RaspberryJuice] Starting output thread!
+[15:38:32] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16913.
+[15:38:32] [Thread-13/INFO]: [RaspberryJuice] Starting input thread
+[15:38:32] [Thread-14/INFO]: [RaspberryJuice] Starting output thread!
+[15:38:38] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate start[m
+[15:38:40] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[15:38:51] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16912.
+[15:38:51] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16913.
+[15:38:55] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16936.
+[15:38:55] [Thread-15/INFO]: [RaspberryJuice] Starting input thread
+[15:38:55] [Thread-16/INFO]: [RaspberryJuice] Starting output thread!
+[15:38:55] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16938.
+[15:38:55] [Thread-17/INFO]: [RaspberryJuice] Starting input thread
+[15:38:55] [Thread-18/INFO]: [RaspberryJuice] Starting output thread!
+[15:38:57] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate start[m
+[15:38:58] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[15:39:14] [Netty Server IO #2/INFO]: <Fortcraft354> explorer set range=10 strategy=spiral[m
+[15:39:18] [Netty Server IO #2/INFO]: <Fortcraft354> miner start[m
+[15:39:21] [Netty Server IO #2/INFO]: <Fortcraft354> miner status[m
+[15:40:18] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16936.
+[15:40:18] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16938.
+[15:40:21] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16995.
+[15:40:21] [Thread-19/INFO]: [RaspberryJuice] Starting input thread
+[15:40:21] [Thread-20/INFO]: [RaspberryJuice] Starting output thread!
+[15:40:21] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:16996.
+[15:40:21] [Thread-21/INFO]: [RaspberryJuice] Starting input thread
+[15:40:21] [Thread-22/INFO]: [RaspberryJuice] Starting output thread!
+[15:40:23] [Netty Server IO #2/INFO]: <Fortcraft354> miner start[m
+[15:40:24] [Netty Server IO #2/INFO]: <Fortcraft354> miner status[m
+[15:40:33] [Netty Server IO #2/INFO]: <Fortcraft354> explorer set range=10 strategy=spiral[m
+[15:40:37] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate start[m
+[15:40:42] [Netty Server IO #2/INFO]: <Fortcraft354> builder set schem=importar[m
+[15:40:48] [Netty Server IO #2/INFO]: <Fortcraft354> builder start[m
+[15:41:08] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-420 z=-350[m
+[15:41:22] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[15:41:29] [Netty Server IO #2/INFO]: <Fortcraft354> miner status[m
+[15:41:44] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[15:41:57] [Netty Server IO #2/INFO]: <Fortcraft354> miner status[m
+[15:43:10] [Netty Server IO #2/INFO]: <Fortcraft354> miner status[m
+[15:43:16] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[15:43:42] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-420 z=-350[m
+[15:44:22] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[15:49:58] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16995.
+[15:49:58] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:16996.
+[16:10:25] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:18039.
+[16:10:25] [Thread-23/INFO]: [RaspberryJuice] Starting input thread
+[16:10:25] [Thread-24/INFO]: [RaspberryJuice] Starting output thread!
+[16:10:26] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:18045.
+[16:10:26] [Thread-26/INFO]: [RaspberryJuice] Starting output thread!
+[16:10:26] [Thread-25/INFO]: [RaspberryJuice] Starting input thread
+[16:10:40] [Netty Server IO #2/INFO]: <Fortcraft354> builder set schem=importar[m
+[16:10:42] [Netty Server IO #2/INFO]: <Fortcraft354> builder start[m
+[16:10:49] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate start[m
+[16:10:53] [Netty Server IO #2/INFO]: <Fortcraft354> miner start[m
+[16:10:58] [Netty Server IO #2/INFO]: <Fortcraft354> explorer set range=10 strategy=spiral[m
+[16:11:12] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-415 z=-400[m
+[16:11:36] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:18039.
+[16:11:36] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:18045.
+[16:12:05] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:18105.
+[16:12:05] [Thread-27/INFO]: [RaspberryJuice] Starting input thread
+[16:12:05] [Thread-28/INFO]: [RaspberryJuice] Starting output thread!
+[16:12:05] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:18106.
+[16:12:05] [Thread-29/INFO]: [RaspberryJuice] Starting input thread
+[16:12:05] [Thread-30/INFO]: [RaspberryJuice] Starting output thread!
+[16:12:09] [Netty Server IO #2/INFO]: <Fortcraft354> builder set schem=importar[m
+[16:12:12] [Netty Server IO #2/INFO]: <Fortcraft354> builder start[m
+[16:12:15] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate start[m
+[16:12:17] [Netty Server IO #2/INFO]: <Fortcraft354> miner start[m
+[16:12:21] [Netty Server IO #2/INFO]: <Fortcraft354> explorer set range=10 strategy=spiral[m
+[16:12:25] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-415 z=-400[m
+[16:13:31] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[16:13:38] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[16:14:17] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[16:14:21] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-415 z=-400[m
+[16:15:27] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-415 z=-400[m
+[16:21:59] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:18105.
+[16:21:59] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:18106.
+[16:22:02] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:18420.
+[16:22:02] [Thread-31/INFO]: [RaspberryJuice] Starting input thread
+[16:22:02] [Thread-32/INFO]: [RaspberryJuice] Starting output thread!
+[16:22:02] [Thread-5/INFO]: [RaspberryJuice] Opened connection to/127.0.0.1:18422.
+[16:22:02] [Thread-33/INFO]: [RaspberryJuice] Starting input thread
+[16:22:02] [Thread-34/INFO]: [RaspberryJuice] Starting output thread!
+[16:22:14] [Netty Server IO #2/INFO]: <Fortcraft354> builder set schem=importar[m
+[16:22:17] [Netty Server IO #2/INFO]: <Fortcraft354> builder start[m
+[16:22:19] [Netty Server IO #2/INFO]: <Fortcraft354> miner start[m
+[16:22:26] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate start[m
+[16:22:30] [Netty Server IO #2/INFO]: <Fortcraft354> explorer set range=10 strategy=spiral[m
+[16:22:36] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-450 z=-400[m
+[16:24:29] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[16:24:32] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-450 z=-400[m
+[16:25:41] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-450 z=-402[m
+[16:25:51] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[16:26:51] [Netty Server IO #2/INFO]: <Fortcraft354> explorer start x=-450 z=-402[m
+[16:26:53] [Netty Server IO #2/INFO]: <Fortcraft354> worldstate status[m
+[16:27:42] [Server thread/INFO]: Stopping the server
+[16:27:42] [Server thread/INFO]: Stopping server
+[16:27:42] [Server thread/INFO]: [RaspberryJuice] Disabling RaspberryJuice v1.10
+[16:27:42] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:18420.
+[16:27:42] [Server thread/INFO]: [RaspberryJuice] Closed connection to/127.0.0.1:18422.
+[16:27:42] [Server thread/INFO]: [RaspberryJuice] Raspberry Juice Stopped
+[16:27:42] [Server thread/INFO]: Saving players
+[16:27:42] [Server thread/INFO]: Fortcraft354 lost connection: Server closed
+[16:27:42] [Server thread/INFO]: Fortcraft354 left the game
+[16:27:43] [Server thread/INFO]: Saving worlds
+[16:27:43] [Server thread/INFO]: Saving chunks for level 'world'/overworld
+[16:27:43] [Server thread/INFO]: Saving chunks for level 'world_nether'/the_nether
+[16:27:43] [Server thread/INFO]: Saving chunks for level 'world_the_end'/the_end

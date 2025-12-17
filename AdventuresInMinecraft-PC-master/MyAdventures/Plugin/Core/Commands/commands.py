@@ -40,8 +40,16 @@ COMMANDS = {
         "description": "Inicia el bot WorldState",
         "params": [],
     },
+    "worldstate_status": {
+        "description": "Devuelve el estado de el bot",
+        "params": [],
+    },
     "miner_start": {
         "description": "Inicia el bot Miner",
+        "params": [],
+    },
+    "miner_status": {
+        "description": "Devuelve el estado de el bot",
         "params": [],
     },
 }
@@ -180,6 +188,7 @@ async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any
 
             type_map = {
                 "worldstate_start":  "command.worldstate.start.v1",
+                "worldstate_status":  "command.worldstate.status.v1",
             }
 
             msg_type = type_map.get(cmd)
@@ -194,7 +203,7 @@ async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any
             }
 
             await bot.bus.publish(msg)
-            return f"[BuilderBot] recibió comando: {cmd} {params}"
+            return f"[Worldstate] recibió comando: {cmd} {params}"
 
         return f"Comando válido pero ningún bot lo gestiona: {cmd}"
 
