@@ -1,6 +1,14 @@
 -Serializable
 -Factory de bots
 -Cambiar parser de commandos para aceptar 3 valores
--Commandos faltanes (/pause /resume)
--Cambio de uso de explorerbot para poder poner una pausa y resumen
 -Chekpoints reales
+
+-Minerbot pasa materiales por worldstate para prevenir problemas futuros de /stop
+
+-explorerbot y minerbot pasan partes parciales si se les hace /stop
+
+-Explorerbot cambia su logica de percieve
+
+-Implementar pause/resume
+
+-Bots quedan escuchando un bus de "error" si no les responde worldstate y este revisa los timestamps para responder por error.
