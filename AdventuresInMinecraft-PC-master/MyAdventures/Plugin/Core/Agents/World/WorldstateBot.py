@@ -1,6 +1,7 @@
 import asyncio
 import random
 from typing import Any, Dict
+from collections import defaultdict
 from ..BaseAgent import BaseAgent
 from ...Logger.logging_config import get_logger
 
@@ -45,9 +46,14 @@ class WorldStateBot(BaseAgent):
         self._inbox = asyncio.Queue()
         self._msg_event = asyncio.Event()
 
+        # Estado global de materiales
+        self.materials = defaultdict(int)
+
         # Subscripciones
         self.bus.subscribe("command.worldstate.start.v1", self._on_start_cmd)
         self.bus.subscribe("command.worldstate.status.v1", self._on_control)
+        self.bus.subscribe("materials.check.v1", self.on_message)
+        self.bus.subscribe("materials.report.v1", self.on_message)
         self.bus.subscribe("savearea.v1", self.on_message)
         self.bus.subscribe("requestarea.v1", self.on_message)
         self.bus.subscribe("releasearea.v1", self.on_message)
@@ -120,7 +126,15 @@ class WorldStateBot(BaseAgent):
 
         elif mtype == "validatecoords.v1":
             return ("VALIDATE_COORDS", sender, payload)
-
+        
+        elif mtype == "materials.report.v1":
+            materials = payload.get("materials")
+            return ("STORE_MATERIALS", sender, materials)
+        
+        elif mtype == "materials.check.v1":
+            materials = payload.get("materials")
+            return ("CHECK_MATERIALS", sender, materials)
+        
         else:
             return ("UNKNOWN", sender, msg)
 
@@ -188,6 +202,31 @@ class WorldStateBot(BaseAgent):
         if action == "VALIDATE_COORDS":
             sender, payload = decision[1], decision[2]
             result = await self._validate_coords(payload)
+
+            await self.bus.publish({
+                "type": "worldstate.response",
+                "source": self.agent_id,
+                "target": sender,
+                "payload": result
+            })
+            return
+
+        if action == "STORE_MATERIALS":
+            sender, materials = decision[1], decision[2]
+            result = await self._store_materials(sender, materials)
+
+            await self.bus.publish({
+                "type": "worldstate.response",
+                "source": self.agent_id,
+                "target": sender,
+                "payload": result
+            })
+            return
+        
+        if action == "CHECK_MATERIALS":
+            sender, mats = decision[1], decision[2]
+
+            result = await self._check_and_consume_materials(sender, mats)
 
             await self.bus.publish({
                 "type": "worldstate.response",
@@ -375,7 +414,72 @@ class WorldStateBot(BaseAgent):
             "valid_coords": valid
         }
 
-                
+    async def _store_materials(self, agent_id, materials):
+        if not materials or not isinstance(materials, dict):
+            logger.warning(
+                f"[WORLDSTATE] Invalid materials payload from {agent_id}: {materials}"
+            )
+            return {
+                "kind": "materials",
+                "status": "INVALID_REQUEST"
+            }
+
+        async with self._lock:
+            for mat, qty in materials.items():
+                if not isinstance(qty, int) or qty <= 0:
+                    continue
+                self.materials[mat] += qty
+
+            logger.info(
+                f"[WORLDSTATE] Materials stored from {agent_id}: {materials}"
+            )
+            logger.info(
+                f"[WORLDSTATE] Global materials state: {dict(self.materials)}"
+            )
+
+        return {
+            "kind": "materials",
+            "status": "OK",
+            "stored": dict(materials)
+        }
+
+    async def _check_and_consume_materials(self, agent_id, required):
+        if not required or not isinstance(required, dict):
+            return {
+                "kind": "materials",
+                "status": "INVALID_REQUEST"
+            }
+
+        missing = {}
+
+        async with self._lock:
+            for mat, qty in required.items():
+                available = self.materials.get(mat, 0)
+                if available < qty:
+                    missing[mat] = qty - available
+
+            if missing:
+                return {
+                    "kind": "materials",
+                    "status": "INSUFFICIENT",
+                    "missing": missing
+                }
+
+            for mat, qty in required.items():
+                self.materials[mat] -= qty
+                if self.materials[mat] <= 0:
+                    del self.materials[mat]
+
+            logger.info(
+                f"[WORLDSTATE] Materials consumed by {agent_id}: {required}"
+            )
+
+        return {
+            "kind": "materials",
+            "status": "OK"
+        }
+
+   
     # ---------------------------------------------------------
     # Control Overloads
     # ---------------------------------------------------------
@@ -383,6 +487,7 @@ class WorldStateBot(BaseAgent):
         """Imprime el estado actual del bot en el logger"""
         info = {
             "areas": self.flat_areas,
+            "materials": self.materials,
             "messages": self._inbox,
         }
         logger.info("[WORLDSTATE STATUS] %s", info)

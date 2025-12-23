@@ -74,6 +74,7 @@ class BuilderBot(BaseAgent):
         self._template_name = list(TEMPLATES.keys())[0]  # default first template
         self._bom = None
         self._material_inventory = {}
+        self._materials_reserved = False
         self._build_progress = 0
         self._build_plan = None
         self._map_event = asyncio.Event()
@@ -176,6 +177,7 @@ class BuilderBot(BaseAgent):
         }
 
     async def decide(self, p):
+
         if p["map"] is None:
             tpl = TEMPLATES[p["template"]]
             req_area = {
@@ -192,18 +194,29 @@ class BuilderBot(BaseAgent):
         if p["bom"] is None:
             return {"action": "compute_bom"}
 
-        if not self._materials_ready(p["bom"], p["inventory"]):
-            await self.bus.publish({
-                "type": "bom.v1",
-                "source": self.agent_id,         # "BuilderBot"
-                "target": "MinerBot",            # para que solo él lo procese
-                "payload": p["bom"],             # diccionario de materiales requeridos
-                "context": {
-                    "task_id": f"BLD-{self.agent_id}"
-                }
-            })
-            self.set_state(AgentState.WAITING, "Need materials")
-            return {"action": "wait_for_materials"}
+        if not self._materials_reserved:
+            result = await self.check_and_consume_materials(p["bom"])
+
+            if result["status"] == "INSUFFICIENT":
+                # pedir SOLO lo que falta
+                self._bom = result["missing"]
+
+                await self.bus.publish({
+                    "type": "bom.v1",
+                    "source": self.agent_id,
+                    "target": "MinerBot",
+                    "payload": self._bom,
+                    "context": {"task_id": f"BLD-{self.agent_id}"}
+                })
+
+                self.set_state(AgentState.WAITING, "Waiting for materials")
+                return {"action": "wait_for_materials"}
+
+            if result["status"] != "OK":
+                self.set_state(AgentState.WAITING, "Material check failed")
+                return {"action": "wait"}
+
+            self._materials_reserved = True
 
         if self._build_plan is None:
             await self._make_build_plan()
@@ -257,17 +270,26 @@ class BuilderBot(BaseAgent):
 
     async def _compute_and_send_bom(self):
         tpl = TEMPLATES[self._template_name]
-        self._bom = dict(tpl["materials"])
+        full_bom = dict(tpl["materials"])
+
+        missing = await self.check_materials_with_worldstate(full_bom)
+
+        if not missing:
+            logger.info("[BUILDER] All materials already available in WorldState")
+            self._bom = full_bom
+            return
+
+        self._bom = missing
 
         msg = self.build_message(
             "materials.requirements.v1",
             "MinerBot",
-            payload=self._bom,
+            payload=missing,
             context={"template": self._template_name}
         )
         await self.bus.publish(msg)
 
-        logger.info("[BUILDER] Published BOM: %s", self._bom)
+        logger.info("[BUILDER] Published BOM (missing only): %s", missing)
 
     def _materials_ready(self, bom, inv):
         return all(inv.get(k, 0) >= v for k, v in bom.items())
@@ -342,6 +364,7 @@ class BuilderBot(BaseAgent):
         self._build_progress = 0
         self._build_plan = None
         self._bom = None
+        self._materials_reserved = False
         self._material_inventory = {}
 
     def list(self):
@@ -431,6 +454,40 @@ class BuilderBot(BaseAgent):
             # liberar suscripción temporal
             self.bus.unsubscribe("worldstate.response", _temp)
         
+    async def check_and_consume_materials(self, bom, timeout=5.0):
+        future = asyncio.get_event_loop().create_future()
+
+        async def _temp(msg):
+            if msg.get("type") != "worldstate.response":
+                return
+            if msg.get("target") not in (self.agent_id, "*"):
+                return
+
+            payload = msg.get("payload", {})
+            if payload.get("kind") != "materials":
+                return
+
+            if not future.done():
+                future.set_result(payload)
+
+        self.bus.subscribe("worldstate.response", _temp)
+
+        await self.bus.publish({
+            "type": "materials.check.v1",
+            "source": self.agent_id,
+            "target": "WorldStateBot",
+            "payload": {
+                "materials": bom
+            }
+        })
+
+        try:
+            return await asyncio.wait_for(future, timeout)
+        except asyncio.TimeoutError:
+            return {"status": "TIMEOUT"}
+        finally:
+            self.bus.unsubscribe("worldstate.response", _temp)
+
     # ---------------------------------------------------------
     # Control Overloads
     # ---------------------------------------------------------

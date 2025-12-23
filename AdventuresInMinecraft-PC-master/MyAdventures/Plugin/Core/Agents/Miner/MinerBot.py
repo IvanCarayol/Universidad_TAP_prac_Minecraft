@@ -168,15 +168,19 @@ class MinerBot(BaseAgent):
 
             logger.info("[MINER] Bom arrived! Reasuming work.")
             return
+        
         if action == "report_complete":
             await self._publish_inventory(status="SUCCESS", final=True)
 
-            # Liberar el área
+            # 👉 NUEVO
+            await self.report_materials_to_worldstate()
+
+            # liberar área
             await self.release_assigned_area()
 
             self._current_bom = None
             return
-
+        
         if action == "mine":
             # perform a mining step according to strategy
             await self._perform_mining_step()
@@ -391,6 +395,60 @@ class MinerBot(BaseAgent):
 
         except asyncio.TimeoutError:
             logger.warning("[MINER] Timeout esperando confirmación de liberación del área")
+            return False
+
+        finally:
+            self.bus.unsubscribe("worldstate.response", _temp)
+
+    async def report_materials_to_worldstate(self, timeout: float = 5.0):
+        if not self.inventory:
+            logger.info("[MINER] Inventory vacío, no se reporta nada a WorldState")
+            return True
+
+        future = asyncio.get_event_loop().create_future()
+
+        async def _temp(msg):
+            if msg.get("type") != "worldstate.response":
+                return
+            if msg.get("target") not in (self.agent_id, "*"):
+                return
+
+            payload = msg.get("payload", {})
+            if payload.get("kind") != "materials":
+                return
+
+            if not future.done():
+                future.set_result(payload)
+
+        self.bus.subscribe("worldstate.response", _temp)
+
+        await self.bus.publish({
+            "type": "materials.report.v1",
+            "source": self.agent_id,
+            "target": "WorldStateBot",
+            "payload": {
+                "materials": dict(self.inventory)
+            },
+            "context": {
+                "task_id": "auto"
+            }
+        })
+
+        logger.info("[MINER] Reportando materiales a WorldState: %s", dict(self.inventory))
+
+        try:
+            result = await asyncio.wait_for(future, timeout=timeout)
+            status = result.get("status", "UNKNOWN")
+
+            if status != "OK":
+                logger.warning("[MINER] WorldState no confirmó materiales: %s", status)
+                return False
+
+            logger.info("[MINER] WorldState confirmó guardado de materiales")
+            return True
+
+        except asyncio.TimeoutError:
+            logger.warning("[MINER] Timeout esperando confirmación de WorldState (materiales)")
             return False
 
         finally:

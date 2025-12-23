@@ -3,8 +3,6 @@
 -Cambiar parser de commandos para aceptar 3 valores
 -Chekpoints reales
 
--Minerbot pasa materiales por worldstate para prevenir problemas futuros de /stop
-
 -explorerbot y minerbot pasan partes parciales si se les hace /stop
 
 -Explorerbot cambia su logica de percieve
