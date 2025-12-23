@@ -272,7 +272,7 @@ class BuilderBot(BaseAgent):
         tpl = TEMPLATES[self._template_name]
         full_bom = dict(tpl["materials"])
 
-        missing = await self.check_materials_with_worldstate(full_bom)
+        missing = await self.check_and_consume_materials(full_bom)
 
         if not missing:
             logger.info("[BUILDER] All materials already available in WorldState")
