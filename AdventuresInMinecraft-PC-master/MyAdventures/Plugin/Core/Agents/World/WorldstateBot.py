@@ -462,20 +462,21 @@ class WorldStateBot(BaseAgent):
         if not bom or not isinstance(bom, list):
             return {"kind": "materials", "status": "INVALID_REQUEST"}
 
+        # --- 0️⃣ Normalizar y agregar cantidades ---
+        agg_bom = defaultdict(int)
+        for item in bom:
+            mat = normalize_material_name(item["material"])
+            qty = item.get("qty", 0)
+            agg_bom[mat] += qty
+
         missing = []
 
         async with self._lock:
-            # 1️⃣ Verificar disponibilidad sumando todas las cantidades normalizadas
-            for item in bom:
-                mat = normalize_material_name(item["material"])
-                qty = item["qty"]
+            # --- 1️⃣ Verificar disponibilidad ---
+            for mat, qty in agg_bom.items():
                 available = self.materials.get(mat, 0)
-
                 if available < qty:
-                    missing.append({
-                        "material": mat,
-                        "qty": qty - available
-                    })
+                    missing.append({"material": mat, "qty": qty - available})
 
             if missing:
                 return {
@@ -484,10 +485,9 @@ class WorldStateBot(BaseAgent):
                     "missing": missing
                 }
 
-            # 2️⃣ Consumir materiales
-            for item in bom:
-                mat = normalize_material_name(item["material"])
-                self.materials[mat] -= item["qty"]
+            # --- 2️⃣ Consumir materiales ---
+            for mat, qty in agg_bom.items():
+                self.materials[mat] -= qty
                 if self.materials[mat] <= 0:
                     del self.materials[mat]
 

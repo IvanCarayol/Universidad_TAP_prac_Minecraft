@@ -178,10 +178,10 @@ class MinerBot(BaseAgent):
             return
         
         if action == "report_complete":
-            await self._publish_inventory(status="SUCCESS", final=True)
-
             # 👉 NUEVO
             await self.report_materials_to_worldstate()
+
+            await self._publish_inventory(status="SUCCESS", final=True)
 
             # liberar área
             await self.release_assigned_area()
@@ -198,9 +198,22 @@ class MinerBot(BaseAgent):
     # Mining internals
     # -----------------------
     def _bom_fulfilled(self, bom) -> bool:
+        """
+        Revisa si el inventario cumple con todas las cantidades requeridas en la BOM,
+        consolidando entradas repetidas de un mismo material.
+        """
+        counter = defaultdict(int)
+
+        # Sumar todas las cantidades por material
         for item in bom:
-            if self.inventory.get(item["material"], 0) < item["qty"]:
+            mat = item["material"]  # usar tal cual está
+            counter[mat] += item["qty"]
+
+        # Comparar con el inventario
+        for mat, qty in counter.items():
+            if self.inventory.get(mat, 0) < qty:
                 return False
+
         return True
 
     async def _perform_mining_step(self):
@@ -251,22 +264,29 @@ class MinerBot(BaseAgent):
                     logger.info(f"Mined {mat_name} at ({x},{y},{z}) (simulated material, real block broken)")
                     break  # solo un bloque por coordenada
 
-            if self._bom_fulfilled(self._current_bom):
-                await self._publish_inventory(status="SUCCESS", final=False)
-
         except Exception:
             logger.exception("Exception during mining step")
 
     def _simulate_material_from_target(self, target):
+        """
+        Decide cuál material minar según lo que falta del inventario
+        comparado con la BOM consolidada.
+        """
         if not self._current_bom:
             return "stone"
 
-        pending = [
-            item for item in self._current_bom
-            if self.inventory.get(item["material"], 0) < item["qty"]
-        ]
+        # Consolidar la BOM
+        counter = defaultdict(int)
+        for item in self._current_bom:
+            counter[item["material"]] += item["qty"]
 
-        return pending[0]["material"] if pending else self._current_bom[0]["material"]
+        # Encontrar material que aún falta
+        for mat, qty in counter.items():
+            if self.inventory.get(mat, 0) < qty:
+                return mat
+
+        # Si todo está lleno, devolver el primero
+        return list(counter.keys())[0]
 
     # -----------------------
     # Publishing inventory
@@ -280,7 +300,7 @@ class MinerBot(BaseAgent):
             "source": self.agent_id,
             "target": "BuilderBot",
             "timestamp": None,  # bus may set timestamp
-            "payload": dict(self.inventory),
+            "payload": None, # no es necesario ya que se mira en worldstate
             "status": status,
             "context": {"task_id": "auto", "state": self.state.value}
         }

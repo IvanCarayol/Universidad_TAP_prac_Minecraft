@@ -79,7 +79,6 @@ class BuilderBot(BaseAgent):
         self._valid_area: Optional[Dict[str, Any]] = None
         self._template_name = list(TEMPLATES.keys())[0]  # default first template
         self._bom: Optional[list[dict]] = None
-        self._material_inventory = {}
         self._materials_reserved = False
         self._build_progress = 0
         self._build_plan = None
@@ -117,9 +116,6 @@ class BuilderBot(BaseAgent):
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
-        payload = msg.get("payload", {})
-        self._material_inventory = payload
-        logger.info("[INVENTORY] Updated: %s", payload)
         self._bom_event.set()
 
     async def _on_start_cmd(self, msg: Dict[str, Any]):
@@ -176,7 +172,6 @@ class BuilderBot(BaseAgent):
     async def perceive(self):
         return {
             "map": self._valid_area,
-            "inventory": dict(self._material_inventory),
             "bom": list(self._bom) if self._bom else None,
             "template": self._template_name,
             "build_progress": self._build_progress,
@@ -372,7 +367,7 @@ class BuilderBot(BaseAgent):
         self._build_plan = None
         self._bom = None
         self._materials_reserved = False
-        self._material_inventory = {}
+
 
     def list(self):
         """Print available templates and current selection via logger only."""
