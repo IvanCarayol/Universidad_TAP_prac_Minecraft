@@ -1,6 +1,7 @@
 # core/agent_base.py
 
 import asyncio
+import json
 from enum import Enum
 from typing import Any, Dict, Optional
 import datetime
@@ -38,11 +39,17 @@ class BaseAgent:
         self.agent_id = agent_id
         self.bus = bus
 
+        self.logger = get_logger(name=agent_id)
+
         self._state: AgentState = AgentState.IDLE
         self._task: Optional[asyncio.Task] = None
         self._should_stop = False
 
-        logger.info(f"[INIT] Agent '{agent_id}' created")
+        self.logger.info(json.dumps({
+            "event": "agent_init", 
+            "agent_id": agent_id,
+            "timestamp": datetime.datetime.utcnow().isoformat() + "Z"
+        }))
 
     # -----------------------------------------------------
     #  State helpers
@@ -54,9 +61,16 @@ class BaseAgent:
     def set_state(self, new_state: AgentState, reason: str = ""):
         prev = self._state
         self._state = new_state
-        logger.info(
-            f"[STATE] {self.agent_id}: {prev.value} → {new_state.value} | reason={reason}"
-        )
+
+        transition_record = {
+            "type": "state_change",
+            "agent_id": self.agent_id,
+            "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+            "previous_state": prev.value,
+            "next_state": new_state.value,
+            "reason": reason
+        }
+        self.logger.info(json.dumps(transition_record))
 
     # -----------------------------------------------------
     #  Control commands
@@ -65,6 +79,12 @@ class BaseAgent:
         """Start the agent loop (safe)."""
         if self._task and not self._task.done():
             logger.warning(f"[START] Agent '{self.agent_id}' already running")
+            self.logger.warning(json.dumps({
+                "event": "start_failed",
+                "reason": "already_running",
+                "agent_id": self.agent_id
+            }))
+
             return
 
         self._should_stop = False
@@ -76,6 +96,10 @@ class BaseAgent:
     async def stop(self):
         """Stop the agent WITHOUT causing it to await on itself."""
         logger.info(f"[STOP] Stopping agent '{self.agent_id}'...")
+        self.logger.info(json.dumps({
+            "event": "stopping_sequence",
+            "agent_id": self.agent_id
+        }))
 
         self._should_stop = True
 
@@ -91,6 +115,11 @@ class BaseAgent:
             except asyncio.CancelledError:
                 pass
             except Exception as e:
+                self.logger.error(json.dumps({
+                    "event": "stop_error", 
+                    "agent_id": self.agent_id,
+                    "error": str(e)
+                }))
                 logger.error(f"[STOP ERROR] {e}")
 
         self.set_state(AgentState.STOPPED, "stop command")
@@ -112,6 +141,11 @@ class BaseAgent:
 
     async def update(self, params: Dict[str, Any]):
         logger.info(f"[UPDATE] {self.agent_id} updated with params={params}")
+        self.logger.info(json.dumps({
+            "event": "update_params",
+            "agent_id": self.agent_id,
+            "params": params
+        }))
 
     # -----------------------------------------------------
     #  PDA LOOP
@@ -144,6 +178,12 @@ class BaseAgent:
 
         except Exception as e:
             logger.exception(f"[ERROR] Agent '{self.agent_id}' crashed: {e}")
+            self.logger.exception(json.dumps({
+                "event": "crash",
+                "agent_id": self.agent_id,
+                "error": str(e)
+            }))
+            
             self.set_state(AgentState.ERROR, str(e))
             await self.save_checkpoint()
 
@@ -169,6 +209,10 @@ class BaseAgent:
     # -----------------------------------------------------
     async def save_checkpoint(self):
         logger.info(f"[CHECKPOINT] Saved data for {self.agent_id}")
+        self.logger.info(json.dumps({
+            "event": "checkpoint_saved",
+            "agent_id": self.agent_id
+        }))
 
 
     # -----------------------------------------------------
