@@ -118,87 +118,87 @@ class ExplorerBot(BaseAgent):
     # PDA Methods
     # ---------------------------------------------------------
     async def perceive(self):
-        x0, z0 = self.center
-        r = self.range
-
-        candidates = await self.search_strategy(self, x0, z0, r)
-
-        validation = await self.validate_coords(candidates)
-
-        if not validation:
-            logger.warning("[EXPLORER] WorldStateBot no respondió")
-            return {"height_map": {}}
-
-        status = validation["status"]
-        valid_coords = validation["valid_coords"]
-
-        if status == "AREA_OCCUPIED":
-            logger.info("[EXPLORER] Área completamente ocupada, abortando exploración")
-            return {"height_map": {}}
-
-        logger.info(
-            f"[EXPLORER] Validación: {status} "
-            f"({len(valid_coords)}/{len(candidates)} coords válidas)"
-        )
-
-        height_map = {}
-        for x, z in valid_coords:
-            h = self.mc.getHeight(x, z)
-            height_map[(x, z)] = h
-            logger.info(f"[EXPLORER] Perciviendo coordenadas ({x},{z}) con altura {h}")
-            await asyncio.sleep(self.SCAN_DELAY)
-
-        return {"height_map": height_map}
-
-    async def decide(self, percept: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Detecta el rectángulo más grande para cualquier altura encontrada.
-        Devuelve: { x1, z1, x2, z2, height, width, area }
+        Percibe un bloque válido a la vez.
+        Mantiene una cola interna de coordenadas válidas.
         """
-        height_map = percept["height_map"]
+        if not hasattr(self, "_pending_coords") or not self._pending_coords:
+            # Inicializar o recargar coordenadas
+            x0, z0 = self.center
+            r = self.range
+            candidates = await self.search_strategy(self, x0, z0, r)
+            validation = await self.validate_coords(candidates)
 
-        # Agrupar coordenadas por altura
+            if not validation:
+                logger.warning("[EXPLORER] WorldStateBot no respondió")
+                return None
+
+            status = validation["status"]
+            valid_coords = validation["valid_coords"]
+
+            if status == "AREA_OCCUPIED":
+                logger.info("[EXPLORER] Área completamente ocupada, abortando exploración")
+                return None
+
+            self._pending_coords = valid_coords.copy()
+            self._height_map = {}  # reset del mapa de alturas
+            logger.info(
+                f"[EXPLORER] Validación: {status} "
+                f"({len(valid_coords)}/{len(candidates)} coords válidas)"
+            )
+
+        # Percibir un bloque de la cola
+        coord = self._pending_coords.pop(0)
+        x, z = coord
+        h = self.mc.getHeight(x, z)
+        self._height_map[coord] = h
+        logger.info(f"[EXPLORER] Percibiendo coordenadas ({x},{z}) con altura {h}")
+
+        await asyncio.sleep(self.SCAN_DELAY)
+
+        return {"coord": coord, "height": h}
+
+    async def decide(self, percept):
+        """
+        Acumula los bloques percibidos y solo devuelve el rectángulo
+        cuando ya se hayan percibido todos los bloques.
+        """
+        # Si todavía hay bloques pendientes, no devolvemos nada
+        if hasattr(self, "_pending_coords") and self._pending_coords:
+            return None
+
+        # Construimos el rectángulo a partir de self._height_map
+        height_map = getattr(self, "_height_map", {})
+        if not height_map:
+            return {"best_rectangle": None}
+
+        # --- mismo código de antes para calcular el mejor rectángulo ---
         levels = {}
         for (x, z), h in height_map.items():
             levels.setdefault(h, []).append((x, z))
 
-        best_rect = None  # (area, x1, z1, x2, z2, height_level)
+        best_rect = None
 
-        # Procesar altura por altura
         for h, coords in levels.items():
-            # Construir grid local
             xs = sorted(set([c[0] for c in coords]))
             zs = sorted(set([c[1] for c in coords]))
-
             x_index = {x: i for i, x in enumerate(xs)}
             z_index = {z: i for i, z in enumerate(zs)}
-
             grid = [[0] * len(zs) for _ in range(len(xs))]
-
             for (x, z) in coords:
                 grid[x_index[x]][z_index[z]] = 1
-
-            # Convertir en "matriz por filas"
-            matrix = list(zip(*grid))  # filas = z, columnas = x
-
-            # Buscar mayor rectángulo
+            matrix = list(zip(*grid))
             rect = self._largest_rectangle_in_matrix(matrix)
-
             if rect is None:
                 continue
-
             area, (z1_i, x1_i), (z2_i, x2_i) = rect
-
-            # Convertir indices a coords reales
             x1, x2 = xs[x1_i], xs[x2_i]
             z1, z2 = zs[z1_i], zs[z2_i]
-
             if best_rect is None or area > best_rect[0]:
                 best_rect = (area, x1, z1, x2, z2, h)
 
         if best_rect:
             area, x1, z1, x2, z2, h = best_rect
-
             return {
                 "best_rectangle": {
                     "x1": x1,
@@ -215,13 +215,21 @@ class ExplorerBot(BaseAgent):
         return {"best_rectangle": None}
 
     async def act(self, decision):
+        # --- 0. Si no hay decision, significa que todavía quedan bloques pendientes ---
+        if decision is None:
+            # No hacemos nada, volverá a llamar a perceive para el siguiente bloque
+            return
+
         rect = decision.get("best_rectangle")
 
-        # --- 1. NO hay rectángulo válido → no guardar nada ---
+        # --- 1. No hay rectángulo válido tras percibir todos los bloques ---
         if rect is None:
-            logger.info("[EXPLORER] No hay rectángulo válido, no se guarda nada")
+            logger.info("[EXPLORER] No se encontró ningún rectángulo válido tras explorar todos los bloques")
             await self._publish_map(None)
             await self._handle_next_or_idle()
+            # Limpiar memoria interna
+            self._pending_coords = []
+            self._height_map = {}
             return
 
         # --- 2. Logging del rectángulo encontrado ---
@@ -237,15 +245,18 @@ class ExplorerBot(BaseAgent):
         if result is None:
             logger.warning("[EXPLORER] No response from WorldStateBot (timeout)")
         elif result.get("status") != "OK":
-            logger.info(
-                f"[EXPLORER] WorldStateBot rechazó el área: {result}"
-            )
+            logger.info(f"[EXPLORER] WorldStateBot rechazó el área: {result}")
         else:
             logger.info("[EXPLORER] Área guardada correctamente en WorldState")
             await self._publish_map(rect)
 
         # --- 4. Continuar flujo normal ---
         await self._handle_next_or_idle()
+
+        # --- 5. Limpiar memoria interna ---
+        self._pending_coords = []
+        self._height_map = {}
+
 
     # ---------------------------------------------------------
     # Helpers
@@ -426,6 +437,12 @@ class ExplorerBot(BaseAgent):
     # ---------------------------------------------------------
     async def stop(self):
         await super().stop()
+
+    async def pause(self):
+        await super().pause()
+
+    async def resume(self):
+        await super().resume()
 
     async def idle(self):
         await super().idle()
