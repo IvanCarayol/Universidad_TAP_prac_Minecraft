@@ -6,9 +6,9 @@ from enum import Enum
 from typing import Any, Dict, Optional
 import datetime
 
-from ..Logger.logging_config import get_logger
+from ..Logger.logging_config import get_console_logger, get_json_file_logger
 
-logger = get_logger(__name__)
+logger = get_console_logger(__name__)
 
 
 # ---------------------------------------------------------
@@ -39,7 +39,7 @@ class BaseAgent:
         self.agent_id = agent_id
         self.bus = bus
 
-        self.logger = get_logger(name=agent_id)
+        self.logger = get_json_file_logger(name=agent_id)
 
         self._state: AgentState = AgentState.IDLE
         self._task: Optional[asyncio.Task] = None

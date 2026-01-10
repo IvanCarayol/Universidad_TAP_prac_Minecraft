@@ -1,36 +1,58 @@
 import logging
 import os
-from typing import Optional
+import sys
 
-def get_logger(name: Optional[str] = None, level: int = logging.INFO, log_file: str = "plugin.log") -> logging.Logger:
-    """
-    Devuelve un logger configurado que escribe en consola y en archivo (Requisito de Trazabilidad).
-    """
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
+# --- CAMBIO AQUÍ ---
+# Al poner solo el nombre, se guardará en la carpeta raíz desde donde lances el juego
+LOG_FILE_PATH = "plugin.log"
+# -------------------
 
-    # Evitar duplicar handlers si ya tiene alguno
+def get_console_logger(name: str) -> logging.Logger:
+    """
+    Crea un logger que SOLO imprime en la terminal (para el humano).
+    """
+    # Usamos un nombre único para evitar conflictos
+    logger_name = f"console.{name}"
+    logger = logging.getLogger(logger_name)
+    logger.setLevel(logging.INFO)
+
     if not logger.handlers:
-        # Formato estándar legible.
-        # NOTA: El contenido JSON irá dentro de %(message)s
+        # Formato legible para humanos
+        formatter = logging.Formatter(
+            fmt='[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s',
+            datefmt='%H:%M:%S'
+        )
+        
+        ch = logging.StreamHandler(sys.stdout)
+        ch.setFormatter(formatter)
+        logger.addHandler(ch)
+        
+        # IMPORTANTE: No propagar al root para evitar duplicados
+        logger.propagate = False
+
+    return logger
+
+def get_json_file_logger(name: str) -> logging.Logger:
+    """
+    Crea un logger que SOLO escribe en el archivo (para la evaluación).
+    """
+    # Usamos un nombre único distinto al de consola
+    logger_name = f"json.{name}"
+    logger = logging.getLogger(logger_name)
+    logger.setLevel(logging.INFO)
+
+    if not logger.handlers:
+        # Formato estándar para el archivo (el mensaje será el JSON)
         formatter = logging.Formatter(
             fmt='[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'
         )
 
-        # 1. Handler de Consola (Para ver en tiempo real)
-        ch = logging.StreamHandler()
-        ch.setLevel(level)
-        ch.setFormatter(formatter)
-        logger.addHandler(ch)
+        fh = logging.FileHandler(LOG_FILE_PATH, mode='a', encoding='utf-8')
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
 
-        # 2. Handler de Archivo (OBLIGATORIO para persistencia y trazabilidad [cite: 143, 224])
-        # Asegúrate de que el archivo se guarde en una ruta accesible, por ejemplo en la raíz
-        file_handler = logging.FileHandler(log_file, mode='a', encoding='utf-8')
-        file_handler.setLevel(level)
-        file_handler.setFormatter(formatter)
-        logger.addHandler(file_handler)
-
+        # IMPORTANTE: No propagar ni imprimir en consola
         logger.propagate = False
 
     return logger
