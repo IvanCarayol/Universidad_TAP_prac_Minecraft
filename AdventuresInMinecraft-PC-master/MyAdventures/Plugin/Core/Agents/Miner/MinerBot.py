@@ -38,7 +38,9 @@ class MinerBot(BaseAgent):
         self.bus.subscribe('bom.v1', self._on_materials_request)
         self.bus.subscribe("command.miner.start.v1", self._on_start_cmd)
         self.bus.subscribe("command.miner.set.v1", self._on_update_cmd)
-        self.bus.subscribe("command.miner.list.v1", self._on_control)
+        self.bus.subscribe("command.miner.stop.v1", self._on_control)
+        self.bus.subscribe("command.miner.pause.v1", self._on_control)
+        self.bus.subscribe("command.miner.resume.v1", self._on_control)
         self.bus.subscribe("command.miner.status.v1", self._on_control)
         self.bus.subscribe('*', self._on_generic)
 
@@ -131,8 +133,6 @@ class MinerBot(BaseAgent):
             await self.resume()
         elif cmdtype.endswith(".stop.v1"):
             await self.stop()
-        elif cmdtype.endswith(".list.v1"):
-            await self.list()
         elif cmdtype.endswith(".status.v1"):
             await self.status()
 
@@ -185,7 +185,9 @@ class MinerBot(BaseAgent):
 
             # liberar área
             await self.release_assigned_area()
-
+            
+            await self.idle()
+            
             self._current_bom = None
             return
         
@@ -499,10 +501,41 @@ class MinerBot(BaseAgent):
     # Control overrides
     # -----------------------
     async def stop(self):
-        # On stop, ensure locks released and save state
-        logger.info("MinerBot stopping: releasing locks and saving checkpoint")
-        await self._locks.release_all()
+        logger.info("[MINER] Stop command received: reporting progress and releasing area")
+
+        # 1️⃣ Reportar los materiales minados hasta ahora a WorldState
+        if self.inventory:
+            try:
+                success = await self.report_materials_to_worldstate()
+                if success:
+                    logger.info("[MINER] Materiales reportados correctamente antes de detenerse")
+                else:
+                    logger.warning("[MINER] Falló el reporte de materiales antes de detenerse")
+            except Exception:
+                logger.exception("[MINER] Excepción al reportar materiales antes de detenerse")
+
+        # 2️⃣ Liberar área asignada, si la hay
+        if self.assigned_area:
+            try:
+                await self.release_assigned_area()
+            except Exception:
+                logger.exception("[MINER] Excepción al liberar área asignada antes de detenerse")
+
+        # 3️⃣ Publicar inventario final a BuilderBot para que sepa que terminó
+        await self._publish_inventory(status="STOPPED", final=True)
+
+        # 4️⃣ Finalmente llamar a stop() de BaseAgent para cambiar estado
         await super().stop()
+
+
+    async def idle(self):
+        await super().idle()
+
+    async def pause(self):
+        await super().pause()
+
+    async def resume(self):
+        await super().resume()
 
     async def save_checkpoint(self):
         # Minimal checkpoint: dump inventory and BOM (could be serialized to a file)

@@ -1,0 +1,1238 @@
+[2026-01-10 19:33:26] [INFO] [__main__] Iniciando sistema de bots...
+[2026-01-10 19:33:26] [INFO] [ExplorerBot] {"event": "agent_init", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T18:33:26.439815Z"}
+[2026-01-10 19:33:26] [INFO] [BuilderBot] {"event": "agent_init", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:33:26.441816Z"}
+[2026-01-10 19:33:26] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading templates from ./Schematics/
+[2026-01-10 19:33:26] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading template 'esencias' (esencias.schem)...
+[2026-01-10 19:33:26] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loaded template 'esencias' (123×38×77, 359898 blocks)
+[2026-01-10 19:33:26] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading template 'importar' (importar.schem)...
+[2026-01-10 19:33:26] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loaded template 'importar' (13×10×14, 1820 blocks)
+[2026-01-10 19:33:26] [INFO] [MinerBot] {"event": "agent_init", "agent_id": "MinerBot", "timestamp": "2026-01-10T18:33:26.870916Z"}
+[2026-01-10 19:33:26] [INFO] [WorldstateBot] {"event": "agent_init", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T18:33:26.871916Z"}
+[2026-01-10 19:33:26] [INFO] [__main__] Bots registrados correctamente.
+[2026-01-10 19:33:37] [INFO] [Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE] Start worldstate bot
+[2026-01-10 19:33:37] [INFO] [WorldstateBot] {"type": "state_change", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T18:33:37.861814Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 19:33:37] [INFO] [Plugin.Core.Agents.BaseAgent] [START] Agent 'WorldstateBot' started
+[2026-01-10 19:34:15] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Start request
+[2026-01-10 19:34:15] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:34:15.108043Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 19:34:15] [INFO] [Plugin.Core.Agents.BaseAgent] [START] Agent 'BuilderBot' started
+[2026-01-10 19:34:15] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:34:15.109043Z", "previous_state": "RUNNING", "next_state": "WAITING", "reason": "Waiting for free area"}
+[2026-01-10 19:34:15] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Waiting for map (bus event)…
+[2026-01-10 19:35:22] [INFO] [Plugin.Core.Agents.BaseAgent] [UPDATE] ExplorerBot updated with params={'range': 10}
+[2026-01-10 19:35:22] [INFO] [ExplorerBot] {"event": "update_params", "agent_id": "ExplorerBot", "params": {"range": 10}}
+[2026-01-10 19:35:42] [INFO] [Plugin.Core.Agents.BaseAgent] [UPDATE] BuilderBot updated with params={'schem': 'importar'}
+[2026-01-10 19:35:42] [INFO] [BuilderBot] {"event": "update_params", "agent_id": "BuilderBot", "params": {"schem": "importar"}}
+[2026-01-10 19:35:49] [INFO] [Plugin.Core.Agents.BaseAgent] [UPDATE] ExplorerBot updated with params={'range': 7, 'strategy': 'spiral'}
+[2026-01-10 19:35:49] [INFO] [ExplorerBot] {"event": "update_params", "agent_id": "ExplorerBot", "params": {"range": 7, "strategy": "spiral"}}
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Start request: x=-420 z=-440 range=7
+[2026-01-10 19:36:01] [INFO] [ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T18:36:01.158966Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.BaseAgent] [START] Agent 'ExplorerBot' started
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Validación: AREA_FREE (240/240 coords válidas)
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-440) con altura 63
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-440) con altura 63
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-439) con altura 63
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-439) con altura 63
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-439) con altura 63
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-440) con altura 63
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-441) con altura 63
+[2026-01-10 19:36:01] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-441) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-441) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-441) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-440) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-439) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-438) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-438) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-438) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-438) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-438) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-439) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-440) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-441) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-442) con altura 63
+[2026-01-10 19:36:02] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-442) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-442) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-442) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-442) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-442) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-441) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-440) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] Start request
+[2026-01-10 19:36:03] [INFO] [MinerBot] {"type": "state_change", "agent_id": "MinerBot", "timestamp": "2026-01-10T18:36:03.459978Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.BaseAgent] [START] Agent 'MinerBot' started
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-439) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] Waiting for bom
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-438) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-437) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-437) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-437) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-437) con altura 63
+[2026-01-10 19:36:03] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-437) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-437) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-437) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-438) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-439) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-440) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-441) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-442) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-443) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-443) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-443) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-443) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-443) con altura 63
+[2026-01-10 19:36:04] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-443) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-443) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-443) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-442) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-441) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-440) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-439) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-438) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-437) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-436) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-436) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-436) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-436) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-436) con altura 63
+[2026-01-10 19:36:05] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-436) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-436) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-436) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-436) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-437) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-438) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-439) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-440) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-441) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-442) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-443) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-444) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-444) con altura 63
+[2026-01-10 19:36:06] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-444) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-443) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-442) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-441) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-440) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-439) con altura 63
+[2026-01-10 19:36:07] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-438) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-437) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-436) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-435) con altura 63
+[2026-01-10 19:36:08] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-436) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-437) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-438) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-439) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-440) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-441) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-442) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-443) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-444) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-445) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-445) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-445) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-445) con altura 63
+[2026-01-10 19:36:09] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-445) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-444) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-443) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-442) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-441) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-440) con altura 63
+[2026-01-10 19:36:10] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-439) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-438) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-437) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-436) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-435) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-434) con altura 63
+[2026-01-10 19:36:11] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-434) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-434) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-434) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-434) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-435) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-436) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-437) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-438) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-439) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-440) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-441) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-442) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-443) con altura 63
+[2026-01-10 19:36:12] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-444) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-445) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-446) con altura 63
+[2026-01-10 19:36:13] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-446) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-446) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-446) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-445) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-444) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-443) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-442) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-441) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-440) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-439) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-438) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-437) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-436) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-435) con altura 63
+[2026-01-10 19:36:14] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-434) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-433) con altura 63
+[2026-01-10 19:36:15] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-433) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-433) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-433) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-434) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-435) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-436) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-437) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-438) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-439) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-440) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-441) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-442) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-443) con altura 63
+[2026-01-10 19:36:16] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-444) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-445) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-446) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-427,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-426,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-425,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-424,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-423,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-422,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-421,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-420,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-419,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-418,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-417,-447) con altura 63
+[2026-01-10 19:36:17] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-416,-447) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-415,-447) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-447) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-447) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-447) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-446) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-445) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-444) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-443) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-442) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-441) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-440) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-439) con altura 63
+[2026-01-10 19:36:18] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-438) con altura 63
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-437) con altura 63
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-436) con altura 63
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-435) con altura 63
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-434) con altura 63
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-433) con altura 63
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Mejor rectángulo: (-427,-447) → (-412,-433), area=240, y=63
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Área guardada correctamente en WorldState
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [MAP] Recived map from ExplorerBot
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Published map.v1 (rect area=240, coords=(-427,-447)→(-412,-433))
+[2026-01-10 19:36:19] [INFO] [ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T18:36:19.360451Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Map arrived! Resuming work.
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] BOM received: [{'material': 'minecraft:glass', 'qty': 2}, {'material': 'minecraft:stone', 'qty': 297}, {'material': 'minecraft:beacon', 'qty': 9}, {'material': 'minecraft:iron_bars', 'qty': 124}, {'material': 'minecraft:glass_pane', 'qty': 28}]
+[2026-01-10 19:36:19] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:36:19.362450Z", "previous_state": "WAITING", "next_state": "WAITING", "reason": "Waiting for materials"}
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Waiting for materials
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] Bom arrived! Reasuming work.
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass at (164,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass at (165,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-145) (simulated material, real block broken)
+[2026-01-10 19:36:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-144) (simulated material, real block broken)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,100,-144) (simulated material, real block broken)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,100,-144) (simulated material, real block broken)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,100,-144) (simulated material, real block broken)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-144) (simulated material, real block broken)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-144) (simulated material, real block broken)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-143) (simulated material, real block broken)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-143) (simulated material, real block broken)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,100,-143) (simulated material, real block broken)
+[2026-01-10 19:36:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-143) (simulated material, real block broken)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,100,-143) (simulated material, real block broken)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-143) (simulated material, real block broken)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,100,-143) (simulated material, real block broken)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,100,-143) (simulated material, real block broken)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-143) (simulated material, real block broken)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-142) (simulated material, real block broken)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-142) (simulated material, real block broken)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,101,-142) (simulated material, real block broken)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-142) (simulated material, real block broken)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,101,-142) (simulated material, real block broken)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,101,-142) (simulated material, real block broken)
+[2026-01-10 19:36:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,101,-142) (simulated material, real block broken)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,101,-142) (simulated material, real block broken)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,100,-142) (simulated material, real block broken)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-142) (simulated material, real block broken)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:29] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-141) (simulated material, real block broken)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,101,-141) (simulated material, real block broken)
+[2026-01-10 19:36:30] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,101,-141) (simulated material, real block broken)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-141) (simulated material, real block broken)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,101,-141) (simulated material, real block broken)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,101,-141) (simulated material, real block broken)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,101,-141) (simulated material, real block broken)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,101,-141) (simulated material, real block broken)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,100,-141) (simulated material, real block broken)
+[2026-01-10 19:36:31] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-141) (simulated material, real block broken)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:32] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-140) (simulated material, real block broken)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-140) (simulated material, real block broken)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,101,-140) (simulated material, real block broken)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-140) (simulated material, real block broken)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,101,-140) (simulated material, real block broken)
+[2026-01-10 19:36:33] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,101,-140) (simulated material, real block broken)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,101,-140) (simulated material, real block broken)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,101,-140) (simulated material, real block broken)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,100,-140) (simulated material, real block broken)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-140) (simulated material, real block broken)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:34] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-139) (simulated material, real block broken)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:35] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-139) (simulated material, real block broken)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,100,-139) (simulated material, real block broken)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-139) (simulated material, real block broken)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,100,-139) (simulated material, real block broken)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-139) (simulated material, real block broken)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,100,-139) (simulated material, real block broken)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,100,-139) (simulated material, real block broken)
+[2026-01-10 19:36:36] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-139) (simulated material, real block broken)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:37] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-138) (simulated material, real block broken)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-138) (simulated material, real block broken)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,100,-138) (simulated material, real block broken)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-138) (simulated material, real block broken)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:38] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,100,-138) (simulated material, real block broken)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-138) (simulated material, real block broken)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,100,-138) (simulated material, real block broken)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-138) (simulated material, real block broken)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-137) (simulated material, real block broken)
+[2026-01-10 19:36:39] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-137) (simulated material, real block broken)
+[2026-01-10 19:36:40] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-137) (simulated material, real block broken)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,101,-137) (simulated material, real block broken)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-137) (simulated material, real block broken)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,101,-137) (simulated material, real block broken)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-137) (simulated material, real block broken)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,100,-137) (simulated material, real block broken)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:41] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-137) (simulated material, real block broken)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-136) (simulated material, real block broken)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-136) (simulated material, real block broken)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-136) (simulated material, real block broken)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-136) (simulated material, real block broken)
+[2026-01-10 19:36:42] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-136) (simulated material, real block broken)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-136) (simulated material, real block broken)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-136) (simulated material, real block broken)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-136) (simulated material, real block broken)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,101,-136) (simulated material, real block broken)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,101,-136) (simulated material, real block broken)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-136) (simulated material, real block broken)
+[2026-01-10 19:36:43] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,101,-136) (simulated material, real block broken)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,101,-136) (simulated material, real block broken)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,100,-136) (simulated material, real block broken)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,93,-136) (simulated material, real block broken)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,93,-136) (simulated material, real block broken)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,93,-136) (simulated material, real block broken)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:44] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-135) (simulated material, real block broken)
+[2026-01-10 19:36:45] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-135) (simulated material, real block broken)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-135) (simulated material, real block broken)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,101,-135) (simulated material, real block broken)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-135) (simulated material, real block broken)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,101,-135) (simulated material, real block broken)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -135) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-135) (simulated material, real block broken)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -135) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,100,-135) (simulated material, real block broken)
+[2026-01-10 19:36:46] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -135) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,93,-135) (simulated material, real block broken)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -135) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -135) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,92,-135) (simulated material, real block broken)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:47] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,100,-134) (simulated material, real block broken)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-134) (simulated material, real block broken)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,100,-134) (simulated material, real block broken)
+[2026-01-10 19:36:48] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,101,-134) (simulated material, real block broken)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -134) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,100,-134) (simulated material, real block broken)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -134) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-134) (simulated material, real block broken)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -134) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,100,-134) (simulated material, real block broken)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -134) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -134) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -134) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,92,-134) (simulated material, real block broken)
+[2026-01-10 19:36:49] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:50] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,100,-133) (simulated material, real block broken)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,100,-133) (simulated material, real block broken)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,100,-133) (simulated material, real block broken)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -133) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,100,-133) (simulated material, real block broken)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -133) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,100,-133) (simulated material, real block broken)
+[2026-01-10 19:36:51] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -133) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -133) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -133) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -133) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,92,-133) (simulated material, real block broken)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:52] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:53] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -132) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -132) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -132) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -132) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -132) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:54] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -132) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,92,-132) (simulated material, real block broken)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:55] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -131) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -131) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:56] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -131) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -131) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -131) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -131) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,92,-131) (simulated material, real block broken)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:57] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:58] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -130) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -130) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -130) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -130) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,92,-130) (simulated material, real block broken)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -130) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:36:59] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,92,-130) (simulated material, real block broken)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -130) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,92,-130) (simulated material, real block broken)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:00] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (174,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -129) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (175,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:01] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -129) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (176,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -129) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (177,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -129) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (178,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -129) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (179,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -129) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (180,92,-129) (simulated material, real block broken)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (164,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:02] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (165,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (166,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (167,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (168,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (169,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (170,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (171,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:03] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (172,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:stone at (173,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (174,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -145) (sector=(10, -10)) strategy=grid)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (175,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (176,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (177,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (178,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:04] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (179,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -145) (sector=(11, -10)) strategy=grid)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (180,93,-145) (simulated material, real block broken)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (164,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:beacon at (165,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:05] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (171,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (172,100,-144) (simulated material, real block broken)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (173,100,-144) (simulated material, real block broken)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (174,100,-144) (simulated material, real block broken)
+[2026-01-10 19:37:06] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -144) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (175,100,-144) (simulated material, real block broken)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (176,100,-144) (simulated material, real block broken)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (177,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (178,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (179,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -144) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (180,93,-144) (simulated material, real block broken)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (164,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:07] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (165,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:08] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (171,100,-143) (simulated material, real block broken)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (172,100,-143) (simulated material, real block broken)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (173,100,-143) (simulated material, real block broken)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (174,101,-143) (simulated material, real block broken)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -143) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (175,100,-143) (simulated material, real block broken)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (176,100,-143) (simulated material, real block broken)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (177,100,-143) (simulated material, real block broken)
+[2026-01-10 19:37:09] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (178,100,-143) (simulated material, real block broken)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (179,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -143) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (180,93,-143) (simulated material, real block broken)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (164,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (165,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:10] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (171,100,-142) (simulated material, real block broken)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (172,100,-142) (simulated material, real block broken)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (173,101,-142) (simulated material, real block broken)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:11] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (174,101,-142) (simulated material, real block broken)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -142) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (175,101,-142) (simulated material, real block broken)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (176,101,-142) (simulated material, real block broken)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (177,101,-142) (simulated material, real block broken)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (178,101,-142) (simulated material, real block broken)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (179,100,-142) (simulated material, real block broken)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -142) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (180,93,-142) (simulated material, real block broken)
+[2026-01-10 19:37:12] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (164,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (165,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:13] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (171,100,-141) (simulated material, real block broken)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (172,101,-141) (simulated material, real block broken)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (173,101,-141) (simulated material, real block broken)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (174,101,-141) (simulated material, real block broken)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -141) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (175,101,-141) (simulated material, real block broken)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (176,101,-141) (simulated material, real block broken)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:14] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (177,101,-141) (simulated material, real block broken)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (178,101,-141) (simulated material, real block broken)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (179,100,-141) (simulated material, real block broken)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -141) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (180,93,-141) (simulated material, real block broken)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (164,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (165,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:15] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (171,100,-140) (simulated material, real block broken)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (172,100,-140) (simulated material, real block broken)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (173,101,-140) (simulated material, real block broken)
+[2026-01-10 19:37:16] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (174,101,-140) (simulated material, real block broken)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -140) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (175,101,-140) (simulated material, real block broken)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (176,101,-140) (simulated material, real block broken)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (177,101,-140) (simulated material, real block broken)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (178,101,-140) (simulated material, real block broken)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (179,100,-140) (simulated material, real block broken)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -140) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:17] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (180,93,-140) (simulated material, real block broken)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (164,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (165,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:18] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (171,100,-139) (simulated material, real block broken)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (172,100,-139) (simulated material, real block broken)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (173,100,-139) (simulated material, real block broken)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (174,101,-139) (simulated material, real block broken)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -139) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (175,100,-139) (simulated material, real block broken)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (176,100,-139) (simulated material, real block broken)
+[2026-01-10 19:37:19] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (177,100,-139) (simulated material, real block broken)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (178,100,-139) (simulated material, real block broken)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (179,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -139) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (180,93,-139) (simulated material, real block broken)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (164,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (165,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:20] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (171,100,-138) (simulated material, real block broken)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (172,100,-138) (simulated material, real block broken)
+[2026-01-10 19:37:21] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (173,100,-138) (simulated material, real block broken)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (174,101,-138) (simulated material, real block broken)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -138) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (175,100,-138) (simulated material, real block broken)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (176,100,-138) (simulated material, real block broken)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (177,100,-138) (simulated material, real block broken)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (178,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (179,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:22] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -138) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (180,93,-138) (simulated material, real block broken)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (164,92,-137) (simulated material, real block broken)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (165,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (166,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (167,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (168,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:23] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (169,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:iron_bars at (170,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (171,100,-137) (simulated material, real block broken)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (172,100,-137) (simulated material, real block broken)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (173,101,-137) (simulated material, real block broken)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (174,101,-137) (simulated material, real block broken)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -137) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (175,101,-137) (simulated material, real block broken)
+[2026-01-10 19:37:24] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (176,100,-137) (simulated material, real block broken)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (177,100,-137) (simulated material, real block broken)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (178,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (179,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -137) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (180,93,-137) (simulated material, real block broken)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (164,92,-136) (simulated material, real block broken)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (165, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (165,92,-136) (simulated material, real block broken)
+[2026-01-10 19:37:25] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (166, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (166,92,-136) (simulated material, real block broken)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (167, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (167,92,-136) (simulated material, real block broken)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (168, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (168,93,-136) (simulated material, real block broken)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (169, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (169,93,-136) (simulated material, real block broken)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (170, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (170,93,-136) (simulated material, real block broken)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (171, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (171,100,-136) (simulated material, real block broken)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (172, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:26] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (172,101,-136) (simulated material, real block broken)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (173, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (173,101,-136) (simulated material, real block broken)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (174, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (174,101,-136) (simulated material, real block broken)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (175, -136) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (175,101,-136) (simulated material, real block broken)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (176, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (176,101,-136) (simulated material, real block broken)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (177, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (177,100,-136) (simulated material, real block broken)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (178, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (178,93,-136) (simulated material, real block broken)
+[2026-01-10 19:37:27] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (179, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (179,93,-136) (simulated material, real block broken)
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (180, -136) (sector=(11, -9)) strategy=grid)
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (180,93,-136) (simulated material, real block broken)
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mining at (164, -135) (sector=(10, -9)) strategy=grid)
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Mined minecraft:glass_pane at (164,92,-135) (simulated material, real block broken)
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] Reportando materiales a WorldState: [{'material': 'minecraft:glass', 'qty': 2}, {'material': 'minecraft:stone', 'qty': 297}, {'material': 'minecraft:beacon', 'qty': 9}, {'material': 'minecraft:iron_bars', 'qty': 124}, {'material': 'minecraft:glass_pane', 'qty': 28}]
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE] Materials stored from MinerBot: [{'material': 'minecraft:glass', 'qty': 2}, {'material': 'minecraft:stone', 'qty': 297}, {'material': 'minecraft:beacon', 'qty': 9}, {'material': 'minecraft:iron_bars', 'qty': 124}, {'material': 'minecraft:glass_pane', 'qty': 28}]
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE] Global materials state: {'minecraft:glass': 2, 'minecraft:stone': 297, 'minecraft:beacon': 9, 'minecraft:iron_bars': 124, 'minecraft:glass_pane': 28}
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] WorldState confirmó guardado de materiales
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] Published inventory (SUCCESS): defaultdict(<class 'int'>, {'minecraft:glass': 2, 'minecraft:stone': 297, 'minecraft:beacon': 9, 'minecraft:iron_bars': 124, 'minecraft:glass_pane': 28})
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] MinerBot checkpoint: inventory={'minecraft:glass': 2, 'minecraft:stone': 297, 'minecraft:beacon': 9, 'minecraft:iron_bars': 124, 'minecraft:glass_pane': 28} bom=[{'material': 'minecraft:glass', 'qty': 2}, {'material': 'minecraft:stone', 'qty': 297}, {'material': 'minecraft:beacon', 'qty': 9}, {'material': 'minecraft:iron_bars', 'qty': 124}, {'material': 'minecraft:glass_pane', 'qty': 28}]
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] Enviada solicitud de liberación del área: {'x1': 164, 'z1': -145, 'x2': 180, 'z2': -129, 'width': 17, 'height': 17, 'area': 289, 'y': 63}
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE] Área eliminada por MinerBot: {'x1': 164, 'z1': -145, 'x2': 180, 'z2': -129, 'width': 17, 'height': 17, 'area': 289, 'y': 63}
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Inventory arrived! Resuming work.
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Miner.MinerBot] [MINER] Área liberada correctamente: {'x1': 164, 'z1': -145, 'x2': 180, 'z2': -129, 'width': 17, 'height': 17, 'area': 289, 'y': 63}
+[2026-01-10 19:37:28] [INFO] [MinerBot] {"type": "state_change", "agent_id": "MinerBot", "timestamp": "2026-01-10T18:37:28.362180Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Build plan ready (10 layers)
+[2026-01-10 19:37:28] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:28.363181Z", "previous_state": "WAITING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:28] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 1/10 built
+[2026-01-10 19:37:28] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:28.367181Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:30] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 2/10 built
+[2026-01-10 19:37:30] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:30.411295Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:31] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 3/10 built
+[2026-01-10 19:37:31] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:31.585690Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:32] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 4/10 built
+[2026-01-10 19:37:32] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:32.744459Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:33] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 5/10 built
+[2026-01-10 19:37:33] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:33.948803Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:35] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 6/10 built
+[2026-01-10 19:37:35] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:35.849904Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:35] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 7/10 built
+[2026-01-10 19:37:35] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:35.850906Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:35] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 8/10 built
+[2026-01-10 19:37:35] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:35.850906Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:35] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 9/10 built
+[2026-01-10 19:37:35] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:35.865909Z", "previous_state": "RUNNING", "next_state": "RUNNING", "reason": "Building"}
+[2026-01-10 19:37:35] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Layer 10/10 built
+[2026-01-10 19:37:35] [INFO] [Plugin.Core.Agents.BaseAgent] [CHECKPOINT] Saved data for BuilderBot
+[2026-01-10 19:37:35] [INFO] [BuilderBot] {"event": "checkpoint_saved", "agent_id": "BuilderBot"}
+[2026-01-10 19:37:35] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:35.867908Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}

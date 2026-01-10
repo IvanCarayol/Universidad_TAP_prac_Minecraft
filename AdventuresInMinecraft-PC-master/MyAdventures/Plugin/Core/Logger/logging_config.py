@@ -2,7 +2,7 @@ import logging
 import os
 from typing import Optional
 
-def get_logger(name: Optional[str] = None, level: int = logging.INFO, log_file: str = "simulation.log") -> logging.Logger:
+def get_logger(name: Optional[str] = None, level: int = logging.INFO, log_file: str = "plugin.log") -> logging.Logger:
     """
     Devuelve un logger configurado que escribe en consola y en archivo (Requisito de Trazabilidad).
     """

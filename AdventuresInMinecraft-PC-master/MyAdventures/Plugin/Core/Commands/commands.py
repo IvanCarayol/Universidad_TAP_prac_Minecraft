@@ -32,6 +32,18 @@ COMMANDS = {
         "description": "Inicia el bot Builder",
         "params": [],
     },
+    "builder_stop": {
+        "description": "Detiene el bot Builder",
+        "params": [],
+    },
+    "builder_pause": {
+        "description": "Pausa el bot Builder",
+        "params": [],
+    },
+    "builder_resume": {
+        "description": "Reanuda el bot Builder",
+        "params": [],
+    },
     "builder_set": {
         "description": "Cambia la schem",
         "params": ["schem"],
@@ -58,6 +70,18 @@ COMMANDS = {
     },
     "miner_status": {
         "description": "Devuelve el estado de el bot",
+        "params": [],
+    },
+    "miner_stop": {
+        "description": "Detiene el bot Miner",
+        "params": [],
+    },
+    "miner_pause": {
+        "description": "Pausa el bot Miner",
+        "params": [],
+    },
+    "miner_resume": {
+        "description": "Reanuda el bot Miner",
         "params": [],
     },
 }
@@ -145,6 +169,9 @@ async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any
             type_map = {
                 "builder_start":  "command.builder.start.v1",
                 "builder_set":    "command.builder.set.v1",
+                "builder_pause":  "command.builder.pause.v1",
+                "builder_resume": "command.builder.resume.v1",
+                "builder_stop":   "command.builder.stop.v1",
                 "builder_list":   "command.builder.list.v1",
                 "builder_status": "command.builder.status.v1",
             }
@@ -172,8 +199,10 @@ async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any
             type_map = {
                 "miner_start":  "command.miner.start.v1",
                 "miner_set":    "command.miner.set.v1",
-                "miner_list":   "command.miner.list.v1",
+                "miner_stop":   "command.miner.stop.v1",
                 "miner_status": "command.miner.status.v1",
+                "miner_pause": "command.miner.pause.v1",
+                "miner_resume": "command.miner.resume.v1",
             }
 
             msg_type = type_map.get(cmd)

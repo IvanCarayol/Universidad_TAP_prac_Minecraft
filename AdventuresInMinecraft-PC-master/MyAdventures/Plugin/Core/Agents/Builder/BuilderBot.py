@@ -88,10 +88,12 @@ class BuilderBot(BaseAgent):
         self.bus.subscribe("map.v1", self._on_map)
         self.bus.subscribe("inventory.v1", self._on_inventory)
         self.bus.subscribe("command.builder.start.v1", self._on_start_cmd)
+        self.bus.subscribe("command.builder.pause.v1", self._on_control)
+        self.bus.subscribe("command.builder.resume.v1", self._on_control)
+        self.bus.subscribe("command.builder.stop.v1", self._on_control)
         self.bus.subscribe("command.builder.set.v1", self._on_update_cmd)
         self.bus.subscribe("command.builder.list.v1", self._on_control)
         self.bus.subscribe("command.builder.status.v1", self._on_control)
-        self.bus.subscribe("command.*.v1", self._on_control)
         self.bus.subscribe("*", self._on_generic)
 
     # ============ MESSAGE HANDLERS ====================
@@ -493,7 +495,15 @@ class BuilderBot(BaseAgent):
     # ---------------------------------------------------------
     # Control Overloads
     # ---------------------------------------------------------
+    async def stop(self):
+        await super().stop()
 
+    async def pause(self):
+        await super().pause()
+
+    async def resume(self):
+        await super().resume()
+        
     async def idle(self):
         await super().idle()
 

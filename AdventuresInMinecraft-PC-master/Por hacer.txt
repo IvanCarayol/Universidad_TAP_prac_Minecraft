@@ -5,8 +5,6 @@
 
 -explorerbot y minerbot pasan partes parciales si se les hace /stop
 
--Explorerbot cambia su logica de percieve
-
--Implementar pause/resume
+-Pause i resume han de poner el estado anterior de el bot envez de running por defecto 
 
 -Bots quedan escuchando un bus de "error" si no les responde worldstate y este revisa los timestamps para responder por error.
