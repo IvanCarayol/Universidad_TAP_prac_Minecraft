@@ -7,9 +7,9 @@ from ...Agents.Strategies.miner_strategies import vertical_strategy, vein_strate
 
 
 from ..BaseAgent import BaseAgent, AgentState
-from ...Logger.logging_config import get_logger
+from ...Logger.logging_config import get_console_logger
 
-logger = get_logger(__name__)
+logger = get_console_logger(__name__)
 
 # ---------------------------
 # MinerBot implementation

@@ -3,9 +3,9 @@ import random
 from typing import Any, Dict
 from collections import defaultdict
 from ..BaseAgent import BaseAgent
-from ...Logger.logging_config import get_logger
+from ...Logger.logging_config import get_console_logger
 
-logger = get_logger(__name__)
+logger = get_console_logger(__name__)
 
 def normalize_material_name(name: str) -> str:
     """

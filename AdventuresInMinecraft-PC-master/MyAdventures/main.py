@@ -7,7 +7,7 @@ from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
 from Plugin.Core.Agents.Builder.BuilderBot import BuilderBot
 from Plugin.Core.Agents.Miner.MinerBot import MinerBot
 from Plugin.Core.Agents.World.WorldstateBot import WorldStateBot
-from Plugin.Core.Logger.logging_config import get_logger
+from Plugin.Core.Logger.logging_config import get_console_logger
 from mcpi.minecraft import Minecraft
 from Plugin.Core.Listener.Chatlistener import register_bot, start_chat_listener 
 from mcpi.event import ChatEvent
@@ -28,7 +28,7 @@ if MCPI_PATH not in sys.path:
 # --------------------------
 # Logger
 # --------------------------
-logger = get_logger(__name__)
+logger = get_console_logger(__name__)
 
 
 # --------------------------

@@ -1236,3 +1236,149 @@
 [2026-01-10 19:37:35] [INFO] [Plugin.Core.Agents.BaseAgent] [CHECKPOINT] Saved data for BuilderBot
 [2026-01-10 19:37:35] [INFO] [BuilderBot] {"event": "checkpoint_saved", "agent_id": "BuilderBot"}
 [2026-01-10 19:37:35] [INFO] [BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:37:35.867908Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-10 19:47:27] [INFO] [Plugin.Core.Agents.BaseAgent] [CHECKPOINT] Saved data for WorldstateBot
+[2026-01-10 19:47:27] [INFO] [WorldstateBot] {"event": "checkpoint_saved", "agent_id": "WorldstateBot"}
+[2026-01-10 19:47:32] [INFO] [__main__] Iniciando sistema de bots...
+[2026-01-10 19:47:32] [INFO] [ExplorerBot] {"event": "agent_init", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T18:47:32.357716Z"}
+[2026-01-10 19:47:32] [INFO] [BuilderBot] {"event": "agent_init", "agent_id": "BuilderBot", "timestamp": "2026-01-10T18:47:32.358716Z"}
+[2026-01-10 19:47:32] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading templates from ./Schematics/
+[2026-01-10 19:47:32] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading template 'esencias' (esencias.schem)...
+[2026-01-10 19:47:32] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loaded template 'esencias' (123×38×77, 359898 blocks)
+[2026-01-10 19:47:32] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading template 'importar' (importar.schem)...
+[2026-01-10 19:47:32] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loaded template 'importar' (13×10×14, 1820 blocks)
+[2026-01-10 19:47:32] [INFO] [MinerBot] {"event": "agent_init", "agent_id": "MinerBot", "timestamp": "2026-01-10T18:47:32.830820Z"}
+[2026-01-10 19:47:32] [INFO] [WorldstateBot] {"event": "agent_init", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T18:47:32.831823Z"}
+[2026-01-10 19:47:32] [INFO] [__main__] Bots registrados correctamente.
+[2026-01-10 19:47:36] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Start request: x=-420 z=-440 range=30
+[2026-01-10 19:47:36] [INFO] [ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T18:47:36.718024Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 19:47:36] [INFO] [Plugin.Core.Agents.BaseAgent] [START] Agent 'ExplorerBot' started
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE] Start worldstate bot
+[2026-01-10 19:47:41] [INFO] [WorldstateBot] {"type": "state_change", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T18:47:41.009970Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.BaseAgent] [START] Agent 'WorldstateBot' started
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Validación: AREA_FREE (3000/3000 coords válidas)
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-432) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-431) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-430) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-429) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-428) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-427) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-426) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-425) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-424) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-414,-423) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-432) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-431) con altura 63
+[2026-01-10 19:47:41] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-430) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-429) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-428) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-427) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-426) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-425) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-424) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-413,-423) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-432) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-431) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-430) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-429) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-428) con altura 63
+[2026-01-10 19:47:42] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-427) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-426) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-425) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-424) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-412,-423) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-432) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-431) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-430) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-429) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-428) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-427) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-426) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-425) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-424) con altura 63
+[2026-01-10 19:47:43] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-411,-423) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-432) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-431) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-430) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-429) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-428) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-427) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-426) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-425) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-424) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-410,-423) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-432) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-431) con altura 63
+[2026-01-10 19:47:44] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-430) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-429) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-428) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-427) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-426) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-425) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-424) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-409,-423) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-432) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-431) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-430) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-429) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-428) con altura 63
+[2026-01-10 19:47:45] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-427) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-426) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-425) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-424) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-408,-423) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-432) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-431) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-430) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-429) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-428) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-427) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-426) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-425) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-424) con altura 63
+[2026-01-10 19:47:46] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-407,-423) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-406,-432) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-406,-431) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-406,-430) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-406,-429) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-406,-428) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-406,-427) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Stop command received: attempting to save best rectangle
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Percibiendo coordenadas (-406,-426) con altura 63
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Best rectangle saved successfully before stop
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Builder.BuilderBot] [MAP] Recived map from ExplorerBot
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Published map.v1 (rect area=80, coords=(-414,-432)→(-407,-423))
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.BaseAgent] [STOP] Stopping agent 'ExplorerBot'...
+[2026-01-10 19:47:47] [INFO] [ExplorerBot] {"event": "stopping_sequence", "agent_id": "ExplorerBot"}
+[2026-01-10 19:47:47] [INFO] [ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T18:47:47.511633Z", "previous_state": "RUNNING", "next_state": "STOPPED", "reason": "stop command"}
+[2026-01-10 19:47:47] [INFO] [Plugin.Core.Agents.Explorer.ExplorerBot] [CHECKPOINT] ExplorerBot saved: center=(-420, -440) range=30
+[2026-01-10 20:06:13] [INFO] [Plugin.Core.Agents.BaseAgent] [CHECKPOINT] Saved data for WorldstateBot
+[2026-01-10 20:06:13] [INFO] [WorldstateBot] {"event": "checkpoint_saved", "agent_id": "WorldstateBot"}
+[2026-01-10 20:10:06] [INFO] [json.ExplorerBot] {"event": "agent_init", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T19:10:06.001803Z"}
+[2026-01-10 20:10:06] [INFO] [json.BuilderBot] {"event": "agent_init", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:10:06.002802Z"}
+[2026-01-10 20:10:06] [INFO] [json.MinerBot] {"event": "agent_init", "agent_id": "MinerBot", "timestamp": "2026-01-10T19:10:06.434932Z"}
+[2026-01-10 20:10:06] [INFO] [json.WorldstateBot] {"event": "agent_init", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T19:10:06.434932Z"}
+[2026-01-10 20:10:18] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T19:10:18.360975Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 20:10:23] [INFO] [json.WorldstateBot] {"type": "state_change", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T19:10:23.458062Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 20:11:26] [INFO] [json.WorldstateBot] {"event": "checkpoint_saved", "agent_id": "WorldstateBot"}
+[2026-01-10 20:15:20] [INFO] [json.ExplorerBot] {"event": "agent_init", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T19:15:20.242860Z"}
+[2026-01-10 20:15:20] [INFO] [json.BuilderBot] {"event": "agent_init", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:15:20.243860Z"}
+[2026-01-10 20:15:20] [INFO] [json.MinerBot] {"event": "agent_init", "agent_id": "MinerBot", "timestamp": "2026-01-10T19:15:20.688405Z"}
+[2026-01-10 20:15:20] [INFO] [json.WorldstateBot] {"event": "agent_init", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T19:15:20.689405Z"}
+[2026-01-10 20:15:25] [INFO] [json.WorldstateBot] {"type": "state_change", "agent_id": "WorldstateBot", "timestamp": "2026-01-10T19:15:25.661431Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 20:15:28] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:15:28.359058Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 20:15:28] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:15:28.360059Z", "previous_state": "RUNNING", "next_state": "WAITING", "reason": "Waiting for free area"}
+[2026-01-10 20:15:32] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:15:32.909599Z", "previous_state": "WAITING", "next_state": "PAUSED", "reason": "pause command"}
+[2026-01-10 20:15:42] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:15:42.158024Z", "previous_state": "PAUSED", "next_state": "WAITING", "reason": "resume command"}
+[2026-01-10 20:15:59] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:15:59.109236Z", "previous_state": "WAITING", "next_state": "PAUSED", "reason": "pause command"}
+[2026-01-10 20:16:08] [INFO] [json.BuilderBot] {"event": "stopping_sequence", "agent_id": "BuilderBot"}
+[2026-01-10 20:16:08] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:16:08.109610Z", "previous_state": "PAUSED", "next_state": "STOPPED", "reason": "stop command"}
+[2026-01-10 20:16:08] [INFO] [json.BuilderBot] {"event": "checkpoint_saved", "agent_id": "BuilderBot"}
+[2026-01-10 20:16:17] [INFO] [json.BuilderBot] {"event": "update_params", "agent_id": "BuilderBot", "params": {"schem": "importar"}}
+[2026-01-10 20:16:25] [INFO] [json.ExplorerBot] {"event": "update_params", "agent_id": "ExplorerBot", "params": {"range": 7, "strategy": "spiral"}}
+[2026-01-10 20:16:36] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T19:16:36.259511Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 20:16:39] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:16:39.658223Z", "previous_state": "STOPPED", "next_state": "RUNNING", "reason": "start"}
+[2026-01-10 20:16:39] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:16:39.709235Z", "previous_state": "RUNNING", "next_state": "WAITING", "reason": "Waiting for free area"}
+[2026-01-10 20:16:42] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:16:42.208841Z", "previous_state": "WAITING", "next_state": "PAUSED", "reason": "pause command"}
+[2026-01-10 20:16:54] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-10T19:16:54.511047Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-10 20:16:59] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:16:59.159543Z", "previous_state": "PAUSED", "next_state": "WAITING", "reason": "resume command"}
+[2026-01-10 20:16:59] [INFO] [json.BuilderBot] {"type": "state_change", "agent_id": "BuilderBot", "timestamp": "2026-01-10T19:16:59.310577Z", "previous_state": "WAITING", "next_state": "WAITING", "reason": "Waiting for materials"}

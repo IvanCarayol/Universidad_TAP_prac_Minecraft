@@ -7,11 +7,11 @@ import os
 
 from ..Strategies.explorer_strategies import search_line, search_spiral, search_random
 from ..BaseAgent import BaseAgent, AgentState
-from ...Logger.logging_config import get_logger
+from ...Logger.logging_config import get_console_logger
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "Core"))
 
-logger = get_logger(__name__)
+logger = get_console_logger(__name__)
 
 # ============================================================
 # ExplorerBot Implementation
@@ -436,6 +436,70 @@ class ExplorerBot(BaseAgent):
     # Control Overloads
     # ---------------------------------------------------------
     async def stop(self):
+        logger.info("[EXPLORER] Stop command received: attempting to save best rectangle")
+
+        # 1️⃣ Construir rectángulo a partir de lo percibido hasta ahora
+        height_map = getattr(self, "_height_map", {})
+        if height_map:
+            # Reusar la lógica de decide para calcular el mejor rectángulo
+            levels = {}
+            for (x, z), h in height_map.items():
+                levels.setdefault(h, []).append((x, z))
+
+            best_rect = None
+            for h, coords in levels.items():
+                xs = sorted(set([c[0] for c in coords]))
+                zs = sorted(set([c[1] for c in coords]))
+                x_index = {x: i for i, x in enumerate(xs)}
+                z_index = {z: i for i, z in enumerate(zs)}
+                grid = [[0] * len(zs) for _ in range(len(xs))]
+                for (x, z) in coords:
+                    grid[x_index[x]][z_index[z]] = 1
+                matrix = list(zip(*grid))
+                rect = self._largest_rectangle_in_matrix(matrix)
+                if rect is None:
+                    continue
+                area, (z1_i, x1_i), (z2_i, x2_i) = rect
+                x1, x2 = xs[x1_i], xs[x2_i]
+                z1, z2 = zs[z1_i], zs[z2_i]
+                if best_rect is None or area > best_rect[0]:
+                    best_rect = (area, x1, z1, x2, z2, h)
+
+            if best_rect:
+                area, x1, z1, x2, z2, h = best_rect
+                rect_dict = {
+                    "x1": x1,
+                    "z1": z1,
+                    "x2": x2,
+                    "z2": z2,
+                    "width": abs(x2 - x1) + 1,
+                    "height": abs(z2 - z1) + 1,
+                    "area": area,
+                    "y": h
+                }
+                try:
+                    result = await self.save_area_clean(rect_dict)
+                    if result and result.get("status") == "OK":
+                        logger.info("[EXPLORER] Best rectangle saved successfully before stop")
+                        await self._publish_map(rect_dict)
+                    else:
+                        logger.warning("[EXPLORER] Failed to save best rectangle before stop")
+                        await self._publish_map(None)
+                except Exception:
+                    logger.exception("[EXPLORER] Exception saving best rectangle on stop")
+                    await self._publish_map(None)
+            else:
+                # No se encontró ningún rectángulo válido
+                await self._publish_map(None)
+        else:
+            # No se percibió ningún bloque aún
+            await self._publish_map(None)
+
+        # 2️⃣ Limpiar memoria interna
+        self._pending_coords = []
+        self._height_map = {}
+
+        # 3️⃣ Llamar a stop() de BaseAgent
         await super().stop()
 
     async def pause(self):

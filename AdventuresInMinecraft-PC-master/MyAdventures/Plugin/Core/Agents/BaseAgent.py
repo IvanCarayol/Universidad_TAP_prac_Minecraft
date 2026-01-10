@@ -41,6 +41,7 @@ class BaseAgent:
 
         self.logger = get_json_file_logger(name=agent_id)
 
+        self.prev = None
         self._state: AgentState = AgentState.IDLE
         self._task: Optional[asyncio.Task] = None
         self._should_stop = False
@@ -59,14 +60,14 @@ class BaseAgent:
         return self._state
 
     def set_state(self, new_state: AgentState, reason: str = ""):
-        prev = self._state
+        self.prev = self._state
         self._state = new_state
 
         transition_record = {
             "type": "state_change",
             "agent_id": self.agent_id,
             "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
-            "previous_state": prev.value,
+            "previous_state": self.prev.value,
             "next_state": new_state.value,
             "reason": reason
         }
@@ -133,8 +134,24 @@ class BaseAgent:
         self.set_state(AgentState.IDLE, "pause command")
 
     async def resume(self):
-        if self._state == AgentState.PAUSED:
-            self.set_state(AgentState.RUNNING, "resume command")
+        """
+        Resume el agente al estado que tenía antes de pausar.
+        """
+        if self._state != AgentState.PAUSED:
+            logger.warning(f"[RESUME] Agent '{self.agent_id}' not paused, cannot resume")
+            return
+
+        if self.prev is None:
+            # fallback: si no hay prev definido, usar RUNNING
+            target_state = AgentState.RUNNING
+        else:
+            target_state = self.prev
+
+        self.set_state(target_state, "resume command")
+
+        # Si el estado restaurado es RUNNING, reiniciar loop si no hay task
+        if target_state == AgentState.RUNNING and (self._task is None or self._task.done()):
+            await self.start()
 
     async def waiting(self):
         self.set_state(AgentState.WAITING, "resume command")

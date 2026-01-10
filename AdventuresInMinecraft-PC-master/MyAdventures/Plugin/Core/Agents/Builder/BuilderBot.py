@@ -9,11 +9,11 @@ from Plugin.Schematics.blockmap import BLOCK_MAP
 from Plugin.Schematics.schematic_loader import load_schematic, parse_schematic, schematic_to_blocks
 from typing import Dict, Any, Optional
 from ..BaseAgent import BaseAgent, AgentState
-from ...Logger.logging_config import get_logger
+from ...Logger.logging_config import get_console_logger
 from collections import Counter
 
 
-logger = get_logger(__name__)
+logger = get_console_logger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parents[3]
 TEMPLATE_DIR = ROOT_DIR / "Schematics"
@@ -503,7 +503,7 @@ class BuilderBot(BaseAgent):
 
     async def resume(self):
         await super().resume()
-        
+
     async def idle(self):
         await super().idle()
 

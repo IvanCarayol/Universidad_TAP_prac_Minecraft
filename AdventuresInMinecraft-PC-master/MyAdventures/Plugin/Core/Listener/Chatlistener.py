@@ -1,5 +1,6 @@
 import asyncio
 from  mcpi.event import ChatEvent
+from ..Logger.logging_config import get_console_logger
 
 # Registro global de bots
 BOTS_REGISTRY = {}
@@ -7,13 +8,14 @@ BOTS_REGISTRY = {}
 # Registro de dispatches activos
 _ACTIVE_DISPATCHES = set()
 
+logger = get_console_logger(__name__)
 
 async def chat_listener(mc, poll_interval: float = 0.1):
     """
     Escucha mensajes del chat.
     Usa ChatEvent solo como contenedor, ya no como sistema de eventos.
     """
-    print("[CHAT LISTENER] Escuchando mensajes...")
+    logger.info("[CHAT LISTENER] Escuchando mensajes...")
 
     while True:
         events = mc.events.pollChatPosts()
@@ -40,7 +42,7 @@ async def chat_listener(mc, poll_interval: float = 0.1):
 
 def start_chat_listener(mc):
     asyncio.create_task(chat_listener(mc))
-    print("[CHAT LISTENER] Iniciado")
+    logger.info("[CHAT LISTENER] Iniciado")
 
 
 async def _dispatch(chat_evt: ChatEvent, dispatch_key):
@@ -59,7 +61,7 @@ async def _dispatch(chat_evt: ChatEvent, dispatch_key):
         )
 
     except Exception as e:
-        print(f"[CHAT CMD ERROR] {e}")
+        logger.error(f"[CHAT CMD ERROR] {e}")
 
     finally:
         _ACTIVE_DISPATCHES.discard(dispatch_key)
@@ -72,5 +74,5 @@ def register_bot(bot):
     bot_key = bot.agent_id.lower().replace("bot", "")
     BOTS_REGISTRY[bot_key] = bot
 
-    print(f"[CHAT LISTENER] Bot registrado: {bot_key}")
+    logger.info(f"[CHAT LISTENER] Bot registrado: {bot_key}")
     return True
