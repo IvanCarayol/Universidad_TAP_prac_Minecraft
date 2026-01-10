@@ -28,7 +28,7 @@ class MinerBot(BaseAgent):
     def __init__(self, agent_id: str = "MinerBot", bus=None, mc=None, default_strategy: str = "grid"):
         super().__init__(agent_id, bus=bus)
         self.inventory: Dict[str, int] = defaultdict(int)  # e.g. {'stone': 10}
-        self._current_bom: Optional[Dict[str, int]] = None
+        self._current_bom: Optional[list[dict]] = None
         self._strategy_name = default_strategy
         self._strategy = None
         self.assigned_area = None
@@ -60,30 +60,38 @@ class MinerBot(BaseAgent):
     # -----------------------
     # Message handlers
     # -----------------------
-    async def _on_materials_request(self, msg: Dict[str, Any]):
-        """
-        Handle materials.requirements.v1 messages (BOM).
-        Expected msg structure:
-        {
-          "type":"materials.requirements.v1",
-          "source":"BuilderBot",
-          "target":"MinerBot",
-          "payload": {"wood":10, "stone":5},
-          "context": {"task_id":"MNR-042"}
-        }
-        """
-        try:
-            payload = msg.get('payload') or {}
-            if not isinstance(payload, dict):
-                logger.error("Invalid BOM payload: %s", payload)
+    async def _on_materials_request(self, msg):
+        if msg.get("target") not in (self.agent_id, "*"):
+            return
+
+        payload = msg.get("payload")
+
+        # Caso correcto: payload = {"bom": [...]}
+        if isinstance(payload, dict):
+            bom = payload.get("bom")
+
+        # Parche defensivo: payload = [...]
+        elif isinstance(payload, list):
+            bom = payload
+
+        else:
+            bom = None
+
+        if not isinstance(bom, list):
+            logger.error("[MINER] Invalid BOM received: %s", payload)
+            return
+
+        # Validar estructura interna
+        for item in bom:
+            if not isinstance(item, dict) or "material" not in item or "qty" not in item:
+                logger.error("[MINER] Malformed BOM item: %s", item)
                 return
-            logger.info("Received BOM from %s: %s", msg.get('source'), payload)
-            # accept BOM and start fulfillment
-            self._current_bom = dict(payload)
-            # if not running, start agent loop (caller may have started already)
-            self._bom_event.set()
-        except Exception:
-            logger.exception("Error handling BOM message")
+
+        self._current_bom = bom
+        self._bom_event.set()
+
+        logger.info("[MINER] BOM received: %s", bom)
+
 
     async def _on_start_cmd(self, msg: Dict[str, Any]):
         """Handle miner start.`"""
@@ -139,7 +147,7 @@ class MinerBot(BaseAgent):
     async def perceive(self) -> Dict[str, Any]:
         await asyncio.sleep(0)  # yield
         percept = {
-            "bom": dict(self._current_bom) if self._current_bom else None,
+            "bom": list(self._current_bom) if self._current_bom else None,  
             "inventory": dict(self.inventory),
             "strategy": self._strategy_name,
             "state": self.state.value
@@ -189,9 +197,9 @@ class MinerBot(BaseAgent):
     # -----------------------
     # Mining internals
     # -----------------------
-    def _bom_fulfilled(self, bom: Dict[str, int]) -> bool:
-        for mat, qty in bom.items():
-            if self.inventory.get(mat, 0) < qty:
+    def _bom_fulfilled(self, bom) -> bool:
+        for item in bom:
+            if self.inventory.get(item["material"], 0) < item["qty"]:
                 return False
         return True
 
@@ -249,19 +257,16 @@ class MinerBot(BaseAgent):
         except Exception:
             logger.exception("Exception during mining step")
 
-    def _simulate_material_from_target(self, target: Tuple[int, int, int]) -> str:
-        """
-        Devuelve un material que aún falte en el BOM.
-        Simula minería cumpliendo la necesidad exacta del BOM.
-        """
+    def _simulate_material_from_target(self, target):
         if not self._current_bom:
-            return "stone"  # fallback
+            return "stone"
 
-        pending = [mat for mat, qty in self._current_bom.items() if self.inventory.get(mat, 0) < qty]
-        if not pending:
-            return list(self._current_bom.keys())[0]
+        pending = [
+            item for item in self._current_bom
+            if self.inventory.get(item["material"], 0) < item["qty"]
+        ]
 
-        return pending[0]
+        return pending[0]["material"] if pending else self._current_bom[0]["material"]
 
     # -----------------------
     # Publishing inventory
@@ -401,9 +406,27 @@ class MinerBot(BaseAgent):
             self.bus.unsubscribe("worldstate.response", _temp)
 
     async def report_materials_to_worldstate(self, timeout: float = 5.0):
+        """
+        Reporta el inventario de MinerBot a WorldStateBot en un formato aceptable,
+        para que BuilderBot pueda iniciar la construcción.
+        """
         if not self.inventory:
             logger.info("[MINER] Inventory vacío, no se reporta nada a WorldState")
             return True
+
+        # Convertir inventario a lista de dicts
+        payload_materials = [
+            {
+                "material": mat.split("[")[0],  # eliminar propiedades como [east=true,...]
+                "qty": int(qty)
+            }
+            for mat, qty in self.inventory.items()
+            if qty > 0
+        ]
+
+        if not payload_materials:
+            logger.warning("[MINER] Inventario convertido vacío, no se reporta nada")
+            return False
 
         future = asyncio.get_event_loop().create_future()
 
@@ -422,19 +445,16 @@ class MinerBot(BaseAgent):
 
         self.bus.subscribe("worldstate.response", _temp)
 
+        # Publicar materiales al WorldStateBot
         await self.bus.publish({
             "type": "materials.report.v1",
             "source": self.agent_id,
             "target": "WorldStateBot",
-            "payload": {
-                "materials": dict(self.inventory)
-            },
-            "context": {
-                "task_id": "auto"
-            }
+            "payload": {"materials": payload_materials},
+            "context": {"task_id": "auto"}
         })
 
-        logger.info("[MINER] Reportando materiales a WorldState: %s", dict(self.inventory))
+        logger.info("[MINER] Reportando materiales a WorldState: %s", payload_materials)
 
         try:
             result = await asyncio.wait_for(future, timeout=timeout)
@@ -453,6 +473,7 @@ class MinerBot(BaseAgent):
 
         finally:
             self.bus.unsubscribe("worldstate.response", _temp)
+
 
     # -----------------------
     # Control overrides

@@ -10,6 +10,7 @@ from Plugin.Schematics.schematic_loader import load_schematic, parse_schematic, 
 from typing import Dict, Any, Optional
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_logger
+from collections import Counter
 
 
 logger = get_logger(__name__)
@@ -39,10 +40,15 @@ def load_all_templates():
             blocks = schematic_to_blocks(struct)
 
             # Build material count
-            materials = {}
+            counter = Counter()
             for (_, _, _, block) in blocks:
                 if block != "minecraft:air":
-                    materials[block] = materials.get(block, 0) + 1
+                    counter[block] += 1
+
+            materials = [
+                {"material": mat, "qty": qty}
+                for mat, qty in counter.items()
+            ]
 
             width, height, depth = struct["size"]
 
@@ -65,14 +71,14 @@ class BuilderBot(BaseAgent):
 
     BUILD_INTERVAL = 0.001
 
-    def __init__(self, agent_id="BuilderBot", bus=None):
+    def __init__(self, agent_id="BuilderBot", bus= None):
         super().__init__(agent_id, bus)
         
         load_all_templates()
  
         self._valid_area: Optional[Dict[str, Any]] = None
         self._template_name = list(TEMPLATES.keys())[0]  # default first template
-        self._bom = None
+        self._bom: Optional[list[dict]] = None
         self._material_inventory = {}
         self._materials_reserved = False
         self._build_progress = 0
@@ -171,15 +177,15 @@ class BuilderBot(BaseAgent):
         return {
             "map": self._valid_area,
             "inventory": dict(self._material_inventory),
-            "bom": dict(self._bom) if self._bom else None,
+            "bom": list(self._bom) if self._bom else None,
             "template": self._template_name,
             "build_progress": self._build_progress,
         }
 
-    async def decide(self, p):
+    async def decide(self, percept):
 
-        if p["map"] is None:
-            tpl = TEMPLATES[p["template"]]
+        if percept["map"] is None:
+            tpl = TEMPLATES[percept["template"]]
             req_area = {
                 "width": tpl["width"],
                 "depth": tpl["depth"]
@@ -191,11 +197,11 @@ class BuilderBot(BaseAgent):
                 self.set_state(AgentState.WAITING, "Waiting for free area")
                 return {"action": "wait_for_map"}
 
-        if p["bom"] is None:
+        if percept["bom"] is None:
             return {"action": "compute_bom"}
 
         if not self._materials_reserved:
-            result = await self.check_and_consume_materials(p["bom"])
+            result = await self.check_and_consume_materials(percept["bom"])
 
             if result["status"] == "INSUFFICIENT":
                 # pedir SOLO lo que falta
@@ -205,7 +211,9 @@ class BuilderBot(BaseAgent):
                     "type": "bom.v1",
                     "source": self.agent_id,
                     "target": "MinerBot",
-                    "payload": self._bom,
+                    "payload": {
+                        "bom": self._bom
+                    },
                     "context": {"task_id": f"BLD-{self.agent_id}"}
                 })
 
@@ -270,26 +278,25 @@ class BuilderBot(BaseAgent):
 
     async def _compute_and_send_bom(self):
         tpl = TEMPLATES[self._template_name]
-        full_bom = dict(tpl["materials"])
+        full_bom = list(tpl["materials"])
 
-        missing = await self.check_and_consume_materials(full_bom)
+        result = await self.check_and_consume_materials(full_bom)
 
-        if not missing:
-            logger.info("[BUILDER] All materials already available in WorldState")
+        if result["status"] == "OK":
+            logger.info("[BUILDER] All materials available")
             self._bom = full_bom
             return
 
-        self._bom = missing
+        self._bom = result["missing"]
 
-        msg = self.build_message(
-            "materials.requirements.v1",
-            "MinerBot",
-            payload=missing,
-            context={"template": self._template_name}
-        )
-        await self.bus.publish(msg)
-
-        logger.info("[BUILDER] Published BOM (missing only): %s", missing)
+        await self.bus.publish({
+            "type": "materials.requirements.v1",
+            "source": self.agent_id,
+            "target": "MinerBot",
+            "payload": {
+                "bom": self._bom
+            }
+        })
 
     def _materials_ready(self, bom, inv):
         return all(inv.get(k, 0) >= v for k, v in bom.items())
@@ -477,7 +484,7 @@ class BuilderBot(BaseAgent):
             "source": self.agent_id,
             "target": "WorldStateBot",
             "payload": {
-                "materials": bom
+                "bom": bom
             }
         })
 

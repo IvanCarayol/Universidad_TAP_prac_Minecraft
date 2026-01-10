@@ -7,6 +7,15 @@ from ...Logger.logging_config import get_logger
 
 logger = get_logger(__name__)
 
+def normalize_material_name(name: str) -> str:
+    """
+    Devuelve el nombre base del material, eliminando propiedades tipo [east=true,...].
+    Ej: 'minecraft:iron_bars[east=true]' -> 'minecraft:iron_bars'
+    """
+    if not isinstance(name, str):
+        return name
+    return name.split("[")[0]
+
 def rects_overlap(r1, r2):
     """Devuelve True si dos rectángulos se solapan."""
     return not (
@@ -132,7 +141,7 @@ class WorldStateBot(BaseAgent):
             return ("STORE_MATERIALS", sender, materials)
         
         elif mtype == "materials.check.v1":
-            materials = payload.get("materials")
+            materials = payload.get("bom")
             return ("CHECK_MATERIALS", sender, materials)
         
         else:
@@ -415,7 +424,7 @@ class WorldStateBot(BaseAgent):
         }
 
     async def _store_materials(self, agent_id, materials):
-        if not materials or not isinstance(materials, dict):
+        if not materials or not isinstance(materials, list):
             logger.warning(
                 f"[WORLDSTATE] Invalid materials payload from {agent_id}: {materials}"
             )
@@ -425,9 +434,15 @@ class WorldStateBot(BaseAgent):
             }
 
         async with self._lock:
-            for mat, qty in materials.items():
-                if not isinstance(qty, int) or qty <= 0:
+            for item in materials:
+                # 1️⃣ Normalizar el nombre
+                mat = normalize_material_name(item.get("material"))
+                qty = item.get("qty")
+
+                if not isinstance(mat, str) or not isinstance(qty, int) or qty <= 0:
                     continue
+
+                # 2️⃣ Sumar al total
                 self.materials[mat] += qty
 
             logger.info(
@@ -440,23 +455,27 @@ class WorldStateBot(BaseAgent):
         return {
             "kind": "materials",
             "status": "OK",
-            "stored": dict(materials)
+            "stored": materials
         }
 
-    async def _check_and_consume_materials(self, agent_id, required):
-        if not required or not isinstance(required, dict):
-            return {
-                "kind": "materials",
-                "status": "INVALID_REQUEST"
-            }
+    async def _check_and_consume_materials(self, agent_id, bom):
+        if not bom or not isinstance(bom, list):
+            return {"kind": "materials", "status": "INVALID_REQUEST"}
 
-        missing = {}
+        missing = []
 
         async with self._lock:
-            for mat, qty in required.items():
+            # 1️⃣ Verificar disponibilidad sumando todas las cantidades normalizadas
+            for item in bom:
+                mat = normalize_material_name(item["material"])
+                qty = item["qty"]
                 available = self.materials.get(mat, 0)
+
                 if available < qty:
-                    missing[mat] = qty - available
+                    missing.append({
+                        "material": mat,
+                        "qty": qty - available
+                    })
 
             if missing:
                 return {
@@ -465,29 +484,31 @@ class WorldStateBot(BaseAgent):
                     "missing": missing
                 }
 
-            for mat, qty in required.items():
-                self.materials[mat] -= qty
+            # 2️⃣ Consumir materiales
+            for item in bom:
+                mat = normalize_material_name(item["material"])
+                self.materials[mat] -= item["qty"]
                 if self.materials[mat] <= 0:
                     del self.materials[mat]
 
-            logger.info(
-                f"[WORLDSTATE] Materials consumed by {agent_id}: {required}"
-            )
-
-        return {
-            "kind": "materials",
-            "status": "OK"
-        }
-
+        return {"kind": "materials", "status": "OK"}
    
     # ---------------------------------------------------------
     # Control Overloads
     # ---------------------------------------------------------
     async def status(self):
         """Imprime el estado actual del bot en el logger"""
+        
+        # Construir un string legible para los materiales
+        if self.materials:
+            materials_str = ", ".join(f"{mat}: {qty}" for mat, qty in self.materials.items())
+        else:
+            materials_str = "No hay materiales almacenados"
+
         info = {
             "areas": self.flat_areas,
-            "materials": self.materials,
-            "messages": self._inbox,
+            "materials": materials_str,
+            "messages_queue_size": self._inbox.qsize(),
         }
+
         logger.info("[WORLDSTATE STATUS] %s", info)
