@@ -16,6 +16,14 @@ COMMANDS = {
         "description": "Detiene el bot Explorer",
         "params": [],
     },
+    "explorer_pause": {
+        "description": "Pausa el bot Explorer",
+        "params": [],
+    },
+    "explorer_resume": {
+        "description": "Reanuda el bot Explorer",
+        "params": [],
+    },
     "explorer_status": {
         "description": "Devuelve el estado de el bot",
         "params": [],
@@ -109,6 +117,8 @@ async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any
                 "explorer_start":  "command.explorer.start.v1",
                 "explorer_set":    "command.explorer.set.v1",
                 "explorer_stop":   "command.explorer.stop.v1",
+                "explorer_pause":  "command.explorer.pause.v1",
+                "explorer_resume": "command.explorer.resume.v1",
                 "explorer_status": "command.explorer.status.v1",
             }
 
