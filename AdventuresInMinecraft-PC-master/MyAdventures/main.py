@@ -8,6 +8,7 @@ from Plugin.Core.Logger.logging_config import get_console_logger
 from mcpi.minecraft import Minecraft
 from Plugin.Core.Listener.Chatlistener import register_bot, start_chat_listener 
 from mcpi.event import ChatEvent
+from Plugin.Core.Bus.Bus import MessageBus
 
 
 # --------------------------
@@ -44,23 +45,35 @@ async def main():
     # Crear instancias reales de bots
     # -----------------------------------------------------
 
-    explorer_bot = AgentFactory.create("explorer", "ExplorerBot", mc)
-
-    builder_bot = AgentFactory.create("builder", "BuilderBot", mc)
-
-    miner_bot = AgentFactory.create("miner", "MinerBot", mc)
-
-    worldstate_bot = AgentFactory.create("worldstate", "WorldstateBot", mc)
-    # Si tienes otros bots, créalos aquí:
-    # miner_bot = MinerBot(...)
-
-    # -----------------------------------------------------
-    # Registrar bots en ChatEvent (MUY IMPORTANTE)
-    # -----------------------------------------------------
-    register_bot(explorer_bot)
-    register_bot(miner_bot)
-    register_bot(builder_bot)
+    shared_bus = MessageBus()
+    worldstate_bot = AgentFactory.create("worldstate", "WorldstateBot", shared_bus, mc)
     register_bot(worldstate_bot)
+
+    NUM_SQUADS = 2
+    
+    for i in range(NUM_SQUADS):
+        suffix = f"_{i+1}" # Genera "_1", "_2"
+        
+        # Nombres únicos para este equipo
+        b_name = f"Builder{suffix}"
+        m_name = f"Miner{suffix}"
+        e_name = f"Explorer{suffix}"
+
+        logger.info(f"--- Creando Escuadrón {suffix}: {b_name} + {m_name} + {e_name} ---")
+
+        # A. Crear bots con la Factory
+        builder = AgentFactory.create("builder", b_name, shared_bus, mc)
+        miner   = AgentFactory.create("miner",   m_name, shared_bus, mc)
+        explorer= AgentFactory.create("explorer", e_name, shared_bus, mc)
+
+        # B. ¡AQUÍ ESTÁ LA CLAVE! Asignamos el equipo al Builder
+        # Le decimos: "Builder_1, tu minero es Miner_1"
+        builder.set_squad(m_name, e_name)
+
+        # C. Registramos a todos para que escuchen el chat
+        register_bot(builder)
+        register_bot(miner)
+        register_bot(explorer)
 
     logger.info("Bots registrados correctamente.")
 

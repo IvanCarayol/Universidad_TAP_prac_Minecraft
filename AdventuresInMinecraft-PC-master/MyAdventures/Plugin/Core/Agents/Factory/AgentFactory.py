@@ -4,12 +4,10 @@ from ..Miner.MinerBot import MinerBot
 from ..Explorer.ExplorerBot import ExplorerBot
 from ..Builder.BuilderBot import BuilderBot
 from ..World.WorldstateBot import WorldStateBot 
-from Plugin.Core.Bus.Bus import MessageBus
-bus = MessageBus()
 
 class AgentFactory:
     @staticmethod
-    def create(agent_type: str, agent_id: str, mc=None):
+    def create(agent_type: str, agent_id: str, bus, mc=None):
         """
         Crea y devuelve una instancia del bot solicitado.
         

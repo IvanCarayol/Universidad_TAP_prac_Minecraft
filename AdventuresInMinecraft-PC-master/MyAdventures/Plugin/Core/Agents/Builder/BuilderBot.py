@@ -75,6 +75,9 @@ class BuilderBot(BaseAgent):
         
         load_all_templates()
  
+        self.miner_id = "MinerBot"       # Por defecto
+        self.explorer_id = "ExplorerBot" # Por defecto
+
         self._valid_area: Optional[Dict[str, Any]] = None
         self._template_name = list(TEMPLATES.keys())[0]  # default first template
         self._bom: Optional[list[dict]] = None
@@ -96,6 +99,11 @@ class BuilderBot(BaseAgent):
         self.bus.subscribe("command.builder.list.v1", self._on_control)
         self.bus.subscribe("command.builder.status.v1", self._on_control)
         self.bus.subscribe("*", self._on_generic)
+
+    def set_squad(self, miner_id, explorer_id):
+        self.miner_id = miner_id
+        self.explorer_id = explorer_id
+        logger.info(f"[{self.agent_id}] Equipo asignado: Miner={self.miner_id}, Explorer={self.explorer_id}")
 
     # ============ MESSAGE HANDLERS ====================
 
@@ -184,16 +192,28 @@ class BuilderBot(BaseAgent):
 
         if percept["map"] is None:
             tpl = TEMPLATES[percept["template"]]
-            req_area = {
-                "width": tpl["width"],
-                "depth": tpl["depth"]
-            }
+            
+            # Calculamos el tamaño que necesitamos escanear
+            # (El ancho o profundidad máximo del edificio + margen de 5 bloques)
+            scan_range = max(tpl["width"], tpl["depth"]) + 5
 
-            self._valid_area = await self.request_free_area_clean(req_area)
+            logger.info(f"[{self.agent_id}] Ordenando a {self.explorer_id} buscar zona de tamaño {scan_range}...")
 
-            if self._valid_area is None:
-                self.set_state(AgentState.WAITING, "Waiting for free area")
-                return {"action": "wait_for_map"}
+            # ENVIAMOS LA ORDEN A NUESTRO EXPLORER (No al WorldState)
+            await self.bus.publish({
+                "type": "command.explorer.start.v1",
+                "source": self.agent_id,
+                "target": self.explorer_id,
+                "payload": {
+                    "x": 0, 
+                    "z": 0,
+                    "range": scan_range
+                }
+            })
+
+            # Nos ponemos a esperar. El Explorer enviará "map.v1" cuando termine.
+            self.set_state(AgentState.WAITING, "Waiting for Explorer map")
+            return {"action": "wait_for_map"}
 
         if percept["bom"] is None:
             return {"action": "compute_bom"}
@@ -205,10 +225,13 @@ class BuilderBot(BaseAgent):
                 # pedir SOLO lo que falta
                 self._bom = result["missing"]
 
+                # CAMBIO AQUÍ: Usamos self.miner_id
+                logger.info(f"[{self.agent_id}] Pidiendo materiales a {self.miner_id}...")
+
                 await self.bus.publish({
-                    "type": "bom.v1",
+                    "type": "materials.requirements.v1",
                     "source": self.agent_id,
-                    "target": "MinerBot",
+                    "target": self.miner_id, # <--- ¡IMPORTANTE! Variable dinámica
                     "payload": {
                         "bom": self._bom
                     },
@@ -287,13 +310,16 @@ class BuilderBot(BaseAgent):
 
         self._bom = result["missing"]
 
+        logger.info(f"[{self.agent_id}] Pidiendo materiales a {self.miner_id}...")
+
         await self.bus.publish({
             "type": "materials.requirements.v1",
             "source": self.agent_id,
-            "target": "MinerBot",
+            "target": self.miner_id, 
             "payload": {
                 "bom": self._bom
-            }
+            },
+            "context": {"task_id": f"BLD-{self.agent_id}"} 
         })
 
     def _materials_ready(self, bom, inv):

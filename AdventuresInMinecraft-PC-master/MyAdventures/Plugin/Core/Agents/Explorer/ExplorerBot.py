@@ -28,6 +28,8 @@ class ExplorerBot(BaseAgent):
         self.occupied = set()
         self.bus = bus
 
+        self.current_requester = None
+
         super().__init__(agent_id, bus)
         # Estrategia por defecto
         self.search_strategy = search_random
@@ -65,6 +67,8 @@ class ExplorerBot(BaseAgent):
         z = int(payload.get("z", self.center[1]))
         r = int(payload.get("range", self.range))
 
+        requester = msg.get("source")   
+
         logger.info("[EXPLORER] Start request: x=%s z=%s range=%s", x, z, r)
 
         # If the bot is running, queue new scan
@@ -74,6 +78,7 @@ class ExplorerBot(BaseAgent):
         else:
             self.center = (x, z)
             self.range = r
+            self.current_requester = requester
             await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
@@ -318,10 +323,13 @@ class ExplorerBot(BaseAgent):
         Publica el resultado para BuilderBot en formato limpio.
         rect = None o un dict con x1,z1,x2,z2,area,width,height,y
         """
+
+        target = self.current_requester if self.current_requester else "*"
+
         msg = {
             "type": "map.v1",
             "source": self.agent_id,
-            "target": "BuilderBot",
+            "target": target,
             "payload": {
                 "best_rectangle": rect,
             },
@@ -334,23 +342,29 @@ class ExplorerBot(BaseAgent):
 
         await self.bus.publish(msg)
 
+        log_target = f"to {target}"
+
         if rect:
             logger.info(
-                f"[EXPLORER] Published map.v1 (rect area={rect['area']}, "
+                f"[EXPLORER] Published map.v1 {log_target} (rect area={rect['area']}, "
                 f"coords=({rect['x1']},{rect['z1']})→({rect['x2']},{rect['z2']}))"
             )
         else:
-            logger.info("[EXPLORER] Published map.v1 (no rectangle found)")
+            logger.info(f"[EXPLORER] Published map.v1 {log_target} (no rectangle found)")
 
     async def _handle_next_or_idle(self):
+
+        self.current_requester = None
+        
         if self._queued_request:
-            x, z, r = self._queued_request
+            x, z, r, requester = self._queued_request
             self._queued_request = None
             self.center = (x, z)
             self.range = r
             logger.info(
-                f"[EXPLORER] Switching to queued request: ({x},{z}) r={r}"
+                f"[EXPLORER] Switching to queued request from {requester}: ({x},{z}) r={r}"
             )
+            await self.start()
         else:
             await self.idle()
 

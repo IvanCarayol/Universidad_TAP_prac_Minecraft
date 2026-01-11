@@ -26,6 +26,8 @@ class MinerBot(BaseAgent):
     """
 
     def __init__(self, agent_id: str = "MinerBot", bus=None, mc=None):
+        
+        self.current_requester = None
 
         self.inventory: Dict[str, int] = defaultdict(int)  # e.g. {'stone': 10}
         self._current_bom: Optional[list[dict]] = None
@@ -165,41 +167,62 @@ class MinerBot(BaseAgent):
             return {"action": "wait_for_bom"}
         
         if self._bom_fulfilled(percept["bom"]):
-            return {"action": "report_complete"}
+            return {
+                "action": "report_complete", 
+                "target": self.current_requester
+            }
 
         return {"action": "mine"}
 
     async def act(self, decision: Dict[str, Any]):
         action = decision.get("action")
+
+        # Esperando peticion
         if action == "wait_for_bom":
-            logger.info("[MINER] Waiting for bom")
-
-            # limpiar el evento por si acaso
+            logger.info(f"[{self.agent_id}] Waiting for BOM request...")
+            
             self._bom_event.clear()
-
-            # dormir hasta que llegue map.v1
-            await self._bom_event.wait()
-
-            logger.info("[MINER] Bom arrived! Reasuming work.")
+            await self._bom_event.wait() # Se desbloquea cuando llega materials.requirements.v1
+            
+            logger.info(f"[{self.agent_id}] BOM received from {self.current_requester}. Resuming work.")
             return
-        
+
+        # Minando
+        if action == "mine":
+            await self._mine_step() 
+            return
+
+        # Ya ha acabado
         if action == "report_complete":
-            # 👉 NUEVO
+            target_builder = decision.get("target")
+            
+            if not target_builder:
+                logger.error(f"[{self.agent_id}] Error: No target builder specified for report.")
+                return
+
+            logger.info(f"[{self.agent_id}] Mission Complete. Reporting to {target_builder}")
+
             await self.report_materials_to_worldstate()
 
-            await self._publish_inventory(status="SUCCESS", final=True)
+            # Enviamos materiales al builder
+            await self.bus.publish({
+                "type": "materials.report.v1",
+                "source": self.agent_id,
+                "target": target_builder,
+                "payload": {
+                    "status": "SUCCESS",
+                    "bom": self._bom,  
+                    "final": True
+                }
+            })
 
-            # liberar área
-            await self.release_assigned_area()
+            await self.release_assigned_area()  # Soltar el área en WorldState
             
+            self._bom = None                    # Borrar lista de tareas
+            self.current_requester = None       # Olvidar al jefe actual (quedar libre)
+            
+            # 5. DORMIR
             await self.idle()
-            
-            self._current_bom = None
-            return
-        
-        if action == "mine":
-            # perform a mining step according to strategy
-            await self._perform_mining_step()
             return
 
     # -----------------------
