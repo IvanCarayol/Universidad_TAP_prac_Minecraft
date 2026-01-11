@@ -1,0 +1,50 @@
+{
+  "agent_id": "WorldstateBot",
+  "state": "RUNNING",
+  "prev_state": "IDLE",
+  "flat_areas": [
+    {
+      "rect": {
+        "x1": 96,
+        "z1": 103,
+        "x2": 101,
+        "z2": 107,
+        "width": 6,
+        "height": 5,
+        "area": 30,
+        "y": 117
+      },
+      "status": "FREE",
+      "assigned_to": null
+    },
+    {
+      "rect": {
+        "x1": 95,
+        "z1": 96,
+        "x2": 98,
+        "z2": 99,
+        "width": 4,
+        "height": 4,
+        "area": 16,
+        "y": 94
+      },
+      "status": "FREE",
+      "assigned_to": null
+    },
+    {
+      "rect": {
+        "x1": -427,
+        "z1": -407,
+        "x2": -412,
+        "z2": -393,
+        "width": 16,
+        "height": 15,
+        "area": 240,
+        "y": 63
+      },
+      "status": "RESERVED",
+      "assigned_to": "BuilderBot"
+    }
+  ],
+  "materials": {}
+}

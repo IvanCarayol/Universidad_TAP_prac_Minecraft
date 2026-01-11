@@ -20,7 +20,6 @@ class ExplorerBot(BaseAgent):
     SCAN_DELAY = 0.01
 
     def __init__(self, agent_id="ExplorerBot", bus=None, mc=None):
-        super().__init__(agent_id, bus)
         self.center: Tuple[int, int] = (0, 0)
         self.range: int = 30
         self._last_publish: float = 0.0
@@ -29,6 +28,7 @@ class ExplorerBot(BaseAgent):
         self.occupied = set()
         self.bus = bus
 
+        super().__init__(agent_id, bus)
         # Estrategia por defecto
         self.search_strategy = search_random
 
@@ -355,6 +355,48 @@ class ExplorerBot(BaseAgent):
             await self.idle()
 
     # ---------------------------------------------------------
+    # Funciones para guardar y cargar checkpoints
+    # ---------------------------------------------------------
+    def get_save_data(self):
+        data = super().get_save_data()
+        data.update({
+            "center": self.center,
+            "range": self.range,
+            "strategy": self.search_strategy.__name__,
+            "pending_coords": getattr(self, "_pending_coords", []),
+            "height_map": {
+                f"{x},{z}": h
+                for (x, z), h in getattr(self, "_height_map", {}).items()
+            },
+            "queued_request": self._queued_request,
+        })
+        return data
+
+    def load_save_data(self, data: Dict[str, Any]):
+        # 1️⃣ restaurar estado de ejecución (SIEMPRE primero)
+        super().load_save_data(data)
+
+        # 2️⃣ estado propio del Explorer
+        self.center = tuple(data.get("center", self.center))
+        self.range = data.get("range", self.range)
+
+        # 3️⃣ estrategia
+        strategy_name = data.get("strategy", "random")
+        self.set_strategy(strategy_name)
+
+        # 4️⃣ exploración parcial (⚠️ asegurar tuples)
+        raw_pending = data.get("pending_coords", [])
+        self._pending_coords = [tuple(coord) for coord in raw_pending]
+
+        raw_map = data.get("height_map", {})
+        self._height_map = {
+            tuple(map(int, k.split(","))): v
+            for k, v in raw_map.items()
+        }
+
+        self._queued_request = data.get("queued_request")
+
+    # ---------------------------------------------------------
     # Funciones para comunicacion con WorldstateBot
     # ---------------------------------------------------------
     async def validate_coords(self, coords, timeout=5.0):
@@ -503,6 +545,8 @@ class ExplorerBot(BaseAgent):
         await super().stop()
 
     async def pause(self):
+        logger.info("[EXPLORER] Pausing → saving checkpoint")
+        await self.save_checkpoint()
         await super().pause()
 
     async def resume(self):
@@ -510,9 +554,6 @@ class ExplorerBot(BaseAgent):
 
     async def idle(self):
         await super().idle()
-
-    async def save_checkpoint(self):
-        logger.info("[CHECKPOINT] ExplorerBot saved: center=%s range=%s", self.center, self.range)
     
     async def status(self):
         """Imprime el estado actual del bot en el logger"""

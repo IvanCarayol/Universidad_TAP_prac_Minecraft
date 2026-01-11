@@ -25,16 +25,18 @@ class MinerBot(BaseAgent):
     - Support pause/resume/stop/update commands.
     """
 
-    def __init__(self, agent_id: str = "MinerBot", bus=None, mc=None, default_strategy: str = "grid"):
-        super().__init__(agent_id, bus=bus)
+    def __init__(self, agent_id: str = "MinerBot", bus=None, mc=None):
+
         self.inventory: Dict[str, int] = defaultdict(int)  # e.g. {'stone': 10}
         self._current_bom: Optional[list[dict]] = None
-        self._strategy_name = default_strategy
+        self._strategy_name = "grid"
         self._strategy = None
         self.assigned_area = None
         self._bom_event = asyncio.Event()
         self.mc = mc
 
+        super().__init__(agent_id, bus=bus)
+        
         self.bus.subscribe('bom.v1', self._on_materials_request)
         self.bus.subscribe("command.miner.start.v1", self._on_start_cmd)
         self.bus.subscribe("command.miner.set.v1", self._on_update_cmd)
@@ -44,11 +46,13 @@ class MinerBot(BaseAgent):
         self.bus.subscribe("command.miner.status.v1", self._on_control)
         self.bus.subscribe('*', self._on_generic)
 
+        self.load_from_disk()
+        
     # -----------------------
     # Strategy factory
     # -----------------------
     async def _build_strategy(self, area):
-        name = (self._strategy_name or "grid").lower()
+        name = (self._strategy_name).lower()
 
         if name == "vertical":
             return await vertical_strategy(area=area)
@@ -107,19 +111,19 @@ class MinerBot(BaseAgent):
         await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
-        """Handle `explorer set` command with optional parameters in payload."""
+        """Handle `miner set` command with optional parameters in payload."""
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
         payload = msg.get("payload", {})
 
-        # Actualizar estrategia si viene en payload
         if "strategy" in payload:
-            self._strategy_name(payload["strategy"])
+            new_strategy = payload["strategy"]
+            logger.info(f"[MINER] Strategy updated to '{new_strategy}'")
+            self._strategy_name = new_strategy
+            self._strategy = None  
 
-        # Llamar a update del BaseAgent para logger
         await super().update(payload)
-
 
     async def _on_control(self, msg: Dict[str, Any]):
         """pause/resume/stop commands"""
@@ -156,6 +160,8 @@ class MinerBot(BaseAgent):
 
     async def decide(self, percept: Dict[str, Any]) -> Dict[str, Any]:
         if percept["bom"] is None:
+
+            self.set_state(AgentState.WAITING, "Waiting for bom")
             return {"action": "wait_for_bom"}
         
         if self._bom_fulfilled(percept["bom"]):
@@ -308,9 +314,31 @@ class MinerBot(BaseAgent):
         }
         await self.bus.publish(msg)
         logger.info("Published inventory (%s): %s", status, self.inventory)
-        if final:
-            # optionally persist checkpoint on finalization
-            await self.save_checkpoint()
+
+    # ---------------------------------------------------------
+    # Funciones para guardar y cargar checkpoints
+    # ---------------------------------------------------------
+    def get_save_data(self):
+        data = super().get_save_data()
+        data.update({
+            "inventory": dict(self.inventory),
+            "current_bom": self._current_bom,
+            "strategy": self._strategy_name,
+            "assigned_area": self.assigned_area,
+        })
+        return data
+
+
+    def load_save_data(self, data):
+        super().load_save_data(data)
+
+        self.inventory = defaultdict(int, data.get("inventory", {}))
+        self._current_bom = data.get("current_bom")
+        self._strategy_name = data.get("strategy", "grid")
+        self.assigned_area = data.get("assigned_area")
+
+        # ⚠️ fuerza reconstrucción segura
+        self._strategy = None
 
     # ---------------------------------------------------------
     # Funciones para comunicacion con WorldstateBot
@@ -532,15 +560,13 @@ class MinerBot(BaseAgent):
         await super().idle()
 
     async def pause(self):
+        logger.info("[MINER] Pausing → saving checkpoint")
+        await self.save_checkpoint()
         await super().pause()
+
 
     async def resume(self):
         await super().resume()
-
-    async def save_checkpoint(self):
-        # Minimal checkpoint: dump inventory and BOM (could be serialized to a file)
-        logger.info("MinerBot checkpoint: inventory=%s bom=%s", dict(self.inventory), self._current_bom)
-        # In a complete implementation, persist to disk / DB here
 
     async def status(self):
         """Imprime el estado actual del bot en el logger"""

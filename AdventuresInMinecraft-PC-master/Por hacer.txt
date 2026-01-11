@@ -1,8 +1,3 @@
--Serializable
 -Factory de bots
--Cambiar parser de commandos para aceptar 3 valores
--Chekpoints reales
-
--Pause i resume han de poner el estado anterior de el bot envez de running por defecto 
 
 -Bots quedan escuchando un bus de "error" si no les responde worldstate y este revisa los timestamps para responder por error.

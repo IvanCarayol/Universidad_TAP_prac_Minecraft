@@ -91,6 +91,10 @@ async def miner_pause(bot, params, sender_id, topic):
 async def miner_resume(bot, params, sender_id, topic):
     return await _send(bot, sender_id, topic, params)
 
+@cmd_manager.on("miner set", "command.miner.set.v1", target_bot="miner")
+async def miner_set(bot, params, sender_id, topic):
+    return await _send(bot, sender_id, topic, params)
+
 @cmd_manager.on("miner status", "command.miner.status.v1", target_bot="miner")
 async def miner_status(bot, params, sender_id, topic):
     return await _send(bot, sender_id, topic, params)

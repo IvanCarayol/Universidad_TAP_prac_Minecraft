@@ -5,11 +5,11 @@ import json
 from enum import Enum
 from typing import Any, Dict, Optional
 import datetime
+from pathlib import Path
 
 from ..Logger.logging_config import get_console_logger, get_json_file_logger
 
 logger = get_console_logger(__name__)
-
 
 # ---------------------------------------------------------
 #  Unified Agent States
@@ -52,6 +52,23 @@ class BaseAgent:
             "timestamp": datetime.datetime.utcnow().isoformat() + "Z"
         }))
 
+        self.load_from_disk()
+        asyncio.create_task(self._auto_resume_if_needed())
+
+    async def _auto_resume_if_needed(self):
+            if self._state in (AgentState.RUNNING, AgentState.WAITING):
+                self._should_stop = False
+                if self._task is None or self._task.done():
+                    self._task = asyncio.create_task(self._run_loop())
+                    logger.info(f"[AUTO-RESUME] Agent '{self.agent_id}' resumed from {self._state.value}")
+    # -----------------------------------------------------
+    #  Directory helpers
+    # -----------------------------------------------------
+    SAVE_DIR = Path(__file__).resolve().parents[2] / "Saves"
+
+    def _get_save_path(self) -> Path:
+        return self.SAVE_DIR / f"{self.agent_id}.json"
+    
     # -----------------------------------------------------
     #  State helpers
     # -----------------------------------------------------
@@ -135,6 +152,10 @@ class BaseAgent:
 
     async def resume(self):
         """
+        Resume el agente sin modificar el estado lógico cargado.
+        Solo reactiva el loop si estaba pausado.
+        """
+        """
         Resume el agente al estado que tenía antes de pausar.
         """
         if self._state != AgentState.PAUSED:
@@ -148,10 +169,16 @@ class BaseAgent:
             target_state = self.prev
 
         self.set_state(target_state, "resume command")
+        
+        self.logger.info(json.dumps({
+            "event": "resume",
+            "agent_id": self.agent_id
+        }))
 
-        # Si el estado restaurado es RUNNING, reiniciar loop si no hay task
-        if target_state == AgentState.RUNNING and (self._task is None or self._task.done()):
-            await self.start()
+        # Reactivar loop si no existe
+        if self._task is None or self._task.done():
+            self._should_stop = False
+            self._task = asyncio.create_task(self._run_loop())
 
     async def waiting(self):
         self.set_state(AgentState.WAITING, "resume command")
@@ -205,10 +232,15 @@ class BaseAgent:
             await self.save_checkpoint()
 
         finally:
-            # Ensure STOPPED state if loop ends
-            if not self._should_stop:
+            """
+            Borrar checkpoint solo si la tarea se completó realmente.
+            """
+            if self.state == AgentState.IDLE:
+                # La tarea ya terminó → no necesitamos el checkpoint
+                await self.delete_checkpoint()
+            else:
+                # Todavía activo o interrumpido → guardar checkpoint
                 await self.save_checkpoint()
-
     # -----------------------------------------------------
     #  PDA abstract methods
     # -----------------------------------------------------
@@ -225,11 +257,101 @@ class BaseAgent:
     #  Checkpoint
     # -----------------------------------------------------
     async def save_checkpoint(self):
-        logger.info(f"[CHECKPOINT] Saved data for {self.agent_id}")
-        self.logger.info(json.dumps({
-            "event": "checkpoint_saved",
-            "agent_id": self.agent_id
-        }))
+        try:
+            self.SAVE_DIR.mkdir(exist_ok=True)
+
+            data = self.get_save_data()
+            path = self._get_save_path()
+
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2)
+
+            logger.info(f"[CHECKPOINT] {self.agent_id} saved to {path}")
+
+            self.logger.info(json.dumps({
+                "event": "checkpoint_saved",
+                "agent_id": self.agent_id,
+                "path": str(path)
+            }))
+
+        except Exception as e:
+            logger.exception(f"[CHECKPOINT ERROR] {self.agent_id}: {e}")
+
+    async def delete_checkpoint(self):
+        path = self._get_save_path()
+        if path.exists():
+            try:
+                path.unlink()
+                logger.info(f"[CHECKPOINT DELETE] {self.agent_id} checkpoint deleted")
+                self.logger.info(json.dumps({
+                    "event": "checkpoint_deleted",
+                    "agent_id": self.agent_id,
+                    "path": str(path)
+                }))
+            except Exception as e:
+                logger.exception(f"[CHECKPOINT DELETE ERROR] {self.agent_id}: {e}")
+    # -----------------------------------------------------
+    #  Load checkpoint from disk
+    # -----------------------------------------------------
+    def load_from_disk(self) -> bool:
+        """
+        Carga el checkpoint desde disco y restaura el estado del agente.
+        Devuelve True si se cargó correctamente, False si no existe.
+        """
+        path = self._get_save_path()
+
+        if not path.exists():
+            logger.info(f"[CHECKPOINT] No checkpoint found for {self.agent_id}")
+            return False
+
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            self.load_save_data(data)
+
+            logger.info(f"[CHECKPOINT] {self.agent_id} restored from {path}")
+
+            self.logger.info(json.dumps({
+                "event": "checkpoint_loaded",
+                "agent_id": self.agent_id,
+                "path": str(path)
+            }))
+
+            return True
+
+        except Exception as e:
+            logger.exception(f"[CHECKPOINT LOAD ERROR] {self.agent_id}: {e}")
+            return False
+
+    # -----------------------------------------------------
+    #  Serialization API (override in child agents)
+    # -----------------------------------------------------
+    def get_save_data(self) -> Dict[str, Any]:
+        """
+        Devuelve un dict JSON-serializable con el estado del agente.
+        Las subclases deben extender este dict.
+        """
+        return {
+            "agent_id": self.agent_id,
+            "state": self.state.value,
+            "prev_state": self.prev.value if self.prev else None,
+        }
+
+    def load_save_data(self, data: Dict[str, Any]):
+        """
+        Restaura el estado del agente desde un dict.
+        Maneja correctamente el caso PAUSED + resume.
+        """
+        state = data.get("state")
+        prev_state = data.get("prev_state")
+        
+        loaded_state = AgentState(state) if state else None
+        loaded_prev = AgentState(prev_state) if prev_state else None
+
+        if loaded_state:
+            self._state = loaded_state
+            self.prev = loaded_prev
 
 
     # -----------------------------------------------------

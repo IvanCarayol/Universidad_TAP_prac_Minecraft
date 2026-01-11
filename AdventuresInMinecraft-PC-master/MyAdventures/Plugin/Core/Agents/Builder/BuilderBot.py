@@ -72,7 +72,6 @@ class BuilderBot(BaseAgent):
     BUILD_INTERVAL = 0.001
 
     def __init__(self, agent_id="BuilderBot", bus= None):
-        super().__init__(agent_id, bus)
         
         load_all_templates()
  
@@ -84,6 +83,8 @@ class BuilderBot(BaseAgent):
         self._build_plan = None
         self._map_event = asyncio.Event()
         self._bom_event = asyncio.Event()
+
+        super().__init__(agent_id, bus)
 
         self.bus.subscribe("map.v1", self._on_map)
         self.bus.subscribe("inventory.v1", self._on_inventory)
@@ -413,6 +414,48 @@ class BuilderBot(BaseAgent):
             rect.get("z1", 0)
         )
     
+    # -----------------------------------------------------
+    # Funciones para guardar y cargar checkpoints
+    # -----------------------------------------------------
+    def get_save_data(self) -> Dict[str, Any]:
+        """Extiende BaseAgent para guardar estado completo del BuilderBot."""
+        data = super().get_save_data()
+        
+        data.update({
+            "valid_area": self._valid_area,
+            "template_name": self._template_name,
+            "bom": self._bom,
+            "materials_reserved": self._materials_reserved,
+            "build_progress": self._build_progress,
+            "build_plan": self._build_plan,  # lista de capas con bloques
+        })
+        
+        return data
+
+    def load_save_data(self, data: Dict[str, Any]):
+        """Restaura estado desde checkpoint."""
+        super().load_save_data(data)
+        
+        self._valid_area = data.get("valid_area")
+        self._template_name = data.get("template_name", list(TEMPLATES.keys())[0])
+        self._bom = data.get("bom")
+        self._materials_reserved = data.get("materials_reserved", False)
+        self._build_progress = data.get("build_progress", 0)
+        self._build_plan = data.get("build_plan")
+        
+        # Eventos no se guardan, se recrean
+        self._map_event = asyncio.Event()
+        self._bom_event = asyncio.Event()
+
+        # Restaurar estado de espera si había quedado esperando
+        if self.state == AgentState.WAITING:
+            if self._bom and not self._materials_reserved:
+                logger.info("[BUILDER] Resuming: waiting for materials")
+                self._bom_event.set()
+            if self._valid_area is None:
+                logger.info("[BUILDER] Resuming: waiting for map")
+                self._map_event.clear()
+    
     # ---------------------------------------------------------
     # Funciones para comunicacion con WorldstateBot
     # ---------------------------------------------------------
@@ -499,6 +542,8 @@ class BuilderBot(BaseAgent):
         await super().stop()
 
     async def pause(self):
+        logger.info("[BUILDER] Pausing → saving checkpoint")
+        await self.save_checkpoint()
         await super().pause()
 
     async def resume(self):

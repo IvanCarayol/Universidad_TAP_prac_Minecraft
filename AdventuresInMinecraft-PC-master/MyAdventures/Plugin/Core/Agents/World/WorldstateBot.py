@@ -45,8 +45,7 @@ def normalize_rect(rect):
 
 class WorldStateBot(BaseAgent):
     def __init__(self, agent_id, bus=None):
-        super().__init__(agent_id, bus)
-
+        
         # Estado interno
         self.flat_areas = []
         self._lock = asyncio.Lock()
@@ -58,6 +57,7 @@ class WorldStateBot(BaseAgent):
         # Estado global de materiales
         self.materials = defaultdict(int)
 
+        super().__init__(agent_id, bus)
         # Subscripciones
         self.bus.subscribe("command.worldstate.start.v1", self._on_start_cmd)
         self.bus.subscribe("command.worldstate.status.v1", self._on_control)
@@ -69,6 +69,8 @@ class WorldStateBot(BaseAgent):
         self.bus.subscribe("lockarea.v1", self.on_message)
         self.bus.subscribe("validatecoords.v1", self.on_message)
 
+        self.load_from_disk()
+
     # ----------------------
     # Manejo de mensajes
     # ----------------------
@@ -79,21 +81,11 @@ class WorldStateBot(BaseAgent):
         await self.start()
         
     async def _on_control(self, msg: Dict[str, Any]):
-        """pause/resume/stop commands"""
+        """status command"""
         if msg.get("target") not in (self.agent_id, "*"):
             return
-
-        cmdtype = msg.get("type", "")
-        if cmdtype.endswith(".pause.v1"):
-            await self.pause()
-        elif cmdtype.endswith(".resume.v1"):
-            await self.resume()
-        elif cmdtype.endswith(".stop.v1"):
-            await self.stop()
-        elif cmdtype.endswith(".list.v1"):
-            await self.list()
-        elif cmdtype.endswith(".status.v1"):
-            await self.status()
+        
+        await self.status()
 
     async def on_message(self, msg):
         """Recibe mensaje del bus y lo mete en la cola de percepciones"""
@@ -492,7 +484,36 @@ class WorldStateBot(BaseAgent):
                     del self.materials[mat]
 
         return {"kind": "materials", "status": "OK"}
-   
+
+    # ---------------------------------------------------------
+    # Funciones para guardar y cargar checkpoints
+    # ---------------------------------------------------------
+    def get_save_data(self) -> Dict[str, Any]:
+        # 1️⃣ Primero obtener los datos base de BaseAgent
+        data = super().get_save_data()
+        
+        # Como get_save_data no puede ser async, solo hacemos copy simple
+        # NOTA: Esto es seguro si no se modifica concurrentemente
+        materials_copy = dict(self.materials)
+
+        data.update({
+            "flat_areas": self.flat_areas.copy(),
+            "materials": materials_copy
+        })
+        return data
+
+    def load_save_data(self, data: Dict[str, Any]):
+        # 1️⃣ Restaurar estado base
+        super().load_save_data(data)
+
+        # 2️⃣ Restaurar estado propio
+        self.flat_areas = data.get("flat_areas", [])
+
+        mats = data.get("materials", {})
+        self.materials = defaultdict(int)
+        for mat, qty in mats.items():
+            self.materials[mat] = qty
+
     # ---------------------------------------------------------
     # Control Overloads
     # ---------------------------------------------------------
