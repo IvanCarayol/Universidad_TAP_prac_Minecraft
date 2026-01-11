@@ -1,0 +1,16 @@
+[2026-01-11 16:53:47] [INFO] [json.ExplorerBot] {"event": "agent_init", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:53:47.844334Z"}
+[2026-01-11 16:53:48] [INFO] [json.BuilderBot] {"event": "agent_init", "agent_id": "BuilderBot", "timestamp": "2026-01-11T15:53:48.280382Z"}
+[2026-01-11 16:53:48] [INFO] [json.MinerBot] {"event": "agent_init", "agent_id": "MinerBot", "timestamp": "2026-01-11T15:53:48.281383Z"}
+[2026-01-11 16:53:48] [INFO] [json.WorldstateBot] {"event": "agent_init", "agent_id": "WorldstateBot", "timestamp": "2026-01-11T15:53:48.282382Z"}
+[2026-01-11 16:53:48] [INFO] [json.WorldstateBot] {"event": "checkpoint_loaded", "agent_id": "WorldstateBot", "path": "C:\\Users\\marcr\\OneDrive\\Escritorio\\Universidad_TAP_prac_Minecraft\\AdventuresInMinecraft-PC-master\\MyAdventures\\Plugin\\Saves\\WorldstateBot.json"}
+[2026-01-11 16:53:48] [INFO] [json.WorldstateBot] {"event": "checkpoint_loaded", "agent_id": "WorldstateBot", "path": "C:\\Users\\marcr\\OneDrive\\Escritorio\\Universidad_TAP_prac_Minecraft\\AdventuresInMinecraft-PC-master\\MyAdventures\\Plugin\\Saves\\WorldstateBot.json"}
+[2026-01-11 16:54:06] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:54:06.885307Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-11 16:54:12] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:54:12.436855Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-11 16:54:25] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:54:25.735181Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-11 16:54:31] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:54:31.236683Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-11 16:54:41] [WARNING] [json.WorldstateBot] {"event": "start_failed", "reason": "already_running", "agent_id": "WorldstateBot"}
+[2026-01-11 16:54:45] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:54:45.436125Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-11 16:54:50] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:54:50.986212Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-11 16:55:44] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:55:44.086174Z", "previous_state": "IDLE", "next_state": "RUNNING", "reason": "start"}
+[2026-01-11 16:55:49] [INFO] [json.ExplorerBot] {"type": "state_change", "agent_id": "ExplorerBot", "timestamp": "2026-01-11T15:55:49.590753Z", "previous_state": "RUNNING", "next_state": "IDLE", "reason": "pause command"}
+[2026-01-11 16:56:03] [INFO] [json.WorldstateBot] {"event": "checkpoint_saved", "agent_id": "WorldstateBot", "path": "C:\\Users\\marcr\\OneDrive\\Escritorio\\Universidad_TAP_prac_Minecraft\\AdventuresInMinecraft-PC-master\\MyAdventures\\Plugin\\Saves\\WorldstateBot.json"}

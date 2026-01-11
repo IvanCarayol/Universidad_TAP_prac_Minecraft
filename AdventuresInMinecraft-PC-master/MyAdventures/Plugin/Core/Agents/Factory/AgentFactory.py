@@ -5,6 +5,8 @@ from ..Explorer.ExplorerBot import ExplorerBot
 from ..Builder.BuilderBot import BuilderBot
 from ..World.WorldstateBot import WorldStateBot 
 from Plugin.Core.Bus.Bus import MessageBus
+bus = MessageBus()
+
 class AgentFactory:
     @staticmethod
     def create(agent_type: str, agent_id: str, mc=None):
@@ -20,7 +22,7 @@ class AgentFactory:
         Returns:
             BaseAgent: La instancia del bot creada.
         """
-        bus = MessageBus()
+        
         t = agent_type.strip().lower()
         
         if t == "miner":

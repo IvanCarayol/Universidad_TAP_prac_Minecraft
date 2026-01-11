@@ -1,0 +1,46 @@
+[16:53:47] [INFO] [console.__main__] Iniciando sistema de bots...
+[16:53:47] [INFO] [console.Plugin.Core.Agents.BaseAgent] [CHECKPOINT] No checkpoint found for ExplorerBot
+[16:53:47] [INFO] [console.Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading templates from ./Schematics/
+[16:53:47] [INFO] [console.Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading template 'esencias' (esencias.schem)...
+[16:53:48] [INFO] [console.Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loaded template 'esencias' (123×38×77, 359898 blocks)
+[16:53:48] [INFO] [console.Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loading template 'importar' (importar.schem)...
+[16:53:48] [INFO] [console.Plugin.Core.Agents.Builder.BuilderBot] [BUILDER] Loaded template 'importar' (13×10×14, 1820 blocks)
+[16:53:48] [INFO] [console.Plugin.Core.Agents.BaseAgent] [CHECKPOINT] No checkpoint found for BuilderBot
+[16:53:48] [INFO] [console.Plugin.Core.Agents.BaseAgent] [CHECKPOINT] No checkpoint found for MinerBot
+[16:53:48] [INFO] [console.Plugin.Core.Agents.BaseAgent] [CHECKPOINT] No checkpoint found for MinerBot
+[16:53:48] [INFO] [console.Plugin.Core.Agents.BaseAgent] [CHECKPOINT] WorldstateBot restored from C:\Users\marcr\OneDrive\Escritorio\Universidad_TAP_prac_Minecraft\AdventuresInMinecraft-PC-master\MyAdventures\Plugin\Saves\WorldstateBot.json
+[16:53:48] [INFO] [console.Plugin.Core.Agents.BaseAgent] [CHECKPOINT] WorldstateBot restored from C:\Users\marcr\OneDrive\Escritorio\Universidad_TAP_prac_Minecraft\AdventuresInMinecraft-PC-master\MyAdventures\Plugin\Saves\WorldstateBot.json
+[16:53:48] [INFO] [console.Plugin.Core.Listener.Chatlistener] [CHAT LISTENER] Bot registrado: explorer
+[16:53:48] [INFO] [console.Plugin.Core.Listener.Chatlistener] [CHAT LISTENER] Bot registrado: miner
+[16:53:48] [INFO] [console.Plugin.Core.Listener.Chatlistener] [CHAT LISTENER] Bot registrado: builder
+[16:53:48] [INFO] [console.Plugin.Core.Listener.Chatlistener] [CHAT LISTENER] Bot registrado: worldstate
+[16:53:48] [INFO] [console.__main__] Bots registrados correctamente.
+[16:53:48] [INFO] [console.Plugin.Core.Listener.Chatlistener] [CHAT LISTENER] Iniciado
+[16:53:48] [INFO] [console.Plugin.Core.Agents.BaseAgent] [AUTO-RESUME] Agent 'WorldstateBot' resumed from RUNNING
+[16:53:48] [INFO] [console.Plugin.Core.Listener.Chatlistener] [CHAT LISTENER] Escuchando mensajes...
+[16:54:01] [INFO] [console.Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE STATUS] {'areas': [{'rect': {'x1': 96, 'z1': 103, 'x2': 101, 'z2': 107, 'width': 6, 'height': 5, 'area': 30, 'y': 117}, 'status': 'FREE', 'assigned_to': None}, {'rect': {'x1': 95, 'z1': 96, 'x2': 98, 'z2': 99, 'width': 4, 'height': 4, 'area': 16, 'y': 94}, 'status': 'FREE', 'assigned_to': None}, {'rect': {'x1': -427, 'z1': -407, 'x2': -412, 'z2': -393, 'width': 16, 'height': 15, 'area': 240, 'y': 63}, 'status': 'RESERVED', 'assigned_to': 'BuilderBot'}], 'materials': 'No hay materiales almacenados', 'messages_queue_size': 0}
+[16:54:06] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Start request: x=0 z=0 range=30
+[16:54:06] [INFO] [console.Plugin.Core.Agents.BaseAgent] [START] Agent 'ExplorerBot' started
+[16:54:12] [WARNING] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] WorldStateBot no respondió
+[16:54:12] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] No se encontró ningún rectángulo válido tras explorar todos los bloques
+[16:54:12] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Published map.v1 (no rectangle found)
+[16:54:22] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER STATUS] {'agent_id': 'ExplorerBot', 'state': 'IDLE', 'center': (0, 0), 'range': 30, 'strategy': 'search_random'}
+[16:54:25] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Start request: x=0 z=0 range=30
+[16:54:25] [INFO] [console.Plugin.Core.Agents.BaseAgent] [START] Agent 'ExplorerBot' started
+[16:54:31] [WARNING] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] WorldStateBot no respondió
+[16:54:31] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] No se encontró ningún rectángulo válido tras explorar todos los bloques
+[16:54:31] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Published map.v1 (no rectangle found)
+[16:54:39] [INFO] [console.Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE STATUS] {'areas': [{'rect': {'x1': 96, 'z1': 103, 'x2': 101, 'z2': 107, 'width': 6, 'height': 5, 'area': 30, 'y': 117}, 'status': 'FREE', 'assigned_to': None}, {'rect': {'x1': 95, 'z1': 96, 'x2': 98, 'z2': 99, 'width': 4, 'height': 4, 'area': 16, 'y': 94}, 'status': 'FREE', 'assigned_to': None}, {'rect': {'x1': -427, 'z1': -407, 'x2': -412, 'z2': -393, 'width': 16, 'height': 15, 'area': 240, 'y': 63}, 'status': 'RESERVED', 'assigned_to': 'BuilderBot'}], 'materials': 'No hay materiales almacenados', 'messages_queue_size': 0}
+[16:54:41] [INFO] [console.Plugin.Core.Agents.World.WorldstateBot] [WORLDSTATE] Start worldstate bot
+[16:54:41] [WARNING] [console.Plugin.Core.Agents.BaseAgent] [START] Agent 'WorldstateBot' already running
+[16:54:45] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Start request: x=0 z=0 range=30
+[16:54:45] [INFO] [console.Plugin.Core.Agents.BaseAgent] [START] Agent 'ExplorerBot' started
+[16:54:50] [WARNING] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] WorldStateBot no respondió
+[16:54:50] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] No se encontró ningún rectángulo válido tras explorar todos los bloques
+[16:54:50] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Published map.v1 (no rectangle found)
+[16:55:44] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Start request: x=0 z=0 range=30
+[16:55:44] [INFO] [console.Plugin.Core.Agents.BaseAgent] [START] Agent 'ExplorerBot' started
+[16:55:49] [WARNING] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] WorldStateBot no respondió
+[16:55:49] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] No se encontró ningún rectángulo válido tras explorar todos los bloques
+[16:55:49] [INFO] [console.Plugin.Core.Agents.Explorer.ExplorerBot] [EXPLORER] Published map.v1 (no rectangle found)
+[16:56:03] [INFO] [console.Plugin.Core.Agents.BaseAgent] [CHECKPOINT] WorldstateBot saved to C:\Users\marcr\OneDrive\Escritorio\Universidad_TAP_prac_Minecraft\AdventuresInMinecraft-PC-master\MyAdventures\Plugin\Saves\WorldstateBot.json
