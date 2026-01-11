@@ -192,6 +192,18 @@ class BuilderBot(BaseAgent):
 
         if percept["map"] is None:
             tpl = TEMPLATES[percept["template"]]
+
+            req_area = {
+                "width": tpl["width"],
+                "depth": tpl["depth"]
+            }
+
+            existing_area = await self.request_free_area_clean(req_area)
+
+            if existing_area:
+                logger.info(f"[{self.agent_id}] ¡Zona encontrada en WorldState! No hace falta explorar.")
+                self._valid_area = existing_area
+                return {"action": "compute_bom"}
             
             # Calculamos el tamaño que necesitamos escanear
             # (El ancho o profundidad máximo del edificio + margen de 5 bloques)

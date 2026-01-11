@@ -326,6 +326,10 @@ class ExplorerBot(BaseAgent):
 
         target = self.current_requester if self.current_requester else "*"
 
+        if str(target).startswith("player:") or target == "user":
+            logger.info(f"[EXPLORER] Orden manual completada. Datos en WorldState. Silencio.")
+            return
+        
         msg = {
             "type": "map.v1",
             "source": self.agent_id,
