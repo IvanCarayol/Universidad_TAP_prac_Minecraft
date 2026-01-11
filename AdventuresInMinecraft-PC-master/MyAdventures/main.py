@@ -2,11 +2,8 @@ import asyncio
 import sys
 import os
 
-from Plugin.Core.Bus.Bus import MessageBus
-from Plugin.Core.Agents.Explorer.ExplorerBot import ExplorerBot
-from Plugin.Core.Agents.Builder.BuilderBot import BuilderBot
-from Plugin.Core.Agents.Miner.MinerBot import MinerBot
-from Plugin.Core.Agents.World.WorldstateBot import WorldStateBot
+from Plugin.Core.Agents.Factory.AgentFactory import AgentFactory
+
 from Plugin.Core.Logger.logging_config import get_console_logger
 from mcpi.minecraft import Minecraft
 from Plugin.Core.Listener.Chatlistener import register_bot, start_chat_listener 
@@ -46,15 +43,14 @@ async def main():
     # -----------------------------------------------------
     # Crear instancias reales de bots
     # -----------------------------------------------------
-    shared_bus = MessageBus()
 
-    explorer_bot = ExplorerBot(agent_id="ExplorerBot", bus=shared_bus, mc=mc)
+    explorer_bot = AgentFactory.create("explorer", "ExplorerBot", mc)
 
-    builder_bot = BuilderBot(agent_id="BuilderBot", bus=shared_bus)
+    builder_bot = AgentFactory.create("builder", "BuilderBot", mc)
 
-    miner_bot = MinerBot(agent_id="MinerBot", bus=shared_bus, mc=mc)
+    miner_bot = AgentFactory.create("miner", "MinerBot", mc)
 
-    worldstate_bot = WorldStateBot(agent_id="WorldstateBot", bus=shared_bus)
+    worldstate_bot = AgentFactory.create("worldstate", "WorldstateBot", mc)
     # Si tienes otros bots, créalos aquí:
     # miner_bot = MinerBot(...)
 
