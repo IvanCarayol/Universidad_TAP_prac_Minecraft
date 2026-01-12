@@ -86,30 +86,30 @@ class MinerBot(BaseAgent):
             bom = None
 
         if not isinstance(bom, list):
-            logger.error("[MINER] Invalid BOM received: %s", payload)
+            logger.error(f"[{self.agent_id}] Invalid BOM received: %s", payload)
             return
 
         # Validar estructura interna
         for item in bom:
             if not isinstance(item, dict) or "material" not in item or "qty" not in item:
-                logger.error("[MINER] Malformed BOM item: %s", item)
+                logger.error(f"[{self.agent_id}] Malformed BOM item: %s", item)
                 return
 
         self._current_bom = bom
         self._bom_event.set()
 
-        logger.info("[MINER] BOM received: %s", bom)
+        logger.info(f"[{self.agent_id}] BOM received: %s", bom)
 
 
     async def _on_start_cmd(self, msg: Dict[str, Any]):
         """Handle miner start.`"""
         if msg.get("target") not in (self.agent_id, "*"):
             return
-        logger.info("[MINER] Start request")
+        logger.info(f"[{self.agent_id}] Start request")
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:
-            logger.info("[MINER] Queuing new request until current finishes")
+            logger.info(f"[{self.agent_id}] Queuing new request until current finishes")
         await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
@@ -204,17 +204,7 @@ class MinerBot(BaseAgent):
 
             await self.report_materials_to_worldstate()
 
-            # Enviamos materiales al builder
-            await self.bus.publish({
-                "type": "materials.report.v1",
-                "source": self.agent_id,
-                "target": target_builder,
-                "payload": {
-                    "status": "SUCCESS",
-                    "bom": self._bom,  
-                    "final": True
-                }
-            })
+            await self._publish_inventory(status="SUCCESS", final=True)
 
             await self.release_assigned_area()  # Soltar el área en WorldState
             
@@ -329,7 +319,7 @@ class MinerBot(BaseAgent):
         msg = {
             "type": "inventory.v1",
             "source": self.agent_id,
-            "target": "BuilderBot",
+            "target": "target_builder",
             "timestamp": None,  # bus may set timestamp
             "payload": None, # no es necesario ya que se mira en worldstate
             "status": status,
@@ -427,7 +417,7 @@ class MinerBot(BaseAgent):
         Sigue exactamente el mismo formato que request_single_area().
         """
         if not self.assigned_area:
-            logger.debug("[MINER] No assigned area to release.")
+            logger.debug(f"[{self.agent_id}] No assigned area to release.")
             return True  # nada que liberar = éxito
 
         rect_to_release = self.assigned_area
@@ -456,7 +446,7 @@ class MinerBot(BaseAgent):
             "payload": {"rect": rect_to_release}
         })
 
-        logger.info(f"[MINER] Enviada solicitud de liberación del área: {rect_to_release}")
+        logger.info(f"[{self.agent_id}] Enviada solicitud de liberación del área: {rect_to_release}")
 
         try:
             # Esperar ACK
@@ -464,15 +454,15 @@ class MinerBot(BaseAgent):
 
             status = result.get("status", "UNKNOWN")
             if status != "OK":
-                logger.warning(f"[MINER] WorldStateBot devolvió estado no OK al liberar área: {status}")
+                logger.warning(f"[{self.agent_id}] WorldStateBot devolvió estado no OK al liberar área: {status}")
                 return False
 
-            logger.info(f"[MINER] Área liberada correctamente: {rect_to_release}")
+            logger.info(f"[{self.agent_id}] Área liberada correctamente: {rect_to_release}")
             self.assigned_area = None
             return True
 
         except asyncio.TimeoutError:
-            logger.warning("[MINER] Timeout esperando confirmación de liberación del área")
+            logger.warning(f"[{self.agent_id}] Timeout esperando confirmación de liberación del área")
             return False
 
         finally:
@@ -484,7 +474,7 @@ class MinerBot(BaseAgent):
         para que BuilderBot pueda iniciar la construcción.
         """
         if not self.inventory:
-            logger.info("[MINER] Inventory vacío, no se reporta nada a WorldState")
+            logger.info(f"[{self.agent_id}] Inventory vacío, no se reporta nada a WorldState")
             return True
 
         # Convertir inventario a lista de dicts
@@ -498,7 +488,7 @@ class MinerBot(BaseAgent):
         ]
 
         if not payload_materials:
-            logger.warning("[MINER] Inventario convertido vacío, no se reporta nada")
+            logger.warning(f"[{self.agent_id}] Inventario convertido vacío, no se reporta nada")
             return False
 
         future = asyncio.get_event_loop().create_future()
@@ -527,21 +517,21 @@ class MinerBot(BaseAgent):
             "context": {"task_id": "auto"}
         })
 
-        logger.info("[MINER] Reportando materiales a WorldState: %s", payload_materials)
+        logger.info(f"[{self.agent_id}] Reportando materiales a WorldState: %s", payload_materials)
 
         try:
             result = await asyncio.wait_for(future, timeout=timeout)
             status = result.get("status", "UNKNOWN")
 
             if status != "OK":
-                logger.warning("[MINER] WorldState no confirmó materiales: %s", status)
+                logger.warning(f"[{self.agent_id}] WorldState no confirmó materiales: %s", status)
                 return False
 
-            logger.info("[MINER] WorldState confirmó guardado de materiales")
+            logger.info(f"[{self.agent_id}] WorldState confirmó guardado de materiales")
             return True
 
         except asyncio.TimeoutError:
-            logger.warning("[MINER] Timeout esperando confirmación de WorldState (materiales)")
+            logger.warning(f"[{self.agent_id}] Timeout esperando confirmación de WorldState (materiales)")
             return False
 
         finally:
@@ -552,25 +542,24 @@ class MinerBot(BaseAgent):
     # Control overrides
     # -----------------------
     async def stop(self):
-        logger.info("[MINER] Stop command received: reporting progress and releasing area")
+        logger.info(f"[{self.agent_id}] Stop command received: reporting progress and releasing area")
 
         # 1️⃣ Reportar los materiales minados hasta ahora a WorldState
         if self.inventory:
             try:
                 success = await self.report_materials_to_worldstate()
                 if success:
-                    logger.info("[MINER] Materiales reportados correctamente antes de detenerse")
+                    logger.info(f"[{self.agent_id}] Materiales reportados correctamente antes de detenerse")
                 else:
-                    logger.warning("[MINER] Falló el reporte de materiales antes de detenerse")
+                    logger.warning(f"[{self.agent_id}] Falló el reporte de materiales antes de detenerse")
             except Exception:
-                logger.exception("[MINER] Excepción al reportar materiales antes de detenerse")
-
+                logger.exception(f"[{self.agent_id}] Excepción al reportar materiales antes de detenerse")
         # 2️⃣ Liberar área asignada, si la hay
         if self.assigned_area:
             try:
                 await self.release_assigned_area()
             except Exception:
-                logger.exception("[MINER] Excepción al liberar área asignada antes de detenerse")
+                logger.exception(f"[{self.agent_id}] Excepción al liberar área asignada antes de detenerse")
 
         # 3️⃣ Publicar inventario final a BuilderBot para que sepa que terminó
         await self._publish_inventory(status="STOPPED", final=True)
@@ -583,7 +572,7 @@ class MinerBot(BaseAgent):
         await super().idle()
 
     async def pause(self):
-        logger.info("[MINER] Pausing → saving checkpoint")
+        logger.info(f"[{self.agent_id}] Pausing → saving checkpoint")
         await self.save_checkpoint()
         await super().pause()
 
@@ -599,4 +588,4 @@ class MinerBot(BaseAgent):
             "locked_area": self.assigned_area,
             "strategy": self._strategy_name,
         }
-        logger.info("[EXPLORER STATUS] %s", info)
+        logger.info(f"[{self.agent_id} STATUS] %s", info)

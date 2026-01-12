@@ -60,11 +60,11 @@ async def builder_pause(bot, params, sender_id, topic):
 async def builder_resume(bot, params, sender_id, topic):
     return await _send(bot, sender_id, topic, params)
 
-@cmd_manager.on("builder set", "command.builder.set.v1", target_bot="builder")
+@cmd_manager.on("builder plan set", "command.builder.set.v1", target_bot="builder")
 async def builder_set(bot, params, sender_id, topic):
     return await _send(bot, sender_id, topic, params)
 
-@cmd_manager.on("builder list", "command.builder.list.v1", target_bot="builder")
+@cmd_manager.on("builder plan list", "command.builder.list.v1", target_bot="builder")
 async def builder_list(bot, params, sender_id, topic):
     return await _send(bot, sender_id, topic, params)
 

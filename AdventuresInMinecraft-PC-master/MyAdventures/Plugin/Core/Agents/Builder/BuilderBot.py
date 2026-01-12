@@ -115,7 +115,7 @@ class BuilderBot(BaseAgent):
         rect = payload.get("best_rectangle")
 
         if rect is None:
-            logger.warning("[BUILDER] ExplorerBot did not find any valid flat area.")
+            logger.warning(f"[{self.agent_id}] ExplorerBot did not find any valid flat area.")
             return  # ignorar mapa inválido
         
         logger.info("[MAP] Recived map from %s", msg["source"])
@@ -133,11 +133,11 @@ class BuilderBot(BaseAgent):
         """Handle `builder start.`"""
         if msg.get("target") not in (self.agent_id, "*"):
             return
-        logger.info("[BUILDER] Start request")
+        logger.info(f"[{self.agent_id}] Start request")
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:
-            logger.info("[BUILDER] Queuing new request until current finishes")
+            logger.info(f"[{self.agent_id}] Queuing new request until current finishes")
         await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
@@ -241,13 +241,12 @@ class BuilderBot(BaseAgent):
                 logger.info(f"[{self.agent_id}] Pidiendo materiales a {self.miner_id}...")
 
                 await self.bus.publish({
-                    "type": "materials.requirements.v1",
+                    "type": "bom.v1",
                     "source": self.agent_id,
                     "target": self.miner_id, # <--- ¡IMPORTANTE! Variable dinámica
                     "payload": {
                         "bom": self._bom
                     },
-                    "context": {"task_id": f"BLD-{self.agent_id}"}
                 })
 
                 self.set_state(AgentState.WAITING, "Waiting for materials")
@@ -272,7 +271,7 @@ class BuilderBot(BaseAgent):
         action = decision["action"]
 
         if action == "wait_for_map":
-            logger.info("[BUILDER] Waiting for map (bus event)…")
+            logger.info(f"[{self.agent_id}] Waiting for map (bus event)…")
 
             # limpiar el evento por si acaso
             self._map_event.clear()
@@ -280,21 +279,21 @@ class BuilderBot(BaseAgent):
             # dormir hasta que llegue map.v1
             await self._map_event.wait()
 
-            logger.info("[BUILDER] Map arrived! Resuming work.")
+            logger.info(f"[{self.agent_id}] Map arrived! Resuming work.")
             return
 
         if action == "compute_bom":
             return await self._compute_and_send_bom()
 
         if action == "wait_for_materials":
-            logger.info("[BUILDER] Waiting for materials")
+            logger.info(f"[{self.agent_id}] Waiting for materials")
             # limpiar el evento por si acaso
             self._bom_event.clear()
 
             # dormir hasta que llegue inventory.v1
             await self._bom_event.wait()
 
-            logger.info("[BUILDER] Inventory arrived! Resuming work.")
+            logger.info(f"[{self.agent_id}] Inventory arrived! Resuming work.")
             return
 
         if action == "build_layer":
@@ -316,7 +315,7 @@ class BuilderBot(BaseAgent):
         result = await self.check_and_consume_materials(full_bom)
 
         if result["status"] == "OK":
-            logger.info("[BUILDER] All materials available")
+            logger.info(f"[{self.agent_id}] All materials available")
             self._bom = full_bom
             return
 
@@ -325,13 +324,12 @@ class BuilderBot(BaseAgent):
         logger.info(f"[{self.agent_id}] Pidiendo materiales a {self.miner_id}...")
 
         await self.bus.publish({
-            "type": "materials.requirements.v1",
+            "type": "bom.v1",
             "source": self.agent_id,
             "target": self.miner_id, 
             "payload": {
                 "bom": self._bom
-            },
-            "context": {"task_id": f"BLD-{self.agent_id}"} 
+            }
         })
 
     def _materials_ready(self, bom, inv):
@@ -354,7 +352,7 @@ class BuilderBot(BaseAgent):
             for y, layer in enumerate(plan)
         ]
 
-        logger.info(f"[BUILDER] Build plan ready ({len(self._build_plan)} layers)")
+        logger.info(f"[{self.agent_id}] Build plan ready ({len(self._build_plan)} layers)")
 
     async def _build_next_layer(self):
         if not self._build_plan or self._build_progress >= len(self._build_plan):
@@ -364,12 +362,12 @@ class BuilderBot(BaseAgent):
 
         # Obtener coordenadas base del mapa de forma segura
         if not self._valid_area:
-            logger.warning("[BUILDER] No map available, cannot build layer")
+            logger.warning(f"[{self.agent_id}] No map available, cannot build layer")
             return
 
         base = self._get_base_coords()
         if base is None:
-            logger.warning("[BUILDER] No map available for building")
+            logger.warning(f"[{self.agent_id}] No map available for building")
             return
 
         base_x, base_y, base_z = base
@@ -382,12 +380,12 @@ class BuilderBot(BaseAgent):
             try:
                 mc.setBlock(base_x + bx, base_y + by, base_z + bz, block.id, block.data)
             except Exception as e:
-                logger.warning(f"[BUILDER] Failed to place block {block_name} at {(bx, by, bz)}: {e}")
+                logger.warning(f"[{self.agent_id}] Failed to place block {block_name} at {(bx, by, bz)}: {e}")
 
             await asyncio.sleep(self.BUILD_INTERVAL)
 
         self._build_progress += 1
-        logger.info(f"[BUILDER] Layer {self._build_progress}/{len(self._build_plan)} built")
+        logger.info(f"[{self.agent_id}] Layer {self._build_progress}/{len(self._build_plan)} built")
 
 
     async def _publish_build_status(self, status, final=False):
@@ -436,7 +434,7 @@ class BuilderBot(BaseAgent):
         base_name = name.split("[")[0]  # elimina propiedades tipo [east=true,...]
         block = BLOCK_MAP.get(base_name)
         if block is None:
-            logger.warning(f"[BUILDER] Unknown material {name}, skipping")
+            logger.warning(f"[{self.agent_id}] Unknown material {name}, skipping")
             return AIR  # fallback
         return block
 
@@ -488,10 +486,10 @@ class BuilderBot(BaseAgent):
         # Restaurar estado de espera si había quedado esperando
         if self.state == AgentState.WAITING:
             if self._bom and not self._materials_reserved:
-                logger.info("[BUILDER] Resuming: waiting for materials")
+                logger.info(f"[{self.agent_id}] Resuming: waiting for materials")
                 self._bom_event.set()
             if self._valid_area is None:
-                logger.info("[BUILDER] Resuming: waiting for map")
+                logger.info(f"[{self.agent_id}] Resuming: waiting for map")
                 self._map_event.clear()
     
     # ---------------------------------------------------------
@@ -599,5 +597,5 @@ class BuilderBot(BaseAgent):
             "template": self._template_name,
             "bom": self._bom,
         }
-        logger.info("[BUILDER STATUS] %s", info)
+        logger.info(f"[{self.agent_id} STATUS] %s", info)
 

@@ -23,7 +23,6 @@ class ExplorerBot(BaseAgent):
         self.center: Tuple[int, int] = (0, 0)
         self.range: int = 30
         self._last_publish: float = 0.0
-        self._queued_request: Optional[Tuple[int, int, int, int]] = None
         self.mc = mc
         self.occupied = set()
         self.bus = bus
@@ -69,12 +68,11 @@ class ExplorerBot(BaseAgent):
 
         requester = msg.get("source")   
 
-        logger.info("[EXPLORER] Start request: x=%s z=%s range=%s", x, z, r)
+        logger.info(f"[{self.agent_id}] Start request: x=%s z=%s range=%s", x, z, r)
 
         # If the bot is running, queue new scan
         if self.state == AgentState.RUNNING:
-            logger.info("[EXPLORER] Queuing new request until current scan finishes")
-            self._queued_request = (x, z, r)
+            logger.info(f"[{self.agent_id}] Explorer is already started")
         else:
             self.center = (x, z)
             self.range = r
@@ -135,20 +133,20 @@ class ExplorerBot(BaseAgent):
             validation = await self.validate_coords(candidates)
 
             if not validation:
-                logger.warning("[EXPLORER] WorldStateBot no respondió")
+                logger.warning(f"[{self.agent_id}] WorldStateBot no respondió")
                 return None
 
             status = validation["status"]
             valid_coords = validation["valid_coords"]
 
             if status == "AREA_OCCUPIED":
-                logger.info("[EXPLORER] Área completamente ocupada, abortando exploración")
+                logger.info(f"[{self.agent_id}] Área completamente ocupada, abortando exploración")
                 return None
 
             self._pending_coords = valid_coords.copy()
             self._height_map = {}  # reset del mapa de alturas
             logger.info(
-                f"[EXPLORER] Validación: {status} "
+                f"[{self.agent_id}] Validación: {status} "
                 f"({len(valid_coords)}/{len(candidates)} coords válidas)"
             )
 
@@ -157,7 +155,7 @@ class ExplorerBot(BaseAgent):
         x, z = coord
         h = self.mc.getHeight(x, z)
         self._height_map[coord] = h
-        logger.info(f"[EXPLORER] Percibiendo coordenadas ({x},{z}) con altura {h}")
+        logger.info(f"[{self.agent_id}] Percibiendo coordenadas ({x},{z}) con altura {h}")
 
         await asyncio.sleep(self.SCAN_DELAY)
 
@@ -239,7 +237,7 @@ class ExplorerBot(BaseAgent):
 
         # --- 2. Logging del rectángulo encontrado ---
         logger.info(
-            f"[EXPLORER] Mejor rectángulo: "
+            f"[{self.agent_id}] Mejor rectángulo: "
             f"({rect['x1']},{rect['z1']}) → ({rect['x2']},{rect['z2']}), "
             f"area={rect['area']}, y={rect['y']}"
         )
@@ -248,11 +246,11 @@ class ExplorerBot(BaseAgent):
         result = await self.save_area_clean(rect)
 
         if result is None:
-            logger.warning("[EXPLORER] No response from WorldStateBot (timeout)")
+            logger.warning(f"[{self.agent_id}] No response from WorldStateBot (timeout)")
         elif result.get("status") != "OK":
-            logger.info(f"[EXPLORER] WorldStateBot rechazó el área: {result}")
+            logger.info(f"[{self.agent_id}] WorldStateBot rechazó el área: {result}")
         else:
-            logger.info("[EXPLORER] Área guardada correctamente en WorldState")
+            logger.info(f"[{self.agent_id}] Área guardada correctamente en WorldState")
             await self._publish_map(rect)
 
         # --- 4. Continuar flujo normal ---
@@ -327,7 +325,7 @@ class ExplorerBot(BaseAgent):
         target = self.current_requester if self.current_requester else "*"
 
         if str(target).startswith("player:") or target == "user":
-            logger.info(f"[EXPLORER] Orden manual completada. Datos en WorldState. Silencio.")
+            logger.info(f"[EXPLORER] Orden manual completada, datos en WorldState.")
             return
         
         msg = {
@@ -350,27 +348,16 @@ class ExplorerBot(BaseAgent):
 
         if rect:
             logger.info(
-                f"[EXPLORER] Published map.v1 {log_target} (rect area={rect['area']}, "
+                f"[{self.agent_id}] Published map.v1 {log_target} (rect area={rect['area']}, "
                 f"coords=({rect['x1']},{rect['z1']})→({rect['x2']},{rect['z2']}))"
             )
         else:
-            logger.info(f"[EXPLORER] Published map.v1 {log_target} (no rectangle found)")
-
+            logger.info(f"[{self.agent_id}] Published map.v1 {log_target} (no rectangle found)")
     async def _handle_next_or_idle(self):
 
         self.current_requester = None
         
-        if self._queued_request:
-            x, z, r, requester = self._queued_request
-            self._queued_request = None
-            self.center = (x, z)
-            self.range = r
-            logger.info(
-                f"[EXPLORER] Switching to queued request from {requester}: ({x},{z}) r={r}"
-            )
-            await self.start()
-        else:
-            await self.idle()
+        await self.idle()
 
     # ---------------------------------------------------------
     # Funciones para guardar y cargar checkpoints
@@ -386,7 +373,6 @@ class ExplorerBot(BaseAgent):
                 f"{x},{z}": h
                 for (x, z), h in getattr(self, "_height_map", {}).items()
             },
-            "queued_request": self._queued_request,
         })
         return data
 
@@ -411,8 +397,6 @@ class ExplorerBot(BaseAgent):
             tuple(map(int, k.split(","))): v
             for k, v in raw_map.items()
         }
-
-        self._queued_request = data.get("queued_request")
 
     # ---------------------------------------------------------
     # Funciones para comunicacion con WorldstateBot
@@ -496,7 +480,7 @@ class ExplorerBot(BaseAgent):
     # Control Overloads
     # ---------------------------------------------------------
     async def stop(self):
-        logger.info("[EXPLORER] Stop command received: attempting to save best rectangle")
+        logger.info(f"[{self.agent_id}] Stop command received: attempting to save best rectangle")
 
         # 1️⃣ Construir rectángulo a partir de lo percibido hasta ahora
         height_map = getattr(self, "_height_map", {})
@@ -540,13 +524,13 @@ class ExplorerBot(BaseAgent):
                 try:
                     result = await self.save_area_clean(rect_dict)
                     if result and result.get("status") == "OK":
-                        logger.info("[EXPLORER] Best rectangle saved successfully before stop")
+                        logger.info(f"[{self.agent_id}] Best rectangle saved successfully before stop")
                         await self._publish_map(rect_dict)
                     else:
-                        logger.warning("[EXPLORER] Failed to save best rectangle before stop")
+                        logger.warning(f"[{self.agent_id}] Failed to save best rectangle before stop")
                         await self._publish_map(None)
                 except Exception:
-                    logger.exception("[EXPLORER] Exception saving best rectangle on stop")
+                    logger.exception(f"[{self.agent_id}] Exception saving best rectangle on stop")
                     await self._publish_map(None)
             else:
                 # No se encontró ningún rectángulo válido
@@ -563,7 +547,7 @@ class ExplorerBot(BaseAgent):
         await super().stop()
 
     async def pause(self):
-        logger.info("[EXPLORER] Pausing → saving checkpoint")
+        logger.info(f"[{self.agent_id}] Pausing → saving checkpoint")
         await self.save_checkpoint()
         await super().pause()
 
@@ -582,6 +566,6 @@ class ExplorerBot(BaseAgent):
             "range": self.range,
             "strategy": self.search_strategy.__name__,
         }
-        logger.info("[EXPLORER STATUS] %s", info)
+        logger.info(f"[{self.agent_id} STATUS] %s", info)
 
 

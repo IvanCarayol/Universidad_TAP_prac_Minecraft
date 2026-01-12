@@ -1,3 +1,19 @@
--Factory de bots
+documentacion
 
--Bots quedan escuchando un bus de "error" si no les responde worldstate y este revisa los timestamps para responder por error.
+juego de pruebas
+
+añadir todo lo que falta que pide el enunciado (commandos, cosas de diseño...)
+
+hacer start miner en builderbot antes de mandarle la bom
+
+actualizar en builder -->  # ENVIAMOS LA ORDEN A NUESTRO EXPLORER (No al WorldState)
+                            await self.bus.publish({
+                                "type": "command.explorer.start.v1",
+                                "source": self.agent_id,
+                                "target": self.explorer_id,
+                                "payload": {
+                                    "x": 0,     <----
+                                    "z": 0,     <----
+                                    "range": scan_range
+                                }
+                            })
