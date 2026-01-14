@@ -2,7 +2,6 @@
 import asyncio
 import os
 from mcpi.minecraft import Minecraft
-mc = Minecraft.create()
 from mcpi.block import AIR, Block
 from pathlib import Path
 from Plugin.Schematics.blockmap import BLOCK_MAP
@@ -72,12 +71,13 @@ class BuilderBot(BaseAgent):
 
     BUILD_INTERVAL = 0.001
 
-    def __init__(self, agent_id="BuilderBot", bus= None):
+    def __init__(self, agent_id="BuilderBot", bus= None, mc=None):
         
         load_all_templates()
  
         self.miner_id = "MinerBot"       # Por defecto
         self.explorer_id = "ExplorerBot" # Por defecto
+        self.mc = mc
 
         self._valid_area: Optional[Dict[str, Any]] = None
         self._template_name = list(TEMPLATES.keys())[0]  # default first template
@@ -452,7 +452,7 @@ class BuilderBot(BaseAgent):
             block = self.get_block_from_name(block_name)
 
             try:
-                mc.setBlock(base_x + bx, base_y + by, base_z + bz, block.id, block.data)
+                self.mc.setBlock(base_x + bx, base_y + by, base_z + bz, block.id, block.data)
             except Exception as e:
                 logger.warning(f"[{self.agent_id}] Failed to place block {block_name} at {(bx, by, bz)}: {e}")
 

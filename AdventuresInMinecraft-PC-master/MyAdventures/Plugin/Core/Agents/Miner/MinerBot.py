@@ -209,7 +209,7 @@ class MinerBot(BaseAgent):
 
             await self.release_assigned_area()  # Soltar el área en WorldState
             
-            self._bom = None                    # Borrar lista de tareas
+            self._current_bom = None                    # Borrar lista de tareas
             self.current_requester = None       # Olvidar al jefe actual (quedar libre)
             
             # 5. DORMIR

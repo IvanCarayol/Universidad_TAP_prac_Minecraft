@@ -53,7 +53,11 @@ class BaseAgent:
         }))
 
         self.load_from_disk()
-        asyncio.create_task(self._auto_resume_if_needed())
+        try:
+            asyncio.create_task(self._auto_resume_if_needed())
+        except RuntimeError:
+            pass
+
 
     async def _auto_resume_if_needed(self):
             if self._state in (AgentState.RUNNING, AgentState.WAITING):
