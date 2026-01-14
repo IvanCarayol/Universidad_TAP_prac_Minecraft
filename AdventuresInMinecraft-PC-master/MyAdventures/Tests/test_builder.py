@@ -79,7 +79,6 @@ class TestBuilderComplete(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(d["action"], "compute_bom")
 
             # CASO C: Falta Material -> Esperar Materiales
-            # [CORRECCIÓN] Damos un BOM para que no intente calcularlo de nuevo
             percept["bom"] = [{"material": "stone", "qty": 5}]
             
             self.bot.check_and_consume_materials = AsyncMock(return_value={

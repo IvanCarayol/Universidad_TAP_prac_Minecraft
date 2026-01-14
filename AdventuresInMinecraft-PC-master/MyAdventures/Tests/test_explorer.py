@@ -16,7 +16,6 @@ class TestExplorerComplete(unittest.IsolatedAsyncioTestCase):
         self.bus.subscribe = MagicMock()
         self.mc = MagicMock()
         
-        # [ARREGLO] Evitar que cargue JSONs sucios de otros tests
         with patch("Plugin.Core.Agents.BaseAgent.BaseAgent.load_from_disk"):
             self.bot = ExplorerBot("Explorer_Test", bus=self.bus, mc=self.mc)
 

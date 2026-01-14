@@ -19,9 +19,7 @@ ChatEvent = namedtuple("ChatEvent", ["entityId", "message"])
 
 class TestInfrastructure(unittest.IsolatedAsyncioTestCase):
 
-    # ==========================================
     # 1. TEST DE LA FÁBRICA DE AGENTES
-    # ==========================================
     def test_agent_factory(self):
         bus = MagicMock()
         
@@ -42,9 +40,7 @@ class TestInfrastructure(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(ValueError):
             AgentFactory.create("robot_cocina", "Chef1", bus)
 
-    # ==========================================
     # 2. TEST DEL BUS DE MENSAJES
-    # ==========================================
     async def test_message_bus(self):
         bus = MessageBus()
         callback = AsyncMock()
@@ -67,14 +63,11 @@ class TestInfrastructure(unittest.IsolatedAsyncioTestCase):
         except Exception:
             self.fail("El Bus falló al intentar borrar una suscripción que no existía")
 
-    # ==========================================
     # 3. TEST DEL SISTEMA DE COMANDOS
-    # ==========================================
     async def test_command_system_complex(self):
         sys = CommandSystem()
         handler = AsyncMock(return_value="OK")
         
-        # [CORRECCIÓN 2]: Añadimos target_bot="miner". 
         # Si no ponemos esto, el sistema no sabe a quién mandar la orden y falla.
         sys.on("miner set", "topic.miner", target_bot="miner")(handler)
 
@@ -98,14 +91,10 @@ class TestInfrastructure(unittest.IsolatedAsyncioTestCase):
         res = await sys.execute("cocinar pizza", 1, bots)
         self.assertIsNone(res)
 
-    # ==========================================
     # 4. TEST DEL ESCUCHA DE CHAT
-    # ==========================================
     async def test_chat_dispatch(self):
         evt = ChatEvent(entityId=99, message="miner start")
         
-        # [CORRECCIÓN 3]: Usamos la ruta completa correcta para el 'patch'.
-        # Antes fallaba porque buscaba en 'Plugin.Chatlistener' en vez de 'Plugin.Core.Listener...'
         ruta_registro = "Plugin.Core.Listener.Chatlistener.BOTS_REGISTRY"
         ruta_dispatch = "Plugin.Core.Commands.commands.dispatch_command"
         
@@ -123,7 +112,6 @@ class TestInfrastructure(unittest.IsolatedAsyncioTestCase):
         bot = MagicMock()
         bot.agent_id = "SuperMinerBot"
         
-        # Usamos la misma ruta corregida
         ruta_registro = "Plugin.Core.Listener.Chatlistener.BOTS_REGISTRY"
         
         with patch(ruta_registro, {}) as registry:

@@ -20,7 +20,6 @@ class TestBotControls(unittest.IsolatedAsyncioTestCase):
     async def test_builder_controls(self):
         bot = BuilderBot("Builder_Control_Test", bus=self.fake_bus, mc=self.fake_mc)
         
-        # [CORRECCIÓN IMPORTANTE] 
         # Forzamos que el bot "crea" que está corriendo.
         # Si no hacemos esto, al hacer Pause guarda "IDLE", y al hacer Resume vuelve a "IDLE".
         bot._state = AgentState.RUNNING
