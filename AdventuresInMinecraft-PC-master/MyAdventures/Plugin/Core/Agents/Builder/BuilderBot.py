@@ -11,6 +11,7 @@ from typing import Dict, Any, Optional
 from ..BaseAgent import BaseAgent, AgentState
 from ...Logger.logging_config import get_console_logger
 from collections import Counter
+import random
 
 
 logger = get_console_logger(__name__)
@@ -84,6 +85,8 @@ class BuilderBot(BaseAgent):
         self._materials_reserved = False
         self._build_progress = 0
         self._build_plan = None
+        self._search_origin = None   # (x, z)
+        self._search_radius = 128    # zona asignada por builder
         self._map_event = asyncio.Event()
         self._bom_event = asyncio.Event()
 
@@ -98,7 +101,11 @@ class BuilderBot(BaseAgent):
         self.bus.subscribe("command.builder.set.v1", self._on_update_cmd)
         self.bus.subscribe("command.builder.list.v1", self._on_control)
         self.bus.subscribe("command.builder.status.v1", self._on_control)
+        self.bus.subscribe("command.builder.workflow.v1", self._on_workflow_cmd)
         self.bus.subscribe("*", self._on_generic)
+
+        if self._search_origin is None:
+            self._init_search_origin()
 
     def set_squad(self, miner_id, explorer_id):
         self.miner_id = miner_id
@@ -135,9 +142,6 @@ class BuilderBot(BaseAgent):
             return
         logger.info(f"[{self.agent_id}] Start request")
 
-        # If the bot is running, queue new scan
-        if self.state == AgentState.RUNNING:
-            logger.info(f"[{self.agent_id}] Queuing new request until current finishes")
         await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
@@ -175,6 +179,91 @@ class BuilderBot(BaseAgent):
         elif cmdtype.endswith(".status.v1"):
             await self.status()
 
+    async def _on_workflow_cmd(self, msg: Dict[str, Any]):
+        """Ejecuta un workflow completo de construcción."""
+        if msg.get("target") not in (self.agent_id, "*"):
+            return
+
+        payload = msg.get("payload", {})
+
+        # ---------- 1. Template ----------
+        template = payload.get("schem")
+        if template:
+            if template not in TEMPLATES:
+                logger.warning(f"[{self.agent_id}] Unknown template '{template}'")
+                return
+            self._template_name = template
+
+        tpl = TEMPLATES[self._template_name]
+
+        # ---------- 2. Área de exploración ----------
+        x = payload.get("x")
+        z = payload.get("z")
+        scan_range = payload.get(
+            "range",
+            max(tpl["width"], tpl["depth"]) + 5
+        )
+
+        # Inicializar search origin si no existe
+        if self._search_origin is None:
+            self._init_search_origin()
+
+        if x is not None and z is not None:
+            self._search_origin = (x, z)
+
+        ox, oz = self._search_origin
+
+        logger.info(
+            f"[{self.agent_id}] Workflow: explorer search at ({ox}, {oz}) range={scan_range}"
+        )
+        
+        # ---------- 3. Configurar Explorer ----------
+        explorer_strategy = payload.get("e_strategy")
+        if explorer_strategy:
+            await self.bus.publish({
+                "type": "command.explorer.set.v1",
+                "source": self.agent_id,
+                "target": self.explorer_id,
+                "payload": {
+                    "strategy": explorer_strategy
+                }
+            })            
+
+        await self.bus.publish({
+            "type": "command.explorer.start.v1",
+            "source": self.agent_id,
+            "target": self.explorer_id,
+            "payload": {
+                "x": ox,
+                "z": oz,
+                "range": scan_range
+            }
+        })
+
+        # ---------- 4. Configurar Miner ----------
+        miner_strategy = payload.get("m_strategy")
+
+        if miner_strategy:
+            await self.bus.publish({
+                "type": "command.miner.set.v1",
+                "source": self.agent_id,
+                "target": self.miner_id,
+                "payload": {
+                    "strategy": miner_strategy
+                }
+            })
+
+        await self.bus.publish({
+            "type": "command.miner.start.v1",
+            "source": self.agent_id,
+            "target": self.miner_id,
+            "payload": {}
+        })
+
+        # ---------- 5. Arrancar Builder ----------
+        logger.info(f"[{self.agent_id}] Workflow: starting builder")
+        await self.start()
+
     async def _on_generic(self, msg: Dict[str, Any]):
         # Debug tap for other messages
         return
@@ -207,21 +296,6 @@ class BuilderBot(BaseAgent):
             
             # Calculamos el tamaño que necesitamos escanear
             # (El ancho o profundidad máximo del edificio + margen de 5 bloques)
-            scan_range = max(tpl["width"], tpl["depth"]) + 5
-
-            logger.info(f"[{self.agent_id}] Ordenando a {self.explorer_id} buscar zona de tamaño {scan_range}...")
-
-            # ENVIAMOS LA ORDEN A NUESTRO EXPLORER (No al WorldState)
-            await self.bus.publish({
-                "type": "command.explorer.start.v1",
-                "source": self.agent_id,
-                "target": self.explorer_id,
-                "payload": {
-                    "x": 0, 
-                    "z": 0,
-                    "range": scan_range
-                }
-            })
 
             # Nos ponemos a esperar. El Explorer enviará "map.v1" cuando termine.
             self.set_state(AgentState.WAITING, "Waiting for Explorer map")
@@ -450,6 +524,31 @@ class BuilderBot(BaseAgent):
             rect.get("z1", 0)
         )
     
+    def _init_search_origin(self):
+        """
+        Asigna una zona base al BuilderBot para evitar solapamientos.
+        Determinista por agent_id.
+        """
+        if self._search_origin is not None:
+            return
+
+        # Hash estable a partir del agent_id
+        seed = abs(hash(self.agent_id)) % 10_000
+        random.seed(seed)
+
+        grid = 256  # separación entre builders
+        gx = random.randint(-5, 5)
+        gz = random.randint(-5, 5)
+
+        self._search_origin = (
+            gx * grid,
+            gz * grid
+        )
+
+        logger.info(
+            f"[{self.agent_id}] Search origin set to {self._search_origin}"
+        )
+
     # -----------------------------------------------------
     # Funciones para guardar y cargar checkpoints
     # -----------------------------------------------------
@@ -464,6 +563,8 @@ class BuilderBot(BaseAgent):
             "materials_reserved": self._materials_reserved,
             "build_progress": self._build_progress,
             "build_plan": self._build_plan,  # lista de capas con bloques
+            "search_origin": self._search_origin,
+            "search_radius": self._search_radius,
         })
         
         return data
@@ -478,6 +579,9 @@ class BuilderBot(BaseAgent):
         self._materials_reserved = data.get("materials_reserved", False)
         self._build_progress = data.get("build_progress", 0)
         self._build_plan = data.get("build_plan")
+        self._search_origin = data.get("search_origin")
+        self._search_radius = data.get("search_radius", 128)
+
         
         # Eventos no se guardan, se recrean
         self._map_event = asyncio.Event()

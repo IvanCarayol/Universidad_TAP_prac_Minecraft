@@ -72,6 +72,10 @@ async def builder_list(bot, params, sender_id, topic):
 async def builder_status(bot, params, sender_id, topic):
     return await _send(bot, sender_id, topic, params)
 
+@cmd_manager.on("builder workflow", "command.builder.workflow.v1", target_bot="builder")
+async def builder_workflow(bot, params, sender_id, topic):
+    return await _send(bot, sender_id, topic, params)
+
 # ============================
 #         MINER
 # ============================

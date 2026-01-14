@@ -73,7 +73,8 @@ class MinerBot(BaseAgent):
             return
 
         payload = msg.get("payload")
-
+        self.current_requester = msg.get("source")
+        
         # Caso correcto: payload = {"bom": [...]}
         if isinstance(payload, dict):
             bom = payload.get("bom")
@@ -189,7 +190,7 @@ class MinerBot(BaseAgent):
 
         # Minando
         if action == "mine":
-            await self._mine_step() 
+            await self._perform_mining_step() 
             return
 
         # Ya ha acabado
@@ -204,7 +205,7 @@ class MinerBot(BaseAgent):
 
             await self.report_materials_to_worldstate()
 
-            await self._publish_inventory(status="SUCCESS", final=True)
+            await self._publish_inventory(status="SUCCESS", final=True, target_builder=target_builder)
 
             await self.release_assigned_area()  # Soltar el área en WorldState
             
@@ -312,14 +313,14 @@ class MinerBot(BaseAgent):
     # -----------------------
     # Publishing inventory
     # -----------------------
-    async def _publish_inventory(self, status="RUNNING", final: bool = False):
+    async def _publish_inventory(self, status="RUNNING", final: bool = False, target_builder: Optional[str] = None):
         if not self.bus:
             logger.debug("No bus configured, skipping inventory publish")
             return
         msg = {
             "type": "inventory.v1",
             "source": self.agent_id,
-            "target": "target_builder",
+            "target": target_builder,
             "timestamp": None,  # bus may set timestamp
             "payload": None, # no es necesario ya que se mira en worldstate
             "status": status,

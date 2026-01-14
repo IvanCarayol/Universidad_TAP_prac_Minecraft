@@ -1,0 +1,22 @@
+{
+  "agent_id": "WorldstateBot",
+  "state": "RUNNING",
+  "prev_state": "IDLE",
+  "flat_areas": [
+    {
+      "rect": {
+        "x1": -433,
+        "z1": -413,
+        "x2": -418,
+        "z2": -399,
+        "width": 16,
+        "height": 15,
+        "area": 240,
+        "y": 63
+      },
+      "status": "RESERVED",
+      "assigned_to": "Builder_1"
+    }
+  ],
+  "materials": {}
+}
