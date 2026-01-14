@@ -11,9 +11,9 @@ from mcpi.event import ChatEvent
 from Plugin.Core.Bus.Bus import MessageBus
 
 
-# --------------------------
+
 # Rutas del proyecto
-# --------------------------
+
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "Plugin"))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
@@ -23,30 +23,28 @@ if MCPI_PATH not in sys.path:
     sys.path.insert(0, MCPI_PATH)
 
 
-# --------------------------
+
 # Logger
-# --------------------------
+
 logger = get_console_logger(__name__)
 
 
-# --------------------------
+
 # Conectar con Minecraft
-# --------------------------
+
 mc = Minecraft.create("localhost", 4711)
 
 
-# --------------------------
+
 # Función principal
-# --------------------------
+
 async def main():
     logger.info("Iniciando sistema de bots...")
 
-    # -----------------------------------------------------
     # Crear instancias reales de bots
-    # -----------------------------------------------------
 
     shared_bus = MessageBus()
-    worldstate_bot = AgentFactory.create("worldstate", "WorldstateBot", shared_bus, mc)
+    worldstate_bot = AgentFactory.create("worldstate", "WorldstateBot", shared_bus)
     register_bot(worldstate_bot)
 
     NUM_SQUADS = 2
@@ -78,9 +76,9 @@ async def main():
     logger.info("Bots registrados correctamente.")
 
     start_chat_listener(mc)
-    # -----------------------------------------------------
+
     # Simulador de chat
-    # -----------------------------------------------------
+
     async def simulate_chat():
         await asyncio.sleep(1)
         ChatEvent.Post(entityId=1, message="explorer start x=100 z=100 range=1000 cube=3")
@@ -94,18 +92,18 @@ async def main():
         await asyncio.sleep(2)
         ChatEvent.Post(entityId=1, message="explorer stop")
 
-    # -----------------------------------------------------
+
     # Lanzar bot + simulador
-    # -----------------------------------------------------
+
     #ChatEvent.Post(entityId=1, message="explorer start x=-180 z=70 range=5 cube=5")
     #ChatEvent.Post(entityId=2, message="builder start")
     while True:
         await asyncio.sleep(1)
 
 
-# --------------------------
+
 # Entry point
-# --------------------------
+
 if __name__ == "__main__":
     try:
         asyncio.run(main())

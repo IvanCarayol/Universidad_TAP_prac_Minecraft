@@ -33,8 +33,7 @@ class AgentFactory:
             
         elif t == "builder":
             # El builder suele gestionar su propia conexión o no la pide en init
-            # (Según tu código, acepta 'bus' y 'agent_id')
-            return BuilderBot(agent_id, bus=bus)
+            return BuilderBot(agent_id, bus=bus, mc=mc)
             
         elif t == "worldstate":
             # El worldstate es pura lógica, no suele usar 'mc' directo en init

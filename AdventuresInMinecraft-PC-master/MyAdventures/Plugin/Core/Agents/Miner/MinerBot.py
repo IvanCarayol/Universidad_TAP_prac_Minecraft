@@ -11,9 +11,8 @@ from ...Logger.logging_config import get_console_logger
 
 logger = get_console_logger(__name__)
 
-# ---------------------------
 # MinerBot implementation
-# ---------------------------
+
 class MinerBot(BaseAgent):
     """
     MinerBot implementation.
@@ -50,9 +49,8 @@ class MinerBot(BaseAgent):
 
         self.load_from_disk()
         
-    # -----------------------
     # Strategy factory
-    # -----------------------
+
     async def _build_strategy(self, area):
         name = (self._strategy_name).lower()
 
@@ -65,9 +63,8 @@ class MinerBot(BaseAgent):
         # default
         return await grid_strategy(area=area)
 
-    # -----------------------
     # Message handlers
-    # -----------------------
+
     async def _on_materials_request(self, msg):
         if msg.get("target") not in (self.agent_id, "*"):
             return
@@ -145,12 +142,10 @@ class MinerBot(BaseAgent):
 
 
     async def _on_generic(self, msg: Dict[str, Any]):
-        # Optional: listen to other messages (e.g., builder broadcasts)
         return
 
-    # -----------------------
     # PDA cycle implementations
-    # -----------------------
+
     async def perceive(self) -> Dict[str, Any]:
         await asyncio.sleep(0)  # yield
         percept = {
@@ -216,9 +211,8 @@ class MinerBot(BaseAgent):
             await self.idle()
             return
 
-    # -----------------------
     # Mining internals
-    # -----------------------
+
     def _bom_fulfilled(self, bom) -> bool:
         """
         Revisa si el inventario cumple con todas las cantidades requeridas en la BOM,
@@ -310,9 +304,8 @@ class MinerBot(BaseAgent):
         # Si todo está lleno, devolver el primero
         return list(counter.keys())[0]
 
-    # -----------------------
     # Publishing inventory
-    # -----------------------
+
     async def _publish_inventory(self, status="RUNNING", final: bool = False, target_builder: Optional[str] = None):
         if not self.bus:
             logger.debug("No bus configured, skipping inventory publish")
@@ -329,9 +322,8 @@ class MinerBot(BaseAgent):
         await self.bus.publish(msg)
         logger.info("Published inventory (%s): %s", status, self.inventory)
 
-    # ---------------------------------------------------------
     # Funciones para guardar y cargar checkpoints
-    # ---------------------------------------------------------
+
     def get_save_data(self):
         data = super().get_save_data()
         data.update({
@@ -351,7 +343,7 @@ class MinerBot(BaseAgent):
         self._strategy_name = data.get("strategy", "grid")
         self.assigned_area = data.get("assigned_area")
 
-        # ⚠️ fuerza reconstrucción segura
+        # fuerza reconstrucción segura
         self._strategy = None
 
     # ---------------------------------------------------------
@@ -539,13 +531,12 @@ class MinerBot(BaseAgent):
             self.bus.unsubscribe("worldstate.response", _temp)
 
 
-    # -----------------------
     # Control overrides
-    # -----------------------
+
     async def stop(self):
         logger.info(f"[{self.agent_id}] Stop command received: reporting progress and releasing area")
 
-        # 1️⃣ Reportar los materiales minados hasta ahora a WorldState
+        # Reportar los materiales minados hasta ahora a WorldState
         if self.inventory:
             try:
                 success = await self.report_materials_to_worldstate()
@@ -555,17 +546,17 @@ class MinerBot(BaseAgent):
                     logger.warning(f"[{self.agent_id}] Falló el reporte de materiales antes de detenerse")
             except Exception:
                 logger.exception(f"[{self.agent_id}] Excepción al reportar materiales antes de detenerse")
-        # 2️⃣ Liberar área asignada, si la hay
+        # Liberar área asignada, si la hay
         if self.assigned_area:
             try:
                 await self.release_assigned_area()
             except Exception:
                 logger.exception(f"[{self.agent_id}] Excepción al liberar área asignada antes de detenerse")
 
-        # 3️⃣ Publicar inventario final a BuilderBot para que sepa que terminó
+        # Publicar inventario final a BuilderBot para que sepa que terminó
         await self._publish_inventory(status="STOPPED", final=True)
 
-        # 4️⃣ Finalmente llamar a stop() de BaseAgent para cambiar estado
+        # Finalmente llamar a stop() de BaseAgent para cambiar estado
         await super().stop()
 
 

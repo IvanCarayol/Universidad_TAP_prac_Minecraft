@@ -13,9 +13,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "Core"))
 
 logger = get_console_logger(__name__)
 
-# ============================================================
+
 # ExplorerBot Implementation
-# ============================================================
+
 class ExplorerBot(BaseAgent):
     SCAN_DELAY = 0.01
 
@@ -53,9 +53,7 @@ class ExplorerBot(BaseAgent):
     async def _yield_scan(self):
         await asyncio.sleep(self.SCAN_DELAY)
 
-    # ---------------------------------------------------------
-    # Message handlers
-    # ---------------------------------------------------------
+
     async def _on_start_cmd(self, msg: Dict[str, Any]):
         """Handle `explorer start x=... z=... range=...`"""
         if msg.get("target") not in (self.agent_id, "*"):
@@ -70,7 +68,7 @@ class ExplorerBot(BaseAgent):
 
         logger.info(f"[{self.agent_id}] Start request: x=%s z=%s range=%s", x, z, r)
 
-        # If the bot is running, queue new scan
+
         if self.state == AgentState.RUNNING:
             logger.info(f"[{self.agent_id}] Explorer is already started")
         else:
@@ -80,7 +78,6 @@ class ExplorerBot(BaseAgent):
             await self.start()
 
     async def _on_update_cmd(self, msg: Dict[str, Any]):
-        """Handle `explorer set` command with optional parameters in payload."""
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
@@ -99,7 +96,6 @@ class ExplorerBot(BaseAgent):
 
 
     async def _on_control(self, msg: Dict[str, Any]):
-        """pause/resume/stop commands"""
         if msg.get("target") not in (self.agent_id, "*"):
             return
 
@@ -114,12 +110,11 @@ class ExplorerBot(BaseAgent):
             await self.status()
 
     async def _on_generic(self, msg: Dict[str, Any]):
-        # Debug tap for other messages
         return
 
-    # ---------------------------------------------------------
-    # PDA Methods
-    # ---------------------------------------------------------
+
+    # PDA metodos
+
     async def perceive(self):
         """
         Percibe un bloque válido a la vez.
@@ -175,7 +170,7 @@ class ExplorerBot(BaseAgent):
         if not height_map:
             return {"best_rectangle": None}
 
-        # --- mismo código de antes para calcular el mejor rectángulo ---
+        # mismo código de antes para calcular el mejor rectángulo
         levels = {}
         for (x, z), h in height_map.items():
             levels.setdefault(h, []).append((x, z))
@@ -218,14 +213,14 @@ class ExplorerBot(BaseAgent):
         return {"best_rectangle": None}
 
     async def act(self, decision):
-        # --- 0. Si no hay decision, significa que todavía quedan bloques pendientes ---
+        # Si no hay decision, significa que todavía quedan bloques pendientes
         if decision is None:
             # No hacemos nada, volverá a llamar a perceive para el siguiente bloque
             return
 
         rect = decision.get("best_rectangle")
 
-        # --- 1. No hay rectángulo válido tras percibir todos los bloques ---
+        # No hay rectángulo válido tras percibir todos los bloques 
         if rect is None:
             logger.info("[EXPLORER] No se encontró ningún rectángulo válido tras explorar todos los bloques")
             await self._publish_map(None)
@@ -235,14 +230,14 @@ class ExplorerBot(BaseAgent):
             self._height_map = {}
             return
 
-        # --- 2. Logging del rectángulo encontrado ---
+        #  Logging del rectángulo encontrado 
         logger.info(
             f"[{self.agent_id}] Mejor rectángulo: "
             f"({rect['x1']},{rect['z1']}) → ({rect['x2']},{rect['z2']}), "
             f"area={rect['area']}, y={rect['y']}"
         )
 
-        # --- 3. Guardar área en WorldState ---
+        #  Guardar área en WorldState 
         result = await self.save_area_clean(rect)
 
         if result is None:
@@ -253,19 +248,15 @@ class ExplorerBot(BaseAgent):
             logger.info(f"[{self.agent_id}] Área guardada correctamente en WorldState")
             await self._publish_map(rect)
 
-        # --- 4. Continuar flujo normal ---
+        # Continuar flujo normal 
         await self._handle_next_or_idle()
 
-        # --- 5. Limpiar memoria interna ---
+        # Limpiar memoria interna 
         self._pending_coords = []
         self._height_map = {}
 
 
-    # ---------------------------------------------------------
-    # Helpers
-    # ---------------------------------------------------------
     def _largest_rectangle_hist(self, heights):
-        """Largest rectangle in histogram algorithm."""
         stack = []
         max_area = 0
         left = right = 0
@@ -359,9 +350,9 @@ class ExplorerBot(BaseAgent):
         
         await self.idle()
 
-    # ---------------------------------------------------------
+
     # Funciones para guardar y cargar checkpoints
-    # ---------------------------------------------------------
+
     def get_save_data(self):
         data = super().get_save_data()
         data.update({
@@ -377,18 +368,18 @@ class ExplorerBot(BaseAgent):
         return data
 
     def load_save_data(self, data: Dict[str, Any]):
-        # 1️⃣ restaurar estado de ejecución (SIEMPRE primero)
+        # restaurar estado de ejecución (SIEMPRE primero)
         super().load_save_data(data)
 
-        # 2️⃣ estado propio del Explorer
+        # estado propio del Explorer
         self.center = tuple(data.get("center", self.center))
         self.range = data.get("range", self.range)
 
-        # 3️⃣ estrategia
+        # estrategia
         strategy_name = data.get("strategy", "random")
         self.set_strategy(strategy_name)
 
-        # 4️⃣ exploración parcial (⚠️ asegurar tuples)
+        # exploración parcial
         raw_pending = data.get("pending_coords", [])
         self._pending_coords = [tuple(coord) for coord in raw_pending]
 
@@ -398,9 +389,9 @@ class ExplorerBot(BaseAgent):
             for k, v in raw_map.items()
         }
 
-    # ---------------------------------------------------------
+
     # Funciones para comunicacion con WorldstateBot
-    # ---------------------------------------------------------
+
     async def validate_coords(self, coords, timeout=5.0):
         future = asyncio.get_event_loop().create_future()
 
@@ -440,7 +431,7 @@ class ExplorerBot(BaseAgent):
 
         future = asyncio.get_event_loop().create_future()
 
-        # --- callback temporal para esta respuesta ---
+        #  callback temporal para esta respuesta 
         async def _temp(msg):
             if msg.get("type") != "worldstate.response":
                 return
@@ -476,13 +467,13 @@ class ExplorerBot(BaseAgent):
             # liberar suscripción temporal
             self.bus.unsubscribe("worldstate.response", _temp)
 
-    # ---------------------------------------------------------
+
     # Control Overloads
-    # ---------------------------------------------------------
+
     async def stop(self):
         logger.info(f"[{self.agent_id}] Stop command received: attempting to save best rectangle")
 
-        # 1️⃣ Construir rectángulo a partir de lo percibido hasta ahora
+        # Construir rectángulo a partir de lo percibido hasta ahora
         height_map = getattr(self, "_height_map", {})
         if height_map:
             # Reusar la lógica de decide para calcular el mejor rectángulo
@@ -539,11 +530,11 @@ class ExplorerBot(BaseAgent):
             # No se percibió ningún bloque aún
             await self._publish_map(None)
 
-        # 2️⃣ Limpiar memoria interna
+        # Limpiar memoria interna
         self._pending_coords = []
         self._height_map = {}
 
-        # 3️⃣ Llamar a stop() de BaseAgent
+        # Llamar a stop() de BaseAgent
         await super().stop()
 
     async def pause(self):

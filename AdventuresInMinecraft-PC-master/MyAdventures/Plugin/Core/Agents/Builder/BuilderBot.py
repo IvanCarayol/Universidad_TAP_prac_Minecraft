@@ -75,12 +75,13 @@ class BuilderBot(BaseAgent):
         
         load_all_templates()
  
-        self.miner_id = "MinerBot"       # Por defecto
-        self.explorer_id = "ExplorerBot" # Por defecto
+        # valores por defecto de los bots
+        self.miner_id = "MinerBot"      
+        self.explorer_id = "ExplorerBot"
         self.mc = mc
 
         self._valid_area: Optional[Dict[str, Any]] = None
-        self._template_name = list(TEMPLATES.keys())[0]  # default first template
+        self._template_name = list(TEMPLATES.keys())[0] 
         self._bom: Optional[list[dict]] = None
         self._materials_reserved = False
         self._build_progress = 0
@@ -112,7 +113,7 @@ class BuilderBot(BaseAgent):
         self.explorer_id = explorer_id
         logger.info(f"[{self.agent_id}] Equipo asignado: Miner={self.miner_id}, Explorer={self.explorer_id}")
 
-    # ============ MESSAGE HANDLERS ====================
+    # MESSAGE HANDLERS
 
     async def _on_map(self, msg):
         if msg.get("target") not in (self.agent_id, "*"):
@@ -186,7 +187,7 @@ class BuilderBot(BaseAgent):
 
         payload = msg.get("payload", {})
 
-        # ---------- 1. Template ----------
+        # 1. Template
         template = payload.get("schem")
         if template:
             if template not in TEMPLATES:
@@ -196,7 +197,7 @@ class BuilderBot(BaseAgent):
 
         tpl = TEMPLATES[self._template_name]
 
-        # ---------- 2. Área de exploración ----------
+        # 2. Área de exploración 
         x = payload.get("x")
         z = payload.get("z")
         scan_range = payload.get(
@@ -217,7 +218,7 @@ class BuilderBot(BaseAgent):
             f"[{self.agent_id}] Workflow: explorer search at ({ox}, {oz}) range={scan_range}"
         )
         
-        # ---------- 3. Configurar Explorer ----------
+        # 3. Configurar Explorer 
         explorer_strategy = payload.get("e_strategy")
         if explorer_strategy:
             await self.bus.publish({
@@ -240,7 +241,7 @@ class BuilderBot(BaseAgent):
             }
         })
 
-        # ---------- 4. Configurar Miner ----------
+        # 4. Configurar Miner 
         miner_strategy = payload.get("m_strategy")
 
         if miner_strategy:
@@ -260,7 +261,7 @@ class BuilderBot(BaseAgent):
             "payload": {}
         })
 
-        # ---------- 5. Arrancar Builder ----------
+        #  5. Arrancar Builder 
         logger.info(f"[{self.agent_id}] Workflow: starting builder")
         await self.start()
 
@@ -268,7 +269,7 @@ class BuilderBot(BaseAgent):
         # Debug tap for other messages
         return
 
-    # ------------------ PDA ---------------------
+    # PDA
     async def perceive(self):
         return {
             "map": self._valid_area,
@@ -308,16 +309,15 @@ class BuilderBot(BaseAgent):
             result = await self.check_and_consume_materials(percept["bom"])
 
             if result["status"] == "INSUFFICIENT":
-                # pedir SOLO lo que falta
+
                 self._bom = result["missing"]
 
-                # CAMBIO AQUÍ: Usamos self.miner_id
                 logger.info(f"[{self.agent_id}] Pidiendo materiales a {self.miner_id}...")
 
                 await self.bus.publish({
                     "type": "bom.v1",
                     "source": self.agent_id,
-                    "target": self.miner_id, # <--- ¡IMPORTANTE! Variable dinámica
+                    "target": self.miner_id,
                     "payload": {
                         "bom": self._bom
                     },
@@ -377,10 +377,6 @@ class BuilderBot(BaseAgent):
             await self._publish_build_status("COMPLETED", final=True)
             self._reset_after_build()
             await self.idle()
-
-    # ---------------------------------------------------------
-    # Helpers 
-    # ---------------------------------------------------------
 
     async def _compute_and_send_bom(self):
         tpl = TEMPLATES[self._template_name]
@@ -483,7 +479,6 @@ class BuilderBot(BaseAgent):
 
 
     def list(self):
-        """Print available templates and current selection via logger only."""
 
         logger.info("\n================= BUILDER TEMPLATE LIST =================")
 
@@ -532,11 +527,10 @@ class BuilderBot(BaseAgent):
         if self._search_origin is not None:
             return
 
-        # Hash estable a partir del agent_id
         seed = abs(hash(self.agent_id)) % 10_000
         random.seed(seed)
 
-        grid = 256  # separación entre builders
+        grid = 256
         gx = random.randint(-5, 5)
         gz = random.randint(-5, 5)
 
@@ -549,9 +543,9 @@ class BuilderBot(BaseAgent):
             f"[{self.agent_id}] Search origin set to {self._search_origin}"
         )
 
-    # -----------------------------------------------------
+
     # Funciones para guardar y cargar checkpoints
-    # -----------------------------------------------------
+
     def get_save_data(self) -> Dict[str, Any]:
         """Extiende BaseAgent para guardar estado completo del BuilderBot."""
         data = super().get_save_data()
@@ -562,7 +556,7 @@ class BuilderBot(BaseAgent):
             "bom": self._bom,
             "materials_reserved": self._materials_reserved,
             "build_progress": self._build_progress,
-            "build_plan": self._build_plan,  # lista de capas con bloques
+            "build_plan": self._build_plan, 
             "search_origin": self._search_origin,
             "search_radius": self._search_radius,
         })
@@ -596,9 +590,7 @@ class BuilderBot(BaseAgent):
                 logger.info(f"[{self.agent_id}] Resuming: waiting for map")
                 self._map_event.clear()
     
-    # ---------------------------------------------------------
     # Funciones para comunicacion con WorldstateBot
-    # ---------------------------------------------------------
 
     async def request_free_area_clean(self, required: dict, timeout=5.0):
         """
@@ -608,7 +600,7 @@ class BuilderBot(BaseAgent):
 
         future = asyncio.get_event_loop().create_future()
 
-        # --- callback temporal ---
+        # callback temporal
         async def _temp(msg):
             if msg.get("type") != "worldstate.response":
                 return
@@ -675,9 +667,9 @@ class BuilderBot(BaseAgent):
         finally:
             self.bus.unsubscribe("worldstate.response", _temp)
 
-    # ---------------------------------------------------------
+
     # Control Overloads
-    # ---------------------------------------------------------
+
     async def stop(self):
         await super().stop()
 

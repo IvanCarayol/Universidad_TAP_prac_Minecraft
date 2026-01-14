@@ -11,9 +11,8 @@ from ..Logger.logging_config import get_console_logger, get_json_file_logger
 
 logger = get_console_logger(__name__)
 
-# ---------------------------------------------------------
 #  Unified Agent States
-# ---------------------------------------------------------
+
 class AgentState(Enum):
     IDLE = "IDLE"
     RUNNING = "RUNNING"
@@ -23,9 +22,8 @@ class AgentState(Enum):
     ERROR = "ERROR"
 
 
-# ---------------------------------------------------------
 #  BaseAgent
-# ---------------------------------------------------------
+
 class BaseAgent:
     """
     Base class for all Minecraft agents with:
@@ -65,17 +63,17 @@ class BaseAgent:
                 if self._task is None or self._task.done():
                     self._task = asyncio.create_task(self._run_loop())
                     logger.info(f"[AUTO-RESUME] Agent '{self.agent_id}' resumed from {self._state.value}")
-    # -----------------------------------------------------
+    
     #  Directory helpers
-    # -----------------------------------------------------
+
     SAVE_DIR = Path(__file__).resolve().parents[2] / "Saves"
 
     def _get_save_path(self) -> Path:
         return self.SAVE_DIR / f"{self.agent_id}.json"
     
-    # -----------------------------------------------------
+
     #  State helpers
-    # -----------------------------------------------------
+
     @property
     def state(self) -> AgentState:
         return self._state
@@ -94,9 +92,9 @@ class BaseAgent:
         }
         self.logger.info(json.dumps(transition_record))
 
-    # -----------------------------------------------------
+
     #  Control commands
-    # -----------------------------------------------------
+
     async def start(self):
         """Start the agent loop (safe)."""
         if self._task and not self._task.done():
@@ -195,9 +193,8 @@ class BaseAgent:
             "params": params
         }))
 
-    # -----------------------------------------------------
     #  PDA LOOP
-    # -----------------------------------------------------
+
     async def _run_loop(self):
         """Core perception-decision-action loop."""
         try:
@@ -209,19 +206,18 @@ class BaseAgent:
                 if self.state in (AgentState.STOPPED, AgentState.ERROR):
                     break
 
-                # --- Perceive
+                # Perceive
                 percept = await self.perceive()
 
-                # --- Decide
+                # Decide
                 decision = await self.decide(percept)
 
-                # --- Act
+                # Act
                 await self.act(decision)
 
-                await asyncio.sleep(0)  # yield control
+                await asyncio.sleep(0) 
 
         except asyncio.CancelledError:
-            # Normal shutdown → no log spam, no await stop()
             return
 
         except Exception as e:
@@ -240,14 +236,14 @@ class BaseAgent:
             Borrar checkpoint solo si la tarea se completó realmente.
             """
             if self.state == AgentState.IDLE:
-                # La tarea ya terminó → no necesitamos el checkpoint
+                # La tarea ya terminó, no necesitamos el checkpoint
                 await self.delete_checkpoint()
             else:
-                # Todavía activo o interrumpido → guardar checkpoint
+                # Todavía activo o interrumpido, guardar checkpoint
                 await self.save_checkpoint()
-    # -----------------------------------------------------
+
     #  PDA abstract methods
-    # -----------------------------------------------------
+
     async def perceive(self) -> Any:
         raise NotImplementedError
 
@@ -257,9 +253,9 @@ class BaseAgent:
     async def act(self, decision: Any):
         raise NotImplementedError
 
-    # -----------------------------------------------------
+
     #  Checkpoint
-    # -----------------------------------------------------
+
     async def save_checkpoint(self):
         try:
             self.SAVE_DIR.mkdir(exist_ok=True)
@@ -294,9 +290,9 @@ class BaseAgent:
                 }))
             except Exception as e:
                 logger.exception(f"[CHECKPOINT DELETE ERROR] {self.agent_id}: {e}")
-    # -----------------------------------------------------
+
     #  Load checkpoint from disk
-    # -----------------------------------------------------
+
     def load_from_disk(self) -> bool:
         """
         Carga el checkpoint desde disco y restaura el estado del agente.
@@ -328,9 +324,8 @@ class BaseAgent:
             logger.exception(f"[CHECKPOINT LOAD ERROR] {self.agent_id}: {e}")
             return False
 
-    # -----------------------------------------------------
     #  Serialization API (override in child agents)
-    # -----------------------------------------------------
+
     def get_save_data(self) -> Dict[str, Any]:
         """
         Devuelve un dict JSON-serializable con el estado del agente.
@@ -358,9 +353,8 @@ class BaseAgent:
             self.prev = loaded_prev
 
 
-    # -----------------------------------------------------
     #  Messages
-    # -----------------------------------------------------
+    
     def build_message(self, msg_type: str, target: str, payload: dict, status="SUCCESS", context=None):
         return {
             "type": msg_type,

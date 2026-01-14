@@ -3,9 +3,7 @@ from typing import Dict, Any
 # Importamos el manager con todos los comandos ya cargados
 from .definitions import cmd_manager
 
-# ------------------------------------------------------------
 # Despacho de comandos (AHORA DELEGA EN EL MANAGER)
-# ------------------------------------------------------------
 async def dispatch_command(sender_id: int, raw_message: str, bots: Dict[str, Any]):
     """
     Procesa un comando escrito en el chat usando el nuevo CommandSystem.
